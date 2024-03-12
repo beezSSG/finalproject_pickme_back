@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="com.pickme.beeze.ccb.dao.CcbDao">
+ 
+ <select id="ccblist" parameterType="com.pickme.beeze.ccb.dto.CcbDto" resultType="com.pickme.beeze.ccb.dto.CcbDto">
+	select id,category,customerId, title, content, createAt, answerYn
+	from ccb
+	order by id desc;
+</select>
+
+<select id="ccbdetail" parameterType="Integer" resultType="com.pickme.beeze.ccb.dto.CcbDto">
+	select id,category,customerId, title, content, createAt, answerYn
+	from ccb
+	where id=#{id}
+</select>
+
+<insert id="ccbcommentwrite" parameterType="com.pickme.beeze.ccb.dto.CcbaDto">
+	insert into ccba(ccbId,managerId,content,createAt)
+	values(ccbId=#{ccbId}, managerId=#{managerId}, content=#{content}, now())
+</insert>
+ </mapper>
