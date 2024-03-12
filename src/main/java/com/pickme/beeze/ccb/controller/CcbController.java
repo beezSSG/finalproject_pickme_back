@@ -43,6 +43,7 @@ public class CcbController {
 	// 관리자 댓글 달기
 	@GetMapping("ccbcommentwrite")
 	public String ccbcommentwrite(CcbaDto dto) {
+		System.out.println("CcbController ccbcommentwrite " + new Date());
 		
 		boolean isS = service.ccbcommentwrtie(dto);
 		
@@ -54,8 +55,18 @@ public class CcbController {
 		}
 	}
 	
-	// 관리자 댓글 수정
-	//@GetMapping("commentupdate")
 	// 관리자 댓글 삭제
-	//@GetMapping("commentdelete")
+	@GetMapping("ccbcommentdelete")
+	public String ccbcommentdelete(int id) {
+		System.out.println("CcbController ccbcommentdelete " + new Date());
+		
+		boolean isS = service.ccbcommentdelete(id);
+		
+		if(isS) {
+			return "YES";
+		}
+		else {
+			return "NO";
+		}
+	}
 }
