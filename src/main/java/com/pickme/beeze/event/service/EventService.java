@@ -23,8 +23,9 @@ public class EventService {
 		return dao.eventlist(dto);
 	}
 	// 이벤트 생성(이미지 url 형식으로 저장)
-	public boolean eventcreate(int id) {
-		int count = dao.eventcreate(id);
+	public boolean eventcreate(EventDto dto) {
+		int count = dao.eventcreate(dto);
 		return count>0?true:false;
 	}
+	
 }

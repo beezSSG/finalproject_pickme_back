@@ -16,6 +16,6 @@ public interface EventDao {
 	// 이벤트 목록
 	List<EventDto> eventlist(EventDto dto);
 	// 이벤트 생성(이미지 url 형식으로 저장)
-	int eventcreate(int id);
+	int eventcreate(EventDto dto);
 	
 }

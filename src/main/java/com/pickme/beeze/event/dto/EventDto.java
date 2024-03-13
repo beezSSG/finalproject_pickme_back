@@ -7,7 +7,7 @@ public class EventDto {
 	private String detailPhoto;
 	private String startDate;
 	private String endDate;
-	private int promotionYn;
+	private int promotionYn; // 0:종료된 이벤트, 1:진행중 이벤트
 	
 	public EventDto() {
 		

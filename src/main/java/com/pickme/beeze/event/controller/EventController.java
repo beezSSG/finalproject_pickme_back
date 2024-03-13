@@ -39,11 +39,20 @@ public class EventController {
     }
     
     // 이벤트 생성
-//    @GetMapping("eventcreate")
-//    public String eventcreate(int id) {
-//    	
-//    	System.out.println("EventController evencreate " + new Date());
-//    }
-//    
+    @GetMapping("eventcreate")
+    public String eventcreate(EventDto dto) {
+   	
+    	System.out.println("EventController evencreate " + new Date());
+    	
+    	boolean isS = service.eventcreate(dto);
+    	
+    	if(isS) {
+    		return "YES";
+    	}
+    	else {
+    		return "NO";
+    	}
+    }
+    
 
 }

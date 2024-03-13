@@ -9,7 +9,10 @@
  	from promotion_post
  </select>
  
- <insert id="eventcreate" parameterType="Integer">
- 	insert into promotion_post(banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`)
- </insert>
+   
+<insert id="eventcreate" parameterType="com.pickme.beeze.event.dto.EventDto">
+    insert into promotion_post(banner_photo, detail_photo, start_date, end_date, promotion_yn)
+    values (#{bannerPhoto}, #{detailPhoto}, #{startDate}, #{endDate}, #{promotionYn})
+</insert>
+
  </mapper>
