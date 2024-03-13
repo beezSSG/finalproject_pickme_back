@@ -41,5 +41,20 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 <delete id="delReview" parameterType="com.pickme.beeze.mypage.dto.MypageReviewDto">
 	delete from review
 	 where customer_id = #{customerId} and product_id = #{productId}
-</delete>	
+</delete>
+	<!-- 장바구니 -->
+<!-- 장바구니 목록보기 -->
+<select id="getCart" resultType="com.pickme.beeze.mypage.dto.MypageCartDto"> 
+	<!-- order_yn [0 == 결제완료전 / 1 == 결제완료] -->
+	select customer_id, s_product_id
+	  from cart
+	 where order_yn = 0
+</select>
+
+<!-- 장바구니 목록삭제 -->
+<delete id="delCart" parameterType="com.pickme.beeze.mypage.dto.MypageCartDto">
+	delete from cart
+	 where customer_id = #{customerId} and s_product_id = #{sProductId}
+</delete>
+
 </mapper>

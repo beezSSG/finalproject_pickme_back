@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -29,4 +30,10 @@ public interface MypageDao {
 	List<MypageReviewDto> getReview(MypageReviewDto dto);
 	// 리뷰삭제
 	int delReview(MypageReviewDto dto);
+	
+	/* TODO 장바구니 */
+	// 장바구니 목록 불러오기
+	List<MypageCartDto> getCart();
+	// 장바구니 물품 삭제
+	void delCart(MypageCartDto dto);
 }

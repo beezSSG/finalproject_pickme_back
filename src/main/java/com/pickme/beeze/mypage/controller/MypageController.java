@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 import com.pickme.beeze.mypage.service.MypageService;
@@ -71,20 +72,40 @@ public class MypageController {
 		return service.addReview(dto);
 	}
 	
-	// 찜목록 불러오기
+	// 리뷰 목록 불러오기
 	@GetMapping("/review/getReview")
 	public List<MypageReviewDto> getReview(MypageReviewDto dto) {
-		System.out.println("MypageController getSave " + new Date());
+		System.out.println("MypageController getReview " + new Date());
 		
 		return service.getReview(dto);
 	}
 	
-	// 찜 삭제
+	// 리뷰 삭제
 	@DeleteMapping("/review/delReview")
 	public int delReview(MypageReviewDto dto) {
-		System.out.println("MypageController delSave " + new Date());
+		System.out.println("MypageController delReview " + new Date());
 		
 	    return service.delReview(dto);
 	}
 
+	// TODO 장바구니	
+	// 장바구니 목록 불러오기
+	@GetMapping("/cart/getCart")
+	public List<MypageCartDto> getCart() {
+		System.out.println("MypageController getCart " + new Date());
+		
+		return service.getCart();
+	}
+	
+	// 장바구니 삭제
+	@DeleteMapping("/cart/delCart")
+	public List<MypageCartDto> delCart(MypageCartDto dto) {
+		System.out.println("MypageController delCart " + new Date());
+		
+		// 장바구니 삭제
+		service.delCart(dto);
+		
+		// 삭제 진행이 완료된 장바구니 목록 불러와서 리턴		
+	    return service.getCart();
+	}
 }
