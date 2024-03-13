@@ -27,5 +27,10 @@ public class EventService {
 		int count = dao.eventcreate(dto);
 		return count>0?true:false;
 	}
+	// 이벤트 종료
+	public boolean eventstop(int id) {
+		int count = dao.eventstop(id);
+		return count>0?true:false;
+	}
 	
 }

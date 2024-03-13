@@ -39,12 +39,28 @@ public class EventController {
     }
     
     // 이벤트 생성
-    @GetMapping("eventcreate")
+    @PostMapping("eventcreate")
     public String eventcreate(EventDto dto) {
    	
     	System.out.println("EventController evencreate " + new Date());
     	
     	boolean isS = service.eventcreate(dto);
+    	
+    	if(isS) {
+    		return "YES";
+    	}
+    	else {
+    		return "NO";
+    	}
+    }
+    
+    // 이벤트 종료
+    @GetMapping("eventstop")
+    public String eventstop(int id) {
+    	
+    	System.out.println("EventController evenstop " + new Date());
+    	
+   	boolean isS = service.eventstop(id);
     	
     	if(isS) {
     		return "YES";
