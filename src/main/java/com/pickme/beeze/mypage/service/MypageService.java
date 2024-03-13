@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.mypage.dao.MypageDao;
+import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -43,5 +44,15 @@ public class MypageService {
 	// 리뷰삭제
 	public int delReview(MypageReviewDto dto) {
 		return dao.delReview(dto);
+	}
+	
+	/* TODO 장바구니 */
+	// 장바구니 목록 불러오기
+	public List<MypageCartDto> getCart(){
+		return dao.getCart();
+	}
+	// 장바구니 물품 삭제
+	public void delCart(MypageCartDto dto) {
+		dao.delCart(dto);
 	}
 }
