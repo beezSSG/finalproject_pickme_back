@@ -82,6 +82,13 @@
 		    <version>1.18.30</version>
 		    <scope>provided</scope>
 		</dependency>
+		
+		<!-- 결제 API [bootpay] -->
+		<dependency>
+		    <groupId>io.github.bootpay</groupId>
+		    <artifactId>backend</artifactId>
+		    <version>2.2.3</version>
+		</dependency>
 
 	</dependencies>
 
