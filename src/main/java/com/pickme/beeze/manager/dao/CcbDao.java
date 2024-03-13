@@ -1,11 +1,12 @@
-package com.pickme.beeze.ccb.dao;
+package com.pickme.beeze.manager.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import com.pickme.beeze.ccb.dto.CcbDto;
-import com.pickme.beeze.ccb.dto.CcbaDto;
+
+import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.manager.dto.CcbaDto;
 
 @Mapper
 @Repository
@@ -19,5 +20,7 @@ public interface CcbDao {
 	CcbDto ccbdetail(int id);
 	// 1:1 문의 관리자 댓글 달기
 	int ccbcommentwrite(CcbaDto dto);
+	// 1:1 문의 관리자 댓글 삭제
+	int ccbcommentdelete(int id);
 	
 }

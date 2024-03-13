@@ -2,22 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
- <mapper namespace="com.pickme.beeze.ccb.dao.CcbDao">
+ <mapper namespace="com.pickme.beeze.manager.dao.CcbDao">
  
- <select id="ccblist" parameterType="com.pickme.beeze.ccb.dto.CcbDto" resultType="com.pickme.beeze.ccb.dto.CcbDto">
-	select id,category,customerId, title, content, createAt, answerYn
+ <select id="ccblist" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbDto">
+	select id,category,customer_id as `customerId`, title, content, create_at as `createAt`, answer_yn as `answerYn`
 	from ccb
 	order by id desc;
 </select>
 
-<select id="ccbdetail" parameterType="Integer" resultType="com.pickme.beeze.ccb.dto.CcbDto">
-	select id,category,customerId, title, content, createAt, answerYn
+ 
+<select id="ccbdetail" parameterType="Integer" resultType="com.pickme.beeze.manager.dto.CcbDto">
+	select id,category,customer_id as `customerId`, title, content, create_at as `createAt`, answer_yn as `answerYn`
 	from ccb
 	where id=#{id}
 </select>
 
-<insert id="ccbcommentwrite" parameterType="com.pickme.beeze.ccb.dto.CcbaDto">
-	insert into ccba(ccbId,managerId,content,createAt)
-	values(ccbId=#{ccbId}, managerId=#{managerId}, content=#{content}, now())
+<insert id="ccbcommentwrite" parameterType="com.pickme.beeze.manager.dto.CcbaDto">
+	insert into ccba(ccb_id, manager_id,content, create_at)
+	values(#{ccbId}, #{managerId}, #{content}, now())
 </insert>
+
+<delete id="ccbcommentdelete">
+	delete from ccba
+	where id=#{id}
+</delete>
  </mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.pickme.beeze.manager.dao.FaqDao">
+
+<!-- faq 목록 카테고리별 세팅-->
+<select id="faqlist" parameterType="com.pickme.beeze.manager.dto.FaqParam" resultType="com.pickme.beeze.manager.dto.FaqDto" >
+	select id,title,content,del
+	from faq
+	<if test="choice != null and choice != ''">
+		<if test="choice == '카드'">
+			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
+		</if>
+		<if test="choice == '매장'">
+			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
+		</if>
+		<if test="choice == '택배'">
+			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
+		</if>
+		<if test="choice == '쿠폰'">
+			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
+		</if>
+		<if test="choice == '영수증'">
+			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
+		</if>
+	</if>
+	order by id desc;
+</select>
+
+<!--  faq 생성 -->
+<insert id="faqcreate" parameterType="com.pickme.beeze.manager.dto.FaqDto">
+	insert into faq(title,content,del)
+	values(#{title},#{content},0)
+</insert>
+
+<!-- faq 삭제(del을 1로) -->
+<update id="faqdelete" parameterType="Integer">
+	update faq
+	set del = 1
+	where id=#{id}
+</update>
+</mapper>
