@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.pickme.beeze.mypage.dao.MypageDao">
+ 
+ 	<!-- 찜 -->
+	<!-- 찜 추가 -->
+	<insert id="addSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
+		insert into save(product_id, customer_id)
+		values (#{productId}, #{customerId})
+	</insert>
+	
+	<!-- 찜목록 가져오기 -->
+	<select id="getSave" resultType="com.pickme.beeze.mypage.dto.MypageSaveDto">
+		select product_id as `productId`, customer_id as `customerId`
+		  from save
+	</select>
+	
+	<!-- 찜목록 삭제 -->
+	<delete id="delSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
+		delete from save
+		 where product_id = #{productId} and customer_id = #{customerId}
+	</delete>
+</mapper>
