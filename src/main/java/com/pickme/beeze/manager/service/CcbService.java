@@ -1,14 +1,13 @@
-package com.pickme.beeze.ccb.service;
+package com.pickme.beeze.manager.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.pickme.beeze.ccb.dao.CcbDao;
-import com.pickme.beeze.ccb.dto.CcbDto;
-import com.pickme.beeze.ccb.dto.CcbaDto;
+import com.pickme.beeze.manager.dao.CcbDao;
+import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.manager.dto.CcbaDto;
 
 
 @Service
