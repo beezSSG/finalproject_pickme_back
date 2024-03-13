@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.mypage.dto.MypageCartDto;
+import com.pickme.beeze.mypage.dto.MypageCouponDto;
+import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -36,4 +38,18 @@ public interface MypageDao {
 	List<MypageCartDto> getCart();
 	// 장바구니 물품 삭제
 	void delCart(MypageCartDto dto);
+		
+	/* TODO 개인정보 */
+	// 개인정보 보기
+	MypageCustomerDto getUserInfo();
+	// 개인정보 수정
+	void updateUserInfo(MypageCustomerDto dto);
+	
+	/* TODO 포인트 및 쿠폰 */
+	// 내 포인트 적립/차감 하기
+	void updatePoint(MypageCustomerDto dto);
+	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까)
+	List<MypageCouponDto> getCoupon(MypageCouponDto dto);
+
+	
 }

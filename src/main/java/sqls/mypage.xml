@@ -42,6 +42,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	delete from review
 	 where customer_id = #{customerId} and product_id = #{productId}
 </delete>
+
 	<!-- 장바구니 -->
 <!-- 장바구니 목록보기 -->
 <select id="getCart" resultType="com.pickme.beeze.mypage.dto.MypageCartDto"> 
@@ -56,5 +57,37 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	delete from cart
 	 where customer_id = #{customerId} and s_product_id = #{sProductId}
 </delete>
+
+	<!-- 개인정보 관리  -->
+<!-- 개인정보 보기 포인트는 이것을 통해서 보기-->
+<select id="getUserInfo" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
+	select email, pw, name, address, phone, point, grade
+	  from customer_info
+	 where id = #{id}
+	 <!-- id = customer_id -->
+</select>
+
+<!-- 개인정보 수정 -->
+<update id="updateUserInfo" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
+	update customer_info
+	   set email = #{email}, pw = #{pw}, name = #{name}, address = #{address}, phone = #{phone}
+	 where id = #{id}
+</update>
+
+	<!-- 포인트 및 쿠폰 -->
+<!-- 내 포인트 적립/차감하기 -->
+<update id="updatePoint" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
+	update customer_info
+	   set point = #{point}
+	 where id = #{id}
+</update>
+
+<!-- 내 쿠폰 보기 -->
+<select id="getCoupon" parameterType="com.pickme.beeze.mypage.dto.MypageCouponDto" resultType="com.pickme.beeze.mypage.dto.MypageCouponDto">
+	select content, start_date as `startDate`, end_date as `endDate`
+	  from coupon
+	 where user_id = #{id}
+</select>
+
 
 </mapper>

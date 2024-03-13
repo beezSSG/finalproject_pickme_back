@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.mypage.dao.MypageDao;
 import com.pickme.beeze.mypage.dto.MypageCartDto;
+import com.pickme.beeze.mypage.dto.MypageCouponDto;
+import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -54,5 +56,26 @@ public class MypageService {
 	// 장바구니 물품 삭제
 	public void delCart(MypageCartDto dto) {
 		dao.delCart(dto);
+	}
+	
+	
+	/* TODO 개인정보 */
+	// 개인정보 보기
+	public MypageCustomerDto getUserInfo() {
+		return dao.getUserInfo();
+	}
+	// 개인정보 수정
+	public void updateUserInfo(MypageCustomerDto dto) {
+		dao.updateUserInfo(dto);
+	}
+	
+	/* TODO 포인트 및 쿠폰 */
+	// 내 포인트 적립/차감 하기
+	public void updatePoint(MypageCustomerDto dto) {
+		dao.updatePoint(dto);
+	}
+	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까)
+	public List<MypageCouponDto> getCoupon(MypageCouponDto dto) {
+		return dao.getCoupon(dto);
 	}
 }
