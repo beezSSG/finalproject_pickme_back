@@ -34,4 +34,9 @@ public class CcbService {
 		int count = dao.ccbcommentwrite(dto);
 		return count>0?true:false;
 	}
+	// 1:1 문의 관리자 댓글 삭제
+	public boolean ccbcommentdelete(int id) {
+		int count = dao.ccbcommentdelete(id);
+		return count>0?true:false;
+	}
 }

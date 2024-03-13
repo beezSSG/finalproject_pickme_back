@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="com.pickme.beeze.event.dao.EventDao">
+ 
+ <select id="eventlist" parameterType="com.pickme.beeze.event.dto.EventDto" resultType="com.pickme.beeze.event.dto.EventDto">
+ 	select id, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
+ 	from promotion_post
+ </select>
+ 
+ <insert id="eventcreate" parameterType="Integer">
+ 	insert into promotion_post(banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`)
+ </insert>
+ </mapper>

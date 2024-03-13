@@ -20,6 +20,7 @@ public class CcbController {
 	// 1대1 문의 목록 게시판 
 	@GetMapping("ccblist")
 	public List<CcbDto> ccblist(CcbDto dto) {
+		
 		System.out.println("CcbController ccblist " + new Date());
 		
 		List<CcbDto> ccblist = service.ccblist(dto);
@@ -33,6 +34,7 @@ public class CcbController {
 	// 게시판 글 링크를 눌렸을 경우 상세화면
 	@GetMapping("ccbdetail")
 	public CcbDto ccbdetail(int id) {
+		
 		System.out.println("CcbController ccbdetail " + new Date());
 		
 		CcbDto dto = service.ccbdetail(id);
@@ -54,8 +56,20 @@ public class CcbController {
 		}
 	}
 	
-	// 관리자 댓글 수정
-	//@GetMapping("commentupdate")
 	// 관리자 댓글 삭제
-	//@GetMapping("commentdelete")
+	@GetMapping("ccbcommentdelete")
+	public String ccbcommentdelete(int id) {
+		
+		System.out.println("CcbController ccbcommentdelete " + new Date());
+		
+		boolean isS = service.ccbcommentdelete(id);
+		
+		if(isS) {
+			return "YES";
+		}
+		else {
+			return "NO";
+		}
+	}
+	
 }

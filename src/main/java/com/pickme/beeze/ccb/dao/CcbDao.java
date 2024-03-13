@@ -19,5 +19,7 @@ public interface CcbDao {
 	CcbDto ccbdetail(int id);
 	// 1:1 문의 관리자 댓글 달기
 	int ccbcommentwrite(CcbaDto dto);
+	// 1:1 문의 관리자 댓글 삭제
+	int ccbcommentdelete(int id);
 	
 }
