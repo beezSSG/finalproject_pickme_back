@@ -4,22 +4,42 @@
    
 <mapper namespace="com.pickme.beeze.mypage.dao.MypageDao">
  
- 	<!-- 찜 -->
-	<!-- 찜 추가 -->
-	<insert id="addSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
-		insert into save(product_id, customer_id)
-		values (#{productId}, #{customerId})
-	</insert>
-	
-	<!-- 찜목록 가져오기 -->
-	<select id="getSave" resultType="com.pickme.beeze.mypage.dto.MypageSaveDto">
-		select product_id as `productId`, customer_id as `customerId`
-		  from save
-	</select>
-	
-	<!-- 찜목록 삭제 -->
-	<delete id="delSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
-		delete from save
-		 where product_id = #{productId} and customer_id = #{customerId}
-	</delete>
+	<!-- 찜 -->
+<!-- 찜 추가 -->
+<insert id="addSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
+	insert into save(product_id, customer_id)
+	values (#{productId}, #{customerId})
+</insert>
+
+<!-- 찜목록 가져오기 -->
+<select id="getSave" resultType="com.pickme.beeze.mypage.dto.MypageSaveDto">
+	select product_id as `productId`, customer_id as `customerId`
+	  from save
+</select>
+
+<!-- 찜목록 삭제 -->
+<delete id="delSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
+	delete from save
+	 where product_id = #{productId} and customer_id = #{customerId}
+</delete>
+
+	<!-- 리뷰 -->
+<!-- 리뷰추가 -->
+<insert id="addReview" parameterType="com.pickme.beeze.mypage.dto.MypageReviewDto">
+insert into review(product_id, customer_id, content, rating)
+values(#{productId}, #{customerId}, #{content}, #{rating})
+</insert>
+
+<!-- 리뷰보기 -->
+<select id="getReview" parameterType="com.pickme.beeze.mypage.dto.MypageReviewDto" resultType="com.pickme.beeze.mypage.dto.MypageReviewDto">
+	select product_id, content, rating
+	  from review
+	 where customer_id = #{customerId}
+</select>
+
+<!-- 리뷰삭제 -->
+<delete id="delReview" parameterType="com.pickme.beeze.mypage.dto.MypageReviewDto">
+	delete from review
+	 where customer_id = #{customerId} and product_id = #{productId}
+</delete>	
 </mapper>
