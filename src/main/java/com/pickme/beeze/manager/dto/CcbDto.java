@@ -8,7 +8,7 @@ public class CcbDto {
 	private String title;
 	private String content;
 	private String createAt;
-	private int answerYn;
+	private int answerYn;	// 0: 답변완료 전, 1:답변완료 후
 	
 	public CcbDto() {
 		
