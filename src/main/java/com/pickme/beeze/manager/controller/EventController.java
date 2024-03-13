@@ -1,4 +1,4 @@
-package com.pickme.beeze.event.controller;
+package com.pickme.beeze.manager.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -11,24 +11,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pickme.beeze.event.dto.EventDto;
-import com.pickme.beeze.event.service.EventService;
+import com.pickme.beeze.manager.dto.EventDto;
+import com.pickme.beeze.manager.service.EventService;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 
 
 @RestController
+@RequestMapping("/api/v1/manager/*")
 public class EventController {
 	
 	@Autowired
 	EventService service;
 	
 	// 이벤트 목록 
-    @GetMapping("eventlist")
+    @GetMapping("/eventlist")
     public List<EventDto> eventlist(EventDto dto) {
     	
     	System.out.println("EventController eventlist " + new Date());
@@ -39,7 +42,7 @@ public class EventController {
     }
     
     // 이벤트 생성
-    @PostMapping("eventcreate")
+    @PostMapping("/eventcreate")
     public String eventcreate(EventDto dto) {
    	
     	System.out.println("EventController evencreate " + new Date());
@@ -55,7 +58,7 @@ public class EventController {
     }
     
     // 이벤트 종료
-    @GetMapping("eventstop")
+    @GetMapping("/eventstop")
     public String eventstop(int id) {
     	
     	System.out.println("EventController evenstop " + new Date());

@@ -1,4 +1,4 @@
-package com.pickme.beeze.event.dto;
+package com.pickme.beeze.manager.dto;
 
 public class EventDto {
 	

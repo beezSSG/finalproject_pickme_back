@@ -1,4 +1,4 @@
-package com.pickme.beeze.ccb.dto;
+package com.pickme.beeze.manager.dto;
 
 public class CcbaDto {
 

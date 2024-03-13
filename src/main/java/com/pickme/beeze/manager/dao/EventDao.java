@@ -1,11 +1,11 @@
-package com.pickme.beeze.event.dao;
+package com.pickme.beeze.manager.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.pickme.beeze.event.dto.EventDto;
+import com.pickme.beeze.manager.dto.EventDto;
 
 @Mapper
 @Repository

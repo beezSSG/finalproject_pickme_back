@@ -1,4 +1,4 @@
-package com.pickme.beeze.ccb.dto;
+package com.pickme.beeze.manager.dto;
 
 public class CcbDto {
 
@@ -8,7 +8,7 @@ public class CcbDto {
 	private String title;
 	private String content;
 	private String createAt;
-	private int answerYn;	// 0:답변X , 1:답변O
+	private int answerYn;
 	
 	public CcbDto() {
 		
@@ -84,8 +84,9 @@ public class CcbDto {
 
 	@Override
 	public String toString() {
-		return "ccbDto [id=" + id + ", category=" + category + ", customerId=" + customerId + ", title=" + title
+		return "CcbDto [id=" + id + ", category=" + category + ", customerId=" + customerId + ", title=" + title
 				+ ", content=" + content + ", createAt=" + createAt + ", answerYn=" + answerYn + "]";
 	}
-
+	
+	
 }

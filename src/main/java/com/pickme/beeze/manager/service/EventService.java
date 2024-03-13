@@ -1,12 +1,13 @@
-package com.pickme.beeze.event.service;
+package com.pickme.beeze.manager.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.pickme.beeze.event.dao.EventDao;
-import com.pickme.beeze.event.dto.EventDto;
+
+import com.pickme.beeze.manager.dao.EventDao;
+import com.pickme.beeze.manager.dto.EventDto;
 
 
 @Service

@@ -1,11 +1,12 @@
-package com.pickme.beeze.ccb.dao;
+package com.pickme.beeze.manager.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import com.pickme.beeze.ccb.dto.CcbDto;
-import com.pickme.beeze.ccb.dto.CcbaDto;
+
+import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.manager.dto.CcbaDto;
 
 @Mapper
 @Repository
