@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.mypage.dto.MypageCartDto;
+import com.pickme.beeze.mypage.dto.MypageCouponDto;
+import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 import com.pickme.beeze.mypage.service.MypageService;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -108,4 +112,39 @@ public class MypageController {
 		// 삭제 진행이 완료된 장바구니 목록 불러와서 리턴		
 	    return service.getCart();
 	}
+	
+	// TODO 개인정보
+	// 개인정보 보기
+	@GetMapping("/user/getUserInfo")
+	public MypageCustomerDto getUserInfo() {
+		System.out.println("MypageController getUserInfo " + new Date());
+		
+		return service.getUserInfo();
+	}
+	
+	// 개인정보 수정
+	@PostMapping("/user/updateUserInfo")
+	public void updateUserInfo(MypageCustomerDto dto) {
+		System.out.println("MypageController updateUserInfo " + new Date());
+		
+		service.updateUserInfo(dto);
+	}
+	
+	// TODO 포인트 및 쿠폰
+	// 내 포인트 적립/차감 하기
+	@GetMapping("/user/updatePoint")
+	public void updatePoint(MypageCustomerDto dto) {
+		System.out.println("MypageController updatePoint " + new Date());
+		
+		service.updatePoint(dto);
+	}
+
+	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까);
+	@PostMapping("/user/getCoupon")
+	public List<MypageCouponDto> getCoupon(MypageCouponDto dto) {
+		System.out.println("MypageController getCoupon " + new Date());
+		
+		return service.getCoupon(dto);
+	}
+	
 }
