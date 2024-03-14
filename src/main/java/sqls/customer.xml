@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.pickme.beeze.customer.dao.CustomerDao">
+
+<!-- 장바구니 담기 -->
+<select id="getProductId" parameterType="String" resultType="Integer">
+	select id
+	from product
+	where name = #{productName}
+</select>
+<select id="getsProductId" parameterType="Integer" resultType="Integer">
+	select id
+	from store_product
+	where product_id=#{productId}
+</select>
+<select id="getCustomerId" parameterType="String" resultType="Integer">
+	select id
+	from customer_info
+	where email=#{email}
+</select>
+<insert id="cartinsert" parameterType="map">
+	insert into cart(customer_id,s_product_id,order_yn)
+	values(#{customerId},#{sProductId},0)
+</insert>
+
+<!-- 주문하기 -->
+<insert id="order" parameterType="Integer">
+	insert into `order`(cart_id,date)
+	values(#{id},now())
+</insert>
+</mapper>
