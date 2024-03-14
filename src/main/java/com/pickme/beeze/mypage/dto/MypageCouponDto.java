@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MypageCartDto {
-	private int customerId;
-	private int sProductId;
+public class MypageCouponDto {
+
+	private int id;
+	private String content;
+	private String startDate;
+	private String endDate;
 }
