@@ -30,5 +30,11 @@ public class ProductService {
 		return dao.productdetail(id);
 	}
 	
+	// 신제품 등록 (꽌리자)
+	public boolean newproductinsert(ProductDto dto) {
+		int count = dao.newproductinsert(dto);
+		return count>0?true:false;
+	}
+	
 
 }
