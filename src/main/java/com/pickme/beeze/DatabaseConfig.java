@@ -41,6 +41,10 @@ public class DatabaseConfig {
 		
 		Resource[] arrResource = new PathMatchingResourcePatternResolver().getResources("classpath:sqls/*.xml");
 		sqlSessionFactoryBean.setMapperLocations(arrResource);
+		
+		//@alias 설정시 위치는 여기!
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.login.dto");	// login dto @alias설정
+		
 		sqlSessionFactoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
 		
 		return (SqlSessionFactory)sqlSessionFactoryBean.getObject();
