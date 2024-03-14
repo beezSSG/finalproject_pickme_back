@@ -4,21 +4,38 @@
    
  <mapper namespace="com.pickme.beeze.product.dao.ProductDao">
  
- <select id="productlist" parameterType="com.pickme.beeze.product.dto.ProductDto" resultType="com.pickme.beeze.product.dto.ProductDto">
- 	select id, name, price, detail, url
+  
+ <!-- 전체 상품 목록 -->
+ <select id="productlist" parameterType="com.pickme.beeze.product.dto.ProductParam"
+				resultType="com.pickme.beeze.product.dto.ProductDto">
+	select id, name, price, url
  	from product
- 	order by id asc
- </select>
+	<if test="search != null and search != ''">
+		where name like concat('%', #{search}, '%')
+	</if>
+ 	order by id desc
+	limit ${(pageNumber * 8)}, 8
+</select>
+
  
+ <!-- 전체 상품 수 -->
+<select id="getallproduct" parameterType="com.pickme.beeze.product.dto.ProductDto"
+				resultType="java.lang.Integer">
+	select count(*) 
+	from product
+	<if test="search != null and search != '' ">
+		where name like concat('%', #{search}, '%')
+	</if>
+</select>
  
+  
+ <!-- 상품 상세보기 -->
  <select id = "productdetail" parameterType="Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
- 	select id, name, price, detail, url
+ 	select id, name, price, url
  	from product
  	where id=#{id}
  </select>
- 
- 
- 
+  
  
  
  
