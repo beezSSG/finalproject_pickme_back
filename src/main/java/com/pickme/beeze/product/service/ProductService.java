@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.product.dao.ProductDao;
 import com.pickme.beeze.product.dto.ProductDto;
+import com.pickme.beeze.product.dto.ProductParam;
 
 @Service
 @Transactional
@@ -17,8 +18,11 @@ public class ProductService {
 	ProductDao dao;
 	
 	// 전체 상품 목록
-	public List<ProductDto> productlist(ProductDto dto){
-		return dao.productlist(dto);
+	public List<ProductDto> productlist(ProductParam param){
+		return dao.productlist(param);
+	}
+	public int getallproduct(ProductParam param) {
+		return dao.getallproduct(param);
 	}
 	
 	// 상품 상세보기
