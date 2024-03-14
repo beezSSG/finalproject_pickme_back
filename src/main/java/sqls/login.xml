@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.pickme.beeze.login.dao.LoginDao">
+
+<!-- 고객 회원가입 -->
+<!-- id(seq필요 X), email(실제ID역할), pw, name, address, phone, point, grade, rdate -->
+<insert id="addCustomerInfo" parameterType="LoginDto">
+	INSERT INTO customer_info(email, pw, name, address, phone, point, grade, rdate)
+	VALUES(#{email}, #{pw}, #{name}, #{address}, #{phone}, 0, 0, now())
+</insert>
+
+<!-- 점주 회원가입 -->
+<insert id="addCeoInfo" parameterType="LoginDto">
+	INSERT INTO ceo_info(email, pw, name, address, phone)
+	VALUES(#{email}, #{pw}, #{name}, #{address}, #{phone})
+</insert>
+
+<!-- 고객 중복 조회 -->
+<select id="countCustomerInfo" parameterType="String" resultType="Integer">
+	SELECT count(*)
+	  FROM customer_info
+	 WHERE email=#{email}
+</select>
+
+<!-- 점주 중복 조회 -->
+<select id="countCeoInfo" parameterType="String" resultType="Integer">
+	SELECT count(*)
+	  FROM ceo_info
+	 WHERE email=#{email}
+</select>
+
+<!-- 고객 로그인 -->
+<select id="selectCustomerInfo" parameterType="LoginDto" resultType="LoginDto">
+	SELECT id, email, name, address, phone, point, grade, rdate
+	  FROM customer_info
+	 WHERE email=#{email} and pw=#{pw}
+</select>
+
+<!-- 점주 로그인 -->
+<select id="selectCeoInfo" parameterType="LoginDto" resultType="LoginDto">
+	SELECT id, email, name, address, phone
+	  FROM ceo_info
+	 WHERE email=#{email} and pw=#{pw}
+</select>
+<!-- 로그인 전 정보 확인용-->
+<!-- 고객 정보 조회 -->
+<select id="whoCustomer" parameterType="LoginDto" resultType="LoginDto">
+	SELECT email, name, address, phone, point, grade, rdate
+	  FROM customer_info
+	 WHERE email=#{email}
+</select>
+
+<!-- 점주 정보 조회 -->
+<select id="whoCeo" parameterType="LoginDto" resultType="LoginDto">
+	SELECT email, name, address, phone
+	  FROM ceo_info
+	 WHERE email=#{email}
+</select>
+
+<!-- 로그인 후 토큰사용시 -->
+<!-- 고객 정보 조회 -->
+<select id="searchCustomerInfo" parameterType="Integer" resultType="LoginDto">
+	SELECT email, name, address, phone, point, grade, rdate
+	  FROM customer_info
+	 WHERE id=#{id}
+</select>
+
+<!-- 점주 정보 조회 -->
+<select id="searchCeoInfo" parameterType="Integer" resultType="LoginDto">
+	SELECT email, name, address, phone
+	  FROM ceo_info
+	 WHERE id=#{id}
+</select>
+
+
+</mapper>
