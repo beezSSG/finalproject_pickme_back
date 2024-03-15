@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
@@ -108,7 +109,23 @@ public class MypageController {
 		
 		return service.getCoupon(dto);
 	}
+	
+	// TODO 1:1 문의 게시판
 
+	// 내 문의 작성하기
+	@PostMapping("/user/addCcbList")
+	public int addCcbList(CcbDto dto) {
+		System.out.println("MypageController addCcbList " + new Date());
+		
+		return service.addCcbList(dto);
+	}
+	// 내 문의 모아보기
+	@GetMapping("/user/getMyCcbList")
+	public List<CcbDto> getMyCcbList(CcbDto dto){
+		System.out.println("MypageController getMyCcbList " + new Date());
+		
+		return service.getMyCcbList(dto);
+	}
 	
 	/* 여기서 부터는 합칠것 */
 	// TODO 리뷰
