@@ -5,28 +5,23 @@
 <mapper namespace="com.pickme.beeze.manager.dao.FaqDao">
 
 <!-- faq 목록 카테고리별 세팅-->
-<select id="faqlist" parameterType="com.pickme.beeze.manager.dto.FaqParam" resultType="com.pickme.beeze.manager.dto.FaqDto" >
-	select id,title,content,del
-	from faq
-	<if test="choice != null and choice != ''">
-		<if test="choice == '카드'">
-			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
-		</if>
-		<if test="choice == '매장'">
-			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
-		</if>
-		<if test="choice == '택배'">
-			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
-		</if>
-		<if test="choice == '쿠폰'">
-			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
-		</if>
-		<if test="choice == '영수증'">
-			where title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%') and del=0
-		</if>
-	</if>
-	order by id desc;
+<select id="faqlist" parameterType="com.pickme.beeze.manager.dto.FaqParam" resultType="com.pickme.beeze.manager.dto.FaqDto">
+    select id, title, content, del
+    from faq
+    <if test="choice != null and choice != ''">
+        <if test="choice == '전체'">
+            where del = 0
+        </if>
+        <if test="choice == '카드' or choice == '매장' or choice == '택배' or choice == '쿠폰' or choice == '영수증'">
+            where (title like concat('%', #{choice}, '%') or content like concat('%', #{choice}, '%')) and del = 0
+        </if>
+    </if>
+    <if test="choice == null or choice == ''">
+        where del = 0
+    </if>
+    order by id desc;
 </select>
+
 
 <!--  faq 생성 -->
 <insert id="faqcreate" parameterType="com.pickme.beeze.manager.dto.FaqDto">
