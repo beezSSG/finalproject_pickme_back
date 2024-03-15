@@ -9,6 +9,7 @@ import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
+import com.pickme.beeze.mypage.dto.MypageOrderDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -25,20 +26,6 @@ public interface MypageDao {
 	List<MypageSaveDto> getSave();
 	// 찜삭제
 	int delSave(MypageSaveDto dto);
-	
-	/* TODO 리뷰 */
-	// 리뷰작성
-	int addReview(MypageReviewDto dto);
-	// 리뷰목록 불러오기
-	List<MypageReviewDto> getReview(MypageReviewDto dto);
-	// 리뷰삭제
-	int delReview(MypageReviewDto dto);
-	
-	/* TODO 장바구니 */
-	// 장바구니 목록 불러오기
-	List<MypageCartDto> getCart();
-	// 장바구니 물품 삭제
-	void delCart(MypageCartDto dto);
 		
 	/* TODO 개인정보 */
 	// 개인정보 보기
@@ -58,5 +45,29 @@ public interface MypageDao {
 	// 내 문의 모아보기
 	List<CcbDto> getMyCcbList(CcbDto dto);
 
+	/* TODO 주문내역 */
+	// 내 주문 내역 불러오기
+	List<MypageOrderDto> getMyOrderList(MypageOrderDto dto);
+	MypageOrderDto getMYOrderProduct(MypageOrderDto dto);
+	MypageOrderDto getMyOrderStore(MypageOrderDto dto);
+	// 내 주문 내역 취소
+	void cancelMyOrder(MypageOrderDto dto);
+	
+	
+
+	// 여기서 부터 변경
+	/* TODO 리뷰 */
+	// 리뷰작성
+	int addReview(MypageReviewDto dto);
+	// 리뷰목록 불러오기
+	List<MypageReviewDto> getReview(MypageReviewDto dto);
+	// 리뷰삭제
+	int delReview(MypageReviewDto dto);
+	
+	/* TODO 장바구니 */
+	// 장바구니 목록 불러오기
+	List<MypageCartDto> getCart();
+	// 장바구니 물품 삭제
+	void delCart(MypageCartDto dto);
 	
 }

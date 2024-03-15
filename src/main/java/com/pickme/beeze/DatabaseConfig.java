@@ -43,7 +43,8 @@ public class DatabaseConfig {
 		sqlSessionFactoryBean.setMapperLocations(arrResource);
 		
 		//@alias 설정시 위치는 여기!
-		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.login.dto");	// login dto @alias설정
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.login.dto");	// login dto
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.mypage.dto");	// order dto
 		
 		sqlSessionFactoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
 		
