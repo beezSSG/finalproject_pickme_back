@@ -17,7 +17,6 @@ public class ProductDto {
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.detail = detail;
 		this.url = url;
 	}
 
@@ -45,14 +44,6 @@ public class ProductDto {
 		this.price = price;
 	}
 
-	public String getDetail() {
-		return detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}	
-
 	public String getUrl() {
 		return url;
 	}
@@ -63,8 +54,7 @@ public class ProductDto {
 
 	@Override
 	public String toString() {
-		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", detail=" + detail + ", url=" + url
-				+ "]";
+		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", url=" + url + "]";
 	}
 	
 	
