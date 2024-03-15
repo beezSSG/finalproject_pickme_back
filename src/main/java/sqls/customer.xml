@@ -5,24 +5,20 @@
 <mapper namespace="com.pickme.beeze.customer.dao.CustomerDao">
 
 <!-- 장바구니 담기 -->
-<select id="getProductId" parameterType="String" resultType="Integer">
-	select id
-	from product
-	where name = #{productName}
-</select>
-<select id="getsProductId" parameterType="Integer" resultType="Integer">
-	select id
+<select id="getsProductId" parameterType="map" resultType="Integer">
+	select store_product.id
 	from store_product
-	where product_id=#{productId}
+	inner join product on store_product.product_id = product.id
+	where product.name = #{productName} and store_product.store_id = #{storeId};
 </select>
 <select id="getCustomerId" parameterType="String" resultType="Integer">
 	select id
 	from customer_info
 	where email=#{email}
 </select>
-<insert id="cartinsert" parameterType="map">
-	insert into cart(customer_id,s_product_id,order_yn)
-	values(#{customerId},#{sProductId},0)
+<insert id="cartinsert" parameterType="com.pickme.beeze.customer.dto.CartDto">
+	insert into cart(customer_id,s_product_id,quantity,order_yn)
+	values(#{customerId},#{sProductId},#{quantity},0)
 </insert>
 
 <!-- 주문하기 -->

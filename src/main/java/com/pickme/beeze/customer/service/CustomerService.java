@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.customer.dao.CustomerDao;
+import com.pickme.beeze.customer.dto.CartDto;
 
 @Service
 @Transactional
@@ -14,17 +15,14 @@ public class CustomerService {
 	CustomerDao dao;
 	
 	// 장바구니 담기
-	public int getProductId(String productName) {
-		return dao.getProductId(productName);
-	}
-	public int getsProductId(int productId) {
-		return dao.getsProductId(productId);
+	public int getsProductId(String productName, int storeId) {
+		return dao.getsProductId(productName,storeId);
 	}
 	public int getCustomerId(String email) {
 		return dao.getCustomerId(email);
 	}
-	public boolean cartinsert(int sProductId,int customerId) {
-		int count = dao.cartinsert(sProductId, customerId);
+	public boolean cartinsert(CartDto dto) {
+		int count = dao.cartinsert(dto);
 		return count>0?true:false;
 	}
 	
