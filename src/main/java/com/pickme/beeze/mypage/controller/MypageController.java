@@ -6,12 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 import com.pickme.beeze.mypage.service.MypageService;
+import com.pickme.beeze.util.NaverCloud;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,6 +62,72 @@ public class MypageController {
 	    return service.delSave(dto);
 	}
 	
+	// TODO 챗봇
+	@PostMapping("/chatbot")
+	public String chatbot(String voiceMessage) {
+		System.out.println("NaverCloudController chatbot" + new Date());
+		
+		System.out.println("voiceMessage : " + voiceMessage);
+		
+		// 네이버 클라우드 불러오기
+		NaverCloud nc = new NaverCloud();
+		String chatbotMessage = nc.ChatBot(voiceMessage);
+		
+		return chatbotMessage;
+	}
+	
+	// TODO 개인정보
+	// 개인정보 보기
+	@GetMapping("/user/getUserInfo")
+	public MypageCustomerDto getUserInfo() {
+		System.out.println("MypageController getUserInfo " + new Date());
+		
+		return service.getUserInfo();
+	}
+	
+	// 개인정보 수정
+	@PostMapping("/user/updateUserInfo")
+	public void updateUserInfo(MypageCustomerDto dto) {
+		System.out.println("MypageController updateUserInfo " + new Date());
+		
+		service.updateUserInfo(dto);
+	}
+	
+	// TODO 포인트 및 쿠폰
+	// 내 포인트 적립/차감 하기
+	@GetMapping("/user/updatePoint")
+	public void updatePoint(MypageCustomerDto dto) {
+		System.out.println("MypageController updatePoint " + new Date());
+		
+		service.updatePoint(dto);
+	}
+
+	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까);
+	@PostMapping("/user/getCoupon")
+	public List<MypageCouponDto> getCoupon(MypageCouponDto dto) {
+		System.out.println("MypageController getCoupon " + new Date());
+		
+		return service.getCoupon(dto);
+	}
+	
+	// TODO 1:1 문의 게시판
+
+	// 내 문의 작성하기
+	@PostMapping("/user/addCcbList")
+	public int addCcbList(CcbDto dto) {
+		System.out.println("MypageController addCcbList " + new Date());
+		
+		return service.addCcbList(dto);
+	}
+	// 내 문의 모아보기
+	@GetMapping("/user/getMyCcbList")
+	public List<CcbDto> getMyCcbList(CcbDto dto){
+		System.out.println("MypageController getMyCcbList " + new Date());
+		
+		return service.getMyCcbList(dto);
+	}
+	
+	/* 여기서 부터는 합칠것 */
 	// TODO 리뷰
 	// 리뷰 생성
 	@PostMapping("/review/addReview")
@@ -111,40 +179,6 @@ public class MypageController {
 		
 		// 삭제 진행이 완료된 장바구니 목록 불러와서 리턴		
 	    return service.getCart();
-	}
-	
-	// TODO 개인정보
-	// 개인정보 보기
-	@GetMapping("/user/getUserInfo")
-	public MypageCustomerDto getUserInfo() {
-		System.out.println("MypageController getUserInfo " + new Date());
-		
-		return service.getUserInfo();
-	}
-	
-	// 개인정보 수정
-	@PostMapping("/user/updateUserInfo")
-	public void updateUserInfo(MypageCustomerDto dto) {
-		System.out.println("MypageController updateUserInfo " + new Date());
-		
-		service.updateUserInfo(dto);
-	}
-	
-	// TODO 포인트 및 쿠폰
-	// 내 포인트 적립/차감 하기
-	@GetMapping("/user/updatePoint")
-	public void updatePoint(MypageCustomerDto dto) {
-		System.out.println("MypageController updatePoint " + new Date());
-		
-		service.updatePoint(dto);
-	}
-
-	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까);
-	@PostMapping("/user/getCoupon")
-	public List<MypageCouponDto> getCoupon(MypageCouponDto dto) {
-		System.out.println("MypageController getCoupon " + new Date());
-		
-		return service.getCoupon(dto);
 	}
 	
 }

@@ -5,14 +5,13 @@ public class ProductDto {
 	private int id;
 	private String name;
 	private int price;
-	private String detail;
 	private String url;
 	
 	public ProductDto() {
 		
 	}
 
-	public ProductDto(int id, String name, int price, String detail, String url) {
+	public ProductDto(int id, String name, int price, String url) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -56,8 +55,7 @@ public class ProductDto {
 	public String toString() {
 		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", url=" + url + "]";
 	}
-	
-	
-	
+
+
 	
 }

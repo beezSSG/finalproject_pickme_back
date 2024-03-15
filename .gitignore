@@ -32,3 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 /.metadata/
+
+### Properties
+/src/main/resources/api.properties

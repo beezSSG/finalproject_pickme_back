@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.pickme.beeze.ceo.dao.CeoDao">
+
+	<!-- 글의 목록 -->
+	<select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
+					resultType="com.pickme.beeze.ceo.dto.PurchaseDto">
+	select o.id, p.url, p.name, o.quantity, o.po_yn as `poYn`
+	  from pickme.purchase_order o 
+      join pickme.product p on p.id = o.product_id
+		<if test="choice != null and choice != '' and search != null and search != ''">
+			<if test="choice == 'name'">
+				where name like concat('%', #{search}, '%') and del=0
+			</if>
+		</if>
+		order by wdate
+		limit ${(pageNumber * 10)}, 10		<!-- 페이지 당 글 개수  -->		
+	</select>
+	
+	<!-- 글의 총수 -->
+	
+	<select id="getallceo" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
+		            resultType="java.lang.Integer">
+		   select count(*) 
+		   from pickme.purchase_order o
+			<if test="choice != null and choice != '' and search != null and search != ''">
+			<if test="choice == 'name'">
+				where name like concat('%', #{search}, '%') and del=0
+			</if>
+		</if>
+	</select>
+	
+	<!-- 발주하기(신청가능품목) -->
+	
+	<insert id="powrite" parameterType="com.pickme.beeze.ceo.dto.PurchaseDto">
+		insert into pickme.purchase_order (product_id, p.name, quantity, p.price, po_yn)
+		values(0,0,0,0)
+		<if test="choice == 'name'">
+			where name like concat('%', #{search}, '%') and del=0
+		</if>
+	</insert>
+	
+	<!-- 발주완료 후 리스트로 뿌려주기-->
+	<select id="powriteAf" parameterType="com.pickme.beeze.ceo.dto.PurchaseDto"
+					resultType="com.pickme.beeze.ceo.dto.PurchaseDto">
+		select 
+	</select>
+	
+
+</mapper>

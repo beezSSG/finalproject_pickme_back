@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dao.MypageDao;
 import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
@@ -78,4 +79,16 @@ public class MypageService {
 	public List<MypageCouponDto> getCoupon(MypageCouponDto dto) {
 		return dao.getCoupon(dto);
 	}
+	
+	/* TODO 1:1 문의 게시판 */
+	// 내 문의 작성하기
+	public int addCcbList(CcbDto dto) {
+		return dao.addCcbList(dto);
+	}
+	// 내 문의 모아보기
+	public List<CcbDto> getMyCcbList(CcbDto dto){
+		return dao.getMyCcbList(dto);
+	}
+	
+	
 }

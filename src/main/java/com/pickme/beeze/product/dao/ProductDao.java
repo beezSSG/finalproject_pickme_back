@@ -21,6 +21,9 @@ public interface ProductDao {
 	// 상품 상세보기
 	ProductDto productdetail(int id);
 	
+	// 신제품 등록(관리자)
+	int newproductinsert(ProductDto dto);
+	
 	
 
 }

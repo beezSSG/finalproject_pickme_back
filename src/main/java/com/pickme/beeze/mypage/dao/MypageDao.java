@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
@@ -50,6 +51,12 @@ public interface MypageDao {
 	void updatePoint(MypageCustomerDto dto);
 	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까)
 	List<MypageCouponDto> getCoupon(MypageCouponDto dto);
+	
+	/* TODO 1:1 문의 게시판 */
+	// 내 문의 작성하기
+	int addCcbList(CcbDto dto);
+	// 내 문의 모아보기
+	List<CcbDto> getMyCcbList(CcbDto dto);
 
 	
 }
