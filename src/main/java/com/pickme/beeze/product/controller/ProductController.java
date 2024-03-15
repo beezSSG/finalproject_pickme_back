@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
+import com.pickme.beeze.product.dto.ProductReview;
 import com.pickme.beeze.product.service.ProductService;
 
 @RestController
@@ -68,6 +69,15 @@ public class ProductController {
 		else {
 			return "NO";
 		}
+	}
+	
+	
+	// 후기 목록
+	@GetMapping("/productReviewList")
+	public List<ProductReview> productReviewtList(int id) {
+		System.out.println("ProductController productReviewtList " + new Date());
+	
+		return service.productReviewtList(id);
 	}
 	
 
