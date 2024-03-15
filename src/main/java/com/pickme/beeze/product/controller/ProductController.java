@@ -49,11 +49,9 @@ public class ProductController {
 	// 상품 상세보기
 	@GetMapping("/productdetail")
 	public ProductDto productdetail(int id) {
-		System.out.println("ProductController productdetail" + new Date());
+		System.out.println("ProductController productdetail" + new Date());		
 		
-		ProductDto dto = service.productdetail(id);
-		
-		return dto;
+		return service.productdetail(id);
 	}
 	
 	

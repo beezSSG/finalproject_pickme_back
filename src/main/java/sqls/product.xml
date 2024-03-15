@@ -30,7 +30,7 @@
  
   
  <!-- 상품 상세보기 -->
- <select id = "productdetail" parameterType="Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
+ <select id = "productdetail" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
  	select id, name, price, url
  	from product
  	where id=#{id}
