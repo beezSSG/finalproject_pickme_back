@@ -11,6 +11,7 @@ import com.pickme.beeze.mypage.dao.MypageDao;
 import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
+import com.pickme.beeze.mypage.dto.MypageOrderDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -34,31 +35,6 @@ public class MypageService {
 	public int delSave(MypageSaveDto dto) {
 		return dao.delSave(dto);
 	}
-	
-	/* TODO 리뷰 */
-	// 리뷰작성
-	public int addReview(MypageReviewDto dto) {
-		return dao.addReview(dto);
-	}
-	// 리뷰목록 불러오기
-	public List<MypageReviewDto> getReview(MypageReviewDto dto) {
-		return dao.getReview(dto);
-	}
-	// 리뷰삭제
-	public int delReview(MypageReviewDto dto) {
-		return dao.delReview(dto);
-	}
-	
-	/* TODO 장바구니 */
-	// 장바구니 목록 불러오기
-	public List<MypageCartDto> getCart(){
-		return dao.getCart();
-	}
-	// 장바구니 물품 삭제
-	public void delCart(MypageCartDto dto) {
-		dao.delCart(dto);
-	}
-	
 	
 	/* TODO 개인정보 */
 	// 개인정보 보기
@@ -90,5 +66,49 @@ public class MypageService {
 		return dao.getMyCcbList(dto);
 	}
 	
+	/* TODO 주문내역 */
+	// 내 주문 내역 불러오기
+	public List<MypageOrderDto> getMyOrderList(MypageOrderDto dto) {
+		List<MypageOrderDto> list = dao.getMyOrderList(dto);
+	
+		// list의 각 dto에 정보를 전부 주입하는 과정
+		for (MypageOrderDto mydto : list) {
+			dao.getMYOrderProduct(mydto);
+			dao.getMyOrderStore(mydto);
+		}
+		
+		return list;		
+	}
+	// 내 주문 내역 취소
+	public void cancelMyOrder(MypageOrderDto dto) {
+		dao.cancelMyOrder(dto);
+	}
+	
+	
+	
+	// 여기서 부터 변경
+	/* TODO 리뷰 */
+	// 리뷰작성
+	public int addReview(MypageReviewDto dto) {
+		return dao.addReview(dto);
+	}
+	// 리뷰목록 불러오기
+	public List<MypageReviewDto> getReview(MypageReviewDto dto) {
+		return dao.getReview(dto);
+	}
+	// 리뷰삭제
+	public int delReview(MypageReviewDto dto) {
+		return dao.delReview(dto);
+	}
+	
+	/* TODO 장바구니 */
+	// 장바구니 목록 불러오기
+	public List<MypageCartDto> getCart(){
+		return dao.getCart();
+	}
+	// 장바구니 물품 삭제
+	public void delCart(MypageCartDto dto) {
+		dao.delCart(dto);
+	}
 	
 }
