@@ -89,5 +89,21 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	 where user_id = #{id}
 </select>
 
+	<!-- 1:1문의게시판 보기 -->
+<!-- 1:1 문의 게시글 작성하기   -->
+<!-- answer_yn 0: 답변완료 전, 1:답변완료 후 -->
+<insert id="addCcbList" parameterType="com.pickme.beeze.manager.dto.CcbDto">
+	insert into ccb(id, category, customer_id, title, content, create_at, answer_yn)
+	values (#{category}, #{customerId}, #{title}, #{content}, #{createAt}, 0)
+</insert>
+
+<!-- 내 1:1 문의 게시판 불러오기 -->
+<select id="getMyCcbList" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbDto">
+	SELECT id, category, title, content, create_at as `createAt`, answer_yn as `answerYn`
+	  FORM ccb
+	 WHERE customer_id = #{custoemerId}
+</select>
+
+
 
 </mapper>
