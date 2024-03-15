@@ -23,6 +23,10 @@ public class EventService {
 	public List<EventDto> eventlist(EventDto dto) {
 		return dao.eventlist(dto);
 	}
+	// 이벤트 상세보기
+	public EventDto eventdetail(int id) {
+		return dao.eventdetail(id);
+	}
 	// 이벤트 생성(이미지 url 형식으로 저장)
 	public boolean eventcreate(EventDto dto) {
 		int count = dao.eventcreate(dto);

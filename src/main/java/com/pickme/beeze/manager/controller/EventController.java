@@ -41,6 +41,17 @@ public class EventController {
     	return eventlist;
     }
     
+    // 이벤트 상세보기
+    @PostMapping("/eventdetail")
+    public EventDto eventdetail(int id) {
+    	
+    	System.out.println("EventController eventdetail " + new Date());
+    	
+    	EventDto dto = service.eventdetail(id);
+    	
+    	return dto;
+    }
+    
     // 이벤트 생성
     @PostMapping("/eventcreate")
     public String eventcreate(EventDto dto) {

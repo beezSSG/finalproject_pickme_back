@@ -62,10 +62,6 @@ public class CustomerController {
 	    return "YES";
 	}
 
-
-	
-	
-	
 	
 	// 택배 신청
 	
