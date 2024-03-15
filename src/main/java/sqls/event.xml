@@ -9,6 +9,11 @@
  	from promotion_post
  </select>
  
+ <select id="eventdetail" parameterType="com.pickme.beeze.manager.dto.EventDto" resultType="com.pickme.beeze.manager.dto.EventDto">
+ 	select id, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
+ 	from promotion_post
+ 	where id=#{id}
+ </select>
    
 <insert id="eventcreate" parameterType="com.pickme.beeze.manager.dto.EventDto">
     insert into promotion_post(banner_photo, detail_photo, start_date, end_date, promotion_yn)
