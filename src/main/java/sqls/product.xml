@@ -36,14 +36,20 @@
  	where id=#{id}
  </select>
  
- <!-- 신제품 등록 -->
- <insert id="newproductinsert" parameterType="com.pickme.beeze.product.dto.ProductDto">
- 	insert into product(name,price,url)
- 	values (#{name}, #{price}, #{url})
- </insert>
+<!-- 신제품 등록 -->
+
+<insert id="newproductinsert" parameterType="com.pickme.beeze.product.dto.ProductDto">
+	insert into product(name,price,url)
+	values (#{name}, #{price}, #{url})
+</insert>
   
- 
- 
- 
+  
+<!-- 후기 목록 -->
+ <select id="productReviewList" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductReview">
+	select id, product_id as `productId`, customer_id as `customerId`, content, rating
+	from review 
+	where product_id=#{id}
+	order by id desc;
+</select>
  </mapper>
  
