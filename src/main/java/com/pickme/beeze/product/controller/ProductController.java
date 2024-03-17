@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pickme.beeze.manager.service.CcbService;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
 import com.pickme.beeze.product.service.ProductService;
@@ -67,50 +68,50 @@ public class ProductController {
 	
 	
 	// 신제품 등록
+
+
 	@PostMapping("/newproductinsert")
 	public String pdsupload(ProductDto dto, 
-							@RequestParam(value = "uploadfile",required = false)
-							MultipartFile uploadfile,
-							HttpServletRequest request) {
-		
-		System.out.println("ProductController newproductinsert " + new Date());
-		
-		// 파일업로드 경로
-		String path = request.getServletContext().getRealPath("/upload");
-				
+	                        @RequestParam(value = "uploadfile", required = false) MultipartFile uploadfile,
+	                        HttpServletRequest request) {
+
+	    System.out.println("ProductController newproductinsert " + new Date());
+	    
+	    // 파일 업로드 경로를 static 폴더로 변경
+	    String staticPath = "src/main/resources/static/upload";
+	    
+	    // 파일명을 변경하여 파일을 static 폴더에 저장
 	    String filename = uploadfile.getOriginalFilename();
-				
-		// 파일명을 변경!
-		String newfilename = getNewFileName(filename);
-				
-		String filepath = path + "/" + newfilename;
-		System.out.println(filepath);
-				
-		File file = new File(filepath);
-				
-		try {
-			BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(file));
-								
-			os.write(uploadfile.getBytes());	// 실제 업로드 되는 부분
-			os.close();
-					
-		} catch (FileNotFoundException e) {			
-			e.printStackTrace();
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		
-		dto.setUrl(filepath);
-		boolean isS = service.newproductinsert(dto);
-		
-		if(isS) {
-			return "YES";
-		}
-		else {
-			return "NO";
-		}
-				
+	    String newfilename = getNewFileName(filename);
+	    String filepath = staticPath + "/" + newfilename;
+	    System.out.println(filepath);
+	    
+	    // 파일 저장
+	    try {
+	        BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(filepath));
+	        os.write(uploadfile.getBytes()); // 파일 업로드
+	        os.close();
+	    } catch (FileNotFoundException e) {            
+	        e.printStackTrace();
+	    } catch (IOException e) {            
+	        e.printStackTrace();
+	    }
+	    
+	    // 데이터베이스에 전체 URL 저장
+	    String baseUrl = request.getRequestURL().toString().replace(request.getRequestURI(), request.getContextPath());
+	    String fullUrl = baseUrl + "/upload/" + newfilename; // 전체 URL 생성
+	    dto.setUrl(fullUrl);
+	    boolean isS = service.newproductinsert(dto);
+	    
+	    if (isS) {
+	        return "YES";
+	    } else {
+	        return "NO";
+	    }
 	}
+
+
+
 	private static String getNewFileName(String filename) {
 		String newfilename = "";
 		String fpost = "";	// .jpg .txt 등 확장자명을 끄집어냄
