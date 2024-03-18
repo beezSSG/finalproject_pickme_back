@@ -72,7 +72,7 @@ public class ProductController {
 
 
 	@PostMapping("/newproductinsert")
-	public String pdsupload(ProductDto dto, 
+	public String newproductinsert(ProductDto dto, 
 	                        @RequestParam(value = "uploadfile", required = false) MultipartFile uploadfile,
 	                        HttpServletRequest request) {
 
@@ -110,8 +110,6 @@ public class ProductController {
 	        return "NO";
 	    }
 	}
-
-
 
 	private static String getNewFileName(String filename) {
 		String newfilename = "";
