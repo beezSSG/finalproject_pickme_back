@@ -2,16 +2,19 @@ package com.pickme.beeze.product.dto;
 
 public class ProductParam {
 
+	private String choice;
 	private String search;
 	private int pageNumber;
 	
 	public ProductParam() {
 	}
 
-	public ProductParam(String search, int pageNumber) {
-		super();
-		this.search = search;
-		this.pageNumber = pageNumber;
+	public String getChoice() {
+		return choice;
+	}
+
+	public void setChoice(String choice) {
+		this.choice = choice;
 	}
 
 	public String getSearch() {
@@ -32,8 +35,9 @@ public class ProductParam {
 
 	@Override
 	public String toString() {
-		return "ProductParam [search=" + search + ", pageNumber=" + pageNumber + "]";
+		return "ProductParam [choice=" + choice + ", search=" + search + ", pageNumber=" + pageNumber + "]";
 	}
+
 	
 	
 
