@@ -6,17 +6,19 @@ public class ProductDto {
 	private String name;
 	private int price;
 	private String url;
+	private int productRating;
 	
 	public ProductDto() {
 		
 	}
 
-	public ProductDto(int id, String name, int price, String url) {
+	public ProductDto(int id, String name, int price, String url, int productRating) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.url = url;
+		this.productRating = productRating;
 	}
 
 	public int getId() {
@@ -51,11 +53,20 @@ public class ProductDto {
 		this.url = url;
 	}
 
-	@Override
-	public String toString() {
-		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", url=" + url + "]";
+	public int getProductRating() {
+		return productRating;
 	}
 
+	public void setProductRating(int productRating) {
+		this.productRating = productRating;
+	}
 
+	@Override
+	public String toString() {
+		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", url=" + url + ", productRating="
+				+ productRating + "]";
+	}
 	
+	
+
 }
