@@ -39,8 +39,7 @@ public class ProductController {
 	public Map<String, Object> bbslist(ProductParam param){
 		System.out.println("ProductController productlist " + new Date());
 		System.out.println(param.toString());
-		
-		
+				
 		// 글목록
 		List<ProductDto> productlist = service.productlist(param);
 		

@@ -25,6 +25,7 @@ public interface ProductDao {
 	// 신제품 등록(관리자)
 	int newproductinsert(ProductDto dto);
 
+	
 	// 후기 목록
 	List<ProductReview> productReviewList(int id);
 	
