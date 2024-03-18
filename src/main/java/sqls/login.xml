@@ -44,22 +44,23 @@
 	  FROM ceo_info
 	 WHERE email=#{email} and pw=#{pw}
 </select>
-<!-- 로그인 전 정보 확인용-->
+
+	<!-- 로그인 전 정보 확인용-->
 <!-- 고객 정보 조회 -->
 <select id="whoCustomer" parameterType="LoginDto" resultType="LoginDto">
-	SELECT email, name, address, phone, point, grade, rdate
+	SELECT email, pw, name, address, phone, point, grade, rdate
 	  FROM customer_info
 	 WHERE email=#{email}
 </select>
 
 <!-- 점주 정보 조회 -->
 <select id="whoCeo" parameterType="LoginDto" resultType="LoginDto">
-	SELECT email, name, address, phone
+	SELECT email, pw, name, address, phone
 	  FROM ceo_info
 	 WHERE email=#{email}
 </select>
 
-<!-- 로그인 후 토큰사용시 -->
+	<!-- 로그인 후 토큰사용시 -->
 <!-- 고객 정보 조회 -->
 <select id="searchCustomerInfo" parameterType="Integer" resultType="LoginDto">
 	SELECT email, name, address, phone, point, grade, rdate
