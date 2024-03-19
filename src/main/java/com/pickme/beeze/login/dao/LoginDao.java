@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.login.dto.LoginDto;
-import com.pickme.beeze.login.dto.UserDto;
 
 @Mapper
 @Repository
@@ -18,8 +17,9 @@ public interface LoginDao {
 	
 	LoginDto selectCustomerInfo(LoginDto dto);
 	LoginDto selectCeoInfo(LoginDto dto);
-	LoginDto whoCustomer(LoginDto dto);
-	LoginDto whoCeo(LoginDto dto);
+	
+	LoginDto whoCustomer(String email);
+	LoginDto whoCeo(String email);
 	
 	LoginDto searchCustomerInfo(int id);
 	LoginDto searchCeoInfo(int id);
