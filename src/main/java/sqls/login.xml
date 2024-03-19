@@ -60,17 +60,30 @@
 	 WHERE email=#{email} and pw=#{pw}
 </select>
 
+	<!-- 아이디/비밀번호 찾기 -->
+<!-- 아이디찾기 -->
+<select id="findCustomerEmail" parameterType="LoginDto" resultType="String">
+	SELECT email
+	  FROM customer_info
+	 WHERE name=#{name} and phone=#{phone}
+</select>
+<select id="findCeoEmail" parameterType="LoginDto" resultType="String">
+	SELECT email
+	  FROM ceo_info
+	 WHERE name=#{name} and phone=#{phone}
+</select>
+
 	<!-- 로그인 후 토큰사용시 -->
 <!-- 고객 정보 조회 -->
 <select id="searchCustomerInfo" parameterType="Integer" resultType="LoginDto">
-	SELECT email, name, address, phone, point, grade, rdate
+	SELECT id, email, name, address, phone, point, grade, rdate
 	  FROM customer_info
 	 WHERE id=#{id}
 </select>
 
 <!-- 점주 정보 조회 -->
 <select id="searchCeoInfo" parameterType="Integer" resultType="LoginDto">
-	SELECT email, name, address, phone
+	SELECT id, email, name, address, phone
 	  FROM ceo_info
 	 WHERE id=#{id}
 </select>
