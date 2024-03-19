@@ -56,19 +56,18 @@ public class SecurityConfig{
 		return new BCryptPasswordEncoder();  
 	}
     
-    // 시큐리티설정, jwt 설정 (로그인 성공시 토큰 값이 파일로 저장)
+    // 시큐리티설정, jwt 설정
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http, CorsFilter corsFilter) throws Exception {
     	System.out.println("filterChain(SecurityConfig) " + new Date());
      
-    	//#1. 요청에 대한 권한설정. (permit:허용, authenticate:증명)
+    	//#1. 요청에 대한 권한설정. (permit:허용, authenticate:증명[토큰만 있으면 가능], hasRole("내용")[해당권한가능])
         http.csrf(AbstractHttpConfigurer::disable)
         	.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
         	.authorizeHttpRequests((authorize) -> authorize
         	.requestMatchers("api/v1/mypage/save/getSave").authenticated()
         	.requestMatchers("api/v1/user/test").authenticated()
         	.anyRequest().permitAll()
-//			.antMatchers("/api/v1/ceo/**").hasRole("ceo") // 점주 권한
 //        	.requestMatchers("/test", "/test1").authenticated()	// 이렇게 해도 된다        	
         );
          	

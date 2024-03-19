@@ -118,6 +118,13 @@
 			<version>2.3.1</version>
 		</dependency>
 		
+		<!-- Mail 서비스 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		
 	</dependencies>
 
 	<build>
