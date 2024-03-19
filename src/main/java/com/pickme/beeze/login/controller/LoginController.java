@@ -52,6 +52,30 @@ public class LoginController {
 		
 		return service.addCeoInfo(dto);	// 0: 회원가입실패 / 1: 회원가입성공
 	}
+	
+	// 점주 회원가입시 OCR
+	@PostMapping("/ocr")
+	public String ocr(@RequestParam("uploadfile")MultipartFile uploadfile,
+							HttpServletRequest re) throws Exception {
+		System.out.println("NaverCloudController ocr " + new Date());
+		
+		String uploadPath = re.getServletContext().getRealPath("/upload");
+		
+		// 파일명을 취득
+		String filename = uploadfile.getOriginalFilename();
+		String filepath = uploadPath + File.separator + filename;	// uploadPath + / + filename
+		
+		System.out.println(filepath);
+		
+		BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+		os.write(uploadfile.getBytes());
+		os.close();
+		
+		// Naver cloud
+		NaverCloud nc = new NaverCloud();
+		String response = nc.OcrProc(filepath);
+		return response;
+	}
     
     // 토큰 적용 로그인
     @PostMapping("/login")
@@ -88,30 +112,16 @@ public class LoginController {
     	
     	return "성공";
     }
+    
+    // 아이디 찾기
+    @GetMapping("/findEmail")
+    public String findEmail(LoginDto dto) {
+    	System.out.println("LoginController findEmail " + new Date());
+    	
+    	return service.findEmail(dto);
+    }
 	
-	// OCR
-	@PostMapping("/ocr")
-	public String ocr(@RequestParam("uploadfile")MultipartFile uploadfile,
-							HttpServletRequest re) throws Exception {
-		System.out.println("NaverCloudController ocr " + new Date());
-		
-		String uploadPath = re.getServletContext().getRealPath("/upload");
-		
-		// 파일명을 취득
-		String filename = uploadfile.getOriginalFilename();
-		String filepath = uploadPath + File.separator + filename;	// uploadPath + / + filename
-		
-		System.out.println(filepath);
-		
-		BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-		os.write(uploadfile.getBytes());
-		os.close();
-		
-		// Naver cloud
-		NaverCloud nc = new NaverCloud();
-		String response = nc.OcrProc(filepath);
-		return response;
-	}
+	// 비밀번호 찾기
 	
 	
 	// 고객 및 점주 로그인
