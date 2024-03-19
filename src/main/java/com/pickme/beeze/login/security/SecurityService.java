@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,26 +28,30 @@ public class SecurityService implements UserDetailsService {
 	@Autowired
 	LoginDao dao;
 	
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		System.out.println("loadUserByUsername(SecurityService) " + new Date());
 		
 		// DB 확인작업
-		List<SimpleGrantedAuthority> list = new ArrayList<>();
-		LoginDto memberDto = new LoginDto();
-		memberDto.setEmail(email);
+		List<SimpleGrantedAuthority> list = new ArrayList<>();	// 권한 부여
 		
 		// 고객일 경우 세팅
-		LoginDto member = dao.whoCustomer(memberDto);
-		System.out.println(member.toString());
+		LoginDto member = dao.whoCustomer(email);
+//		System.out.println(member.toString());
 		member.setRole("customer");
 		
 		// 점주일 경우 세팅
 		if (member.getRdate() == null || member.getRdate().equals("")) {
-			member = dao.whoCeo(memberDto);
+			member = dao.whoCeo(email);
 			member.setRole("ceo");
 		}
-		System.out.println("LoginDto :: " + member.toString() );
+		
+		// 관리자일 경우 세팅
+		
+		member.setPw(encoder.encode(member.getPw()));
+//		System.out.println("LoginDto :: " + member.toString() );
 		
 		list.add(new SimpleGrantedAuthority(member.getRole()));
 		return new org.springframework.security.core.userdetails.User(member.getEmail(), member.getPw(), list);

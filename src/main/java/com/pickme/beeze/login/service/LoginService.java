@@ -34,11 +34,12 @@ public class LoginService {
 	public LoginDto selectCeoInfo(LoginDto dto) {
 		return dao.selectCeoInfo(dto);
 	}
-	public LoginDto whoCustomer(LoginDto dto) {
-		return dao.whoCustomer(dto);
+	
+	public LoginDto whoCustomer(String email) {
+		return dao.whoCustomer(email);
 	}
-	public LoginDto whoCeo(LoginDto dto) {
-		return dao.whoCeo(dto);
+	public LoginDto whoCeo(String email) {
+		return dao.whoCeo(email);
 	}
 	
 	public LoginDto searchCustomerInfo(int id) {
@@ -47,27 +48,5 @@ public class LoginService {
 	public LoginDto searchCeoInfo(int id) {
 		return dao.searchCeoInfo(id);
 	}
-	
-	
-	
-	/*
-	// 토큰 실험용
-	public UserDto selectUserByUserId(String user_id) {
-		return Dao.selectUserByUserId(user_id);
-	}
-
-	public UserDto selectUserAndBranchToInfo(String user_id) {
-		return Dao.selectUserAndBranchToInfo(user_id);
-	}
-
-	public int selectCountToFindUserExist(UserDto dto) {
-		return Dao.selectCountToFindUserExist(dto);
-	}
-
-	public int updateUserByUserIdToChgPW(UserDto dto) {
-		return Dao.updateUserByUserIdToChgPW(dto);
-	}
-	*/
-
 
 }
