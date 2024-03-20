@@ -34,4 +34,5 @@ build/
 /.metadata/
 
 ### Properties
-/src/main/resources/api.properties
+/src/main/resources/*.properties
+/src/main/resources/*.yml
