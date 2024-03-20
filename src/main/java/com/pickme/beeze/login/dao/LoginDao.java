@@ -32,4 +32,5 @@ public interface LoginDao {
 	/* 토큰값을 통한 회원확인 */
 	LoginDto searchCustomerInfo(int id);
 	LoginDto searchCeoInfo(int id);
+
 }

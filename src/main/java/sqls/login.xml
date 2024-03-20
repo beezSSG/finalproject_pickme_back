@@ -88,5 +88,10 @@
 	 WHERE id=#{id}
 </select>
 
+<select id="findByEmail" parameterType="String" resultType="CustomerDto">
+	SELECT *
+	FROM customer_info
+	where email=#{email}
+</select>
 
 </mapper>

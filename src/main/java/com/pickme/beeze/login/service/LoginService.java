@@ -11,6 +11,7 @@ import com.pickme.beeze.login.dto.LoginDto;
 @Transactional
 public class LoginService {
     
+
 	@Autowired
 	private LoginDao dao;
 
@@ -62,5 +63,4 @@ public class LoginService {
 	public LoginDto searchCeoInfo(int id) {
 		return dao.searchCeoInfo(id);
 	}
-
 }
