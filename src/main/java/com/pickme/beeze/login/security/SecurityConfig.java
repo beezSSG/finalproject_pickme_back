@@ -15,13 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.savedrequest.CookieRequestCache;
 import org.springframework.web.filter.CorsFilter;
 
 import com.pickme.beeze.login.jwt.JwtTokenFilter;
 import com.pickme.beeze.login.jwt.JwtTokenProvider;
-
-import lombok.RequiredArgsConstructor;
 
 //@RequiredArgsConstructor	// @Autowired 사용 안해도됨
 @EnableWebSecurity
@@ -43,7 +40,7 @@ public class SecurityConfig{
 		this.provide = provide;		
 	}
     
-	@Bean
+	@Bean // api요청시 보안관련 빈 설정
     AuthenticationManager authenticationManager(
     AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

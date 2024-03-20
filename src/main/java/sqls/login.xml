@@ -72,6 +72,18 @@
 	  FROM ceo_info
 	 WHERE name=#{name} and phone=#{phone}
 </select>
+<!-- 비밀번호 변경 -->
+<update id="changeCustomerPw" parameterType="LoginDto">
+	UPDATE customer_info
+	   SET pw=#{pw}
+	 WHERE email=#{email}
+</update>
+<update id="changeCeoPw" parameterType="LoginDto">
+	UPDATE ceo_info
+	   SET pw=#{pw}
+	 WHERE email=#{email}
+</update>
+
 
 	<!-- 로그인 후 토큰사용시 -->
 <!-- 고객 정보 조회 -->

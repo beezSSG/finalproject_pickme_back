@@ -25,9 +25,13 @@ public interface LoginDao {
 	LoginDto selectCustomerInfo(LoginDto dto);
 	LoginDto selectCeoInfo(LoginDto dto);
 	
-	/* 아이디/비밀번호 찾기 */
+	/* 아이디 찾기 */
 	String findCustomerEmail(LoginDto dto);
 	String findCeoEmail(LoginDto dto);
+	
+	/* 비밀번호 변경 */
+	int changeCustomerPw(LoginDto dto);
+	int changeCeoPw(LoginDto dto);
 	
 	/* 토큰값을 통한 회원확인 */
 	LoginDto searchCustomerInfo(int id);
