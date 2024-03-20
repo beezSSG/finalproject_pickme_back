@@ -90,10 +90,6 @@ public class LoginController {
 		} else {	// 점주 로그인
 			member2 = service.selectCeoInfo(dto);
 		}			// 관리자 로그인
-		
-		if (member2.getEmail() == null || member2.getEmail().equals("")) {	// 회원이 아닌경우
-			return ResponseEntity.ok("가입된 회원이 아닙니다.");
-		}
 
         // JWT 토큰 생성 및 반환
         String jwt = provider.createToken(member2);
@@ -120,41 +116,23 @@ public class LoginController {
     	
     	return service.findEmail(dto);
     }
-	
-	// 비밀번호 찾기
-	
-	
-	// 고객 및 점주 로그인
-	/*
-	@PostMapping("/login")
-	public LoginDto login(LoginDto dto) {
-		System.out.println("LoginController login " + new Date());
-		
-		LoginDto user;
-		// 확인작업
-		user = service.whoCustomer(dto);
-		
-		if (user.getRdate() != null || !user.getRdate().equals("")) {	// 고객 로그인
-			user = service.selectCustomerInfo(dto);
-		} else {	// 점주 로그인
-			user = service.selectCeoInfo(dto);
-		}
-		
-		System.out.println(user.toString());
-		return user;
-	}
-	
-    // JWT 토큰을 담을 내부 클래스를 정의
-    @Getter
-    @Setter
-    class JwtResponse {
-        private String token;
+    
+    // 이메일 발송 ( 이메일 인증 / 비밀번호 찾기 겸용 )
+    @PostMapping("/sendCodeToEmail")
+    public ResponseEntity<?> sendCodeToEmail(String email) {
+        String tempCode = service.sendCodeToEmail(email);
 
-	/* TODO 토근 적용 로그인 */
-
-        // 생성자를 통해 토큰을 초기화
-        public JwtResponse(String token) {
-            this.token = token;
-        }
+        return ResponseEntity.ok(tempCode);
     }
+
+    /*
+    // 이메일 확인후 비밀번호 변경 ->
+    @GetMapping("/emails/verifications")
+    public ResponseEntity verificationEmail(@RequestParam("email") @Valid @CustomEmail String email,
+                                            @RequestParam("code") String authCode) {
+        EmailVerificationResult response = memberService.verifiedCode(email, authCode);
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+    }
+    */
+    
 }
