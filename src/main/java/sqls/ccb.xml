@@ -17,6 +17,12 @@
 	where id=#{id}
 </select>
 
+<select id="ccbcommentlist" parameterType="Integer" resultType="com.pickme.beeze.manager.dto.CcbaDto">
+	select id, ccb_id as `ccbId`, manager_id as `managerId`, content, create_at as `createAt`
+	from ccba
+	where ccb_id=#{ccbId} 
+</select>
+
 <insert id="ccbcommentwrite" parameterType="com.pickme.beeze.manager.dto.CcbaDto">
 	insert into ccba(ccb_id, manager_id,content, create_at)
 	values(#{ccbId}, #{managerId}, #{content}, now())

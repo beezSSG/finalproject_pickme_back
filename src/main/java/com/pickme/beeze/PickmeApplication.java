@@ -3,12 +3,25 @@ package com.pickme.beeze;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class PickmeApplication {
-
+	
 	public static void main(String[] args) {
-		SpringApplication.run(PickmeApplication.class, args);
+		new SpringApplicationBuilder(PickmeApplication.class)
+					.properties(PROPERTIES)
+					.run(args);
 	}
+	
+	private static final String PROPERTIES =
+	        "spring.config.location="
+	        +"classpath:/application.properties"
+	        +",classpath:/mail.yml"
+	        +",classpath:/key.properties";
+	
+//	public static void main(String[] args) {
+//		SpringApplication.run(PickmeApplication.class, args)
+//	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pickme.beeze.product.dao.ProductDao;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
+import com.pickme.beeze.product.dto.ProductReview;
 
 @Service
 @Transactional
@@ -29,6 +30,19 @@ public class ProductService {
 	public ProductDto productdetail(int id) {
 		return dao.productdetail(id);
 	}
+	
+	// 신제품 등록 (꽌리자)
+	public boolean newproductinsert(ProductDto dto) {
+		int count = dao.newproductinsert(dto);
+		return count>0?true:false;
+	}
+	
+	// 후기 목록
+	public List<ProductReview> productReviewtList(int id){
+		return dao.productReviewList(id);
+	}
+	
+	
 	
 
 }

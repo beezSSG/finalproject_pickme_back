@@ -5,20 +5,20 @@ public class ProductDto {
 	private int id;
 	private String name;
 	private int price;
-	private String detail;
 	private String url;
+	private int productRating;
 	
 	public ProductDto() {
 		
 	}
 
-	public ProductDto(int id, String name, int price, String detail, String url) {
+	public ProductDto(int id, String name, int price, String url, int productRating) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.detail = detail;
 		this.url = url;
+		this.productRating = productRating;
 	}
 
 	public int getId() {
@@ -45,14 +45,6 @@ public class ProductDto {
 		this.price = price;
 	}
 
-	public String getDetail() {
-		return detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}	
-
 	public String getUrl() {
 		return url;
 	}
@@ -61,13 +53,20 @@ public class ProductDto {
 		this.url = url;
 	}
 
+	public int getProductRating() {
+		return productRating;
+	}
+
+	public void setProductRating(int productRating) {
+		this.productRating = productRating;
+	}
+
 	@Override
 	public String toString() {
-		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", detail=" + detail + ", url=" + url
-				+ "]";
+		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", url=" + url + ", productRating="
+				+ productRating + "]";
 	}
 	
 	
-	
-	
+
 }

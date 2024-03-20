@@ -9,28 +9,28 @@ import com.pickme.beeze.login.dto.LoginDto;
 @Repository
 public interface LoginDao {
 
+	/* 회원가입 */
 	int addCustomerInfo(LoginDto dto);
 	int addCeoInfo(LoginDto dto);
 	
+	/* 이메일(id) 중복확인 */
 	int countCustomerInfo(String email);
 	int countCeoInfo(String email);
+
+	/* 로그인전 정보확인 */
+	LoginDto whoCustomer(String email);
+	LoginDto whoCeo(String email);
 	
+	/* 로그인 */
 	LoginDto selectCustomerInfo(LoginDto dto);
 	LoginDto selectCeoInfo(LoginDto dto);
-	LoginDto whoCustomer(LoginDto dto);
-	LoginDto whoCeo(LoginDto dto);
 	
+	/* 아이디/비밀번호 찾기 */
+	String findCustomerEmail(LoginDto dto);
+	String findCeoEmail(LoginDto dto);
+	
+	/* 토큰값을 통한 회원확인 */
 	LoginDto searchCustomerInfo(int id);
 	LoginDto searchCeoInfo(int id);
-	
-	
-	/*
-	// jwt 토큰 실험용
-	int insertUserToJoin(UserDto dto);
-	UserDto selectUserByUserId(String user_id);
-	UserDto selectUserAndBranchToInfo(String string);
-	int selectCountToFindUserExist(UserDto userDTO);
-	int updateUserByUserIdToChgPW(UserDto userDTO);
-	*/
-	
+
 }

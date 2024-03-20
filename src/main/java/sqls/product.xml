@@ -8,12 +8,31 @@
  <!-- 전체 상품 목록 -->
  <select id="productlist" parameterType="com.pickme.beeze.product.dto.ProductParam"
 				resultType="com.pickme.beeze.product.dto.ProductDto">
-	select id, name, price, url
+	select id, name, price, url, product_rating as `productRating`
  	from product
-	<if test="search != null and search != ''">
-		where name like concat('%', #{search}, '%')
+	
+	<if test="choice == 'date'">				
+		<if test="search != null and search != '' ">	
+			where name like concat('%', #{search}, '%')
+		</if>
+ 		order by id desc
 	</if>
- 	order by id desc
+	<if test="choice == 'rate'">				
+		<if test="search != null and search != '' ">	
+			where name like concat('%', #{search}, '%')
+		</if>
+ 		order by product_rating desc
+	</if>
+	<if test="choice == 'select'">
+		<if test="search != null and search != '' ">
+			where name like concat('%', #{search}, '%')
+		</if>
+		order by id desc
+	</if>
+	<if test="choice == ''">
+		order by id desc
+	</if>
+	
 	limit ${(pageNumber * 8)}, 8
 </select>
 
@@ -28,16 +47,28 @@
 	</if>
 </select>
  
-  
+ 
  <!-- 상품 상세보기 -->
- <select id = "productdetail" parameterType="Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
- 	select id, name, price, url
+ <select id = "productdetail" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
+ 	select id, name, price, url, product_rating
  	from product
  	where id=#{id}
  </select>
+ 
+<!-- 신제품 등록 -->
+
+<insert id="newproductinsert" parameterType="com.pickme.beeze.product.dto.ProductDto">
+	insert into product(name,price,url)
+	values (#{name}, #{price}, #{url})
+</insert>
+
   
- 
- 
- 
+<!-- 후기 목록 -->
+ <select id="productReviewList" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductReview">
+	select id, product_id as `productId`, customer_id as `customerId`, content, rating
+	from review 
+	where product_id=#{id}
+	order by id desc;
+</select>
  </mapper>
  

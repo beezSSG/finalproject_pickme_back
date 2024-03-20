@@ -42,36 +42,38 @@ public class CcbController {
 		return dto;
 	}
 	
+	// 댓글 불러오기
+	@GetMapping("/ccbcommentlist")
+	public List<CcbaDto> ccbcommentlist(int ccbId) {
+		System.out.println("CcbController ccbcommentlist " + new Date());
+		
+		List<CcbaDto> ccbalist = service.ccbcommentlist(ccbId);
+		
+		return ccbalist;
+	}
+	
 	// 관리자 댓글 달기
 	@GetMapping("/ccbcommentwrite")
-	public String ccbcommentwrite(CcbaDto dto) {
+	public List<CcbaDto> ccbcommentwrite(CcbaDto dto) {
 		
-		boolean isS = service.ccbcommentwrtie(dto);
-		
-		if(isS) {
-			return "YES";
-		}
-		else {
-			return "NO";
-		}
+		service.ccbcommentwrtie(dto);
+		return service.ccbcommentlist(dto.getCcbId());
+	
 	}
 	
 	// 관리자 댓글 수정
 	//@GetMapping("commentupdate")
 	// 관리자 댓글 삭제
 	@GetMapping("/ccbcommentdelete")
-	public String ccbcommentdelete(int id) {
+	public List<CcbaDto> ccbcommentdelete(CcbaDto dto) {
 		
 		System.out.println("CcbController ccbcommentdelete " + new Date());
 		
-		boolean isS = service.ccbcommentdelete(id);
+		System.out.println(dto.toString());
 		
-		if(isS) {
-			return "YES";
-		}
-		else {
-			return "NO";
-		}
+		service.ccbcommentdelete(dto.getId());
+		
+		return service.ccbcommentlist(dto.getCcbId());
 	}
 	
 }

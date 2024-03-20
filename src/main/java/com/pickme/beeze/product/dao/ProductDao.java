@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
+import com.pickme.beeze.product.dto.ProductReview;
 
 @Mapper
 @Repository
@@ -21,6 +22,12 @@ public interface ProductDao {
 	// 상품 상세보기
 	ProductDto productdetail(int id);
 	
+	// 신제품 등록(관리자)
+	int newproductinsert(ProductDto dto);
+
+	
+	// 후기 목록
+	List<ProductReview> productReviewList(int id);
 	
 
 }

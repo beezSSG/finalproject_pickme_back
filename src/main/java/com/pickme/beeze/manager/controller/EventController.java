@@ -41,21 +41,86 @@ public class EventController {
     	return eventlist;
     }
     
-    // 이벤트 생성
-    @PostMapping("/eventcreate")
-    public String eventcreate(EventDto dto) {
-   	
-    	System.out.println("EventController evencreate " + new Date());
+    // 이벤트 상세보기
+    @PostMapping("/eventdetail")
+    public EventDto eventdetail(int id) {
     	
-    	boolean isS = service.eventcreate(dto);
+    	System.out.println("EventController eventdetail " + new Date());
     	
-    	if(isS) {
-    		return "YES";
-    	}
-    	else {
-    		return "NO";
-    	}
+    	EventDto dto = service.eventdetail(id);
+    	
+    	return dto;
     }
+    
+    // 이벤트 생성
+
+	@PostMapping("/eventcreate")
+	public String eventcreate(EventDto dto, 
+	                        @RequestParam(value = "uploadfile1", required = false) MultipartFile uploadfile1,
+	                        @RequestParam(value = "uploadfile2", required = false) MultipartFile uploadfile2,
+	                        HttpServletRequest request) {
+	
+	    System.out.println("ProductController newproductinsert " + new Date());
+	    
+	    // 파일 업로드 경로를 static 폴더로 변경
+	    String staticPath = "src/main/resources/static/upload";
+	    
+	    // 파일명을 변경하여 파일을 static 폴더에 저장
+	    String filename1 = uploadfile1.getOriginalFilename();
+	    String newfilename1 = getNewFileName(filename1);
+	    String filepath1 = staticPath + "/" + newfilename1;
+	    System.out.println(filepath1);
+	    
+	    String filename2 = uploadfile2.getOriginalFilename();
+	    String newfilename2 = getNewFileName(filename2);
+	    String filepath2 = staticPath + "/" + newfilename2;
+	    System.out.println(filepath2);
+	    
+	    // 파일 저장
+	    try {
+	        BufferedOutputStream os1 = new BufferedOutputStream(new FileOutputStream(filepath1));
+	        os1.write(uploadfile1.getBytes()); // 파일 업로드
+	        os1.close();
+	        
+	        BufferedOutputStream os2 = new BufferedOutputStream(new FileOutputStream(filepath2));
+	        os2.write(uploadfile2.getBytes()); // 파일 업로드
+	        os2.close();
+	    } catch (FileNotFoundException e) {            
+	        e.printStackTrace();
+	    } catch (IOException e) {            
+	        e.printStackTrace();
+	    }
+	    
+	    // 데이터베이스에 전체 URL 저장
+	    String baseUrl = request.getRequestURL().toString().replace(request.getRequestURI(), request.getContextPath());
+	    String fullUrl1 = baseUrl + "/upload/" + newfilename1; // 전체 URL 생성
+	    dto.setBannerPhoto(fullUrl1);
+	    
+	    String fullUrl2 = baseUrl + "/upload/" + newfilename2; // 전체 URL 생성
+	    dto.setDetailPhoto(fullUrl2);
+	    
+	    boolean isS = service.eventcreate(dto);
+	    
+	    if (isS) {
+	        return "YES";
+	    } else {
+	        return "NO";
+	    }
+	}
+
+	private static String getNewFileName(String filename) {
+		String newfilename = "";
+		String fpost = "";	// .jpg .txt 등 확장자명을 끄집어냄
+		
+		if(filename.indexOf('.') >= 0) {	// 확장자명이 있음
+			fpost = filename.substring(filename.indexOf('.'));	// .txt
+			newfilename = new Date().getTime() + fpost;	// 43534534.txt
+		}else {
+			newfilename = new Date().getTime() + ".back";
+		}
+		
+		return newfilename;
+	}
     
     // 이벤트 종료
     @GetMapping("/eventstop")
