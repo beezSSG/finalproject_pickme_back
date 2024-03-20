@@ -36,6 +36,12 @@ public class ProductService {
 		int count = dao.newproductinsert(dto);
 		return count>0?true:false;
 	}
+
+
+	// 상품 평점 계산
+	void productRatingAvg(int productId) {
+		dao.productRatingAvg(productId);
+	}
 	
 	// 후기 목록
 	public List<ProductReview> productReviewtList(int id){

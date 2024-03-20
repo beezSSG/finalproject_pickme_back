@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="com.pickme.beeze.store.dao.StoreProductDao">
+ 
+ <!-- 매장 상품 목록 -->
+ <select id="storeproductlist" parameterType="com.pickme.beeze.store.dto.StoreProductParam"
+				resultType="com.pickme.beeze.product.dto.ProductDto">
+	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
+ 	from store_product sp
+	join product p on sp.product_id = p.id
+	
+	<if test="choice == 'date'">				
+		<if test="search != null and search != '' ">	
+			where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+		</if>
+		<if test="search == null or search == '' ">
+			where sp.store_id=#{store_id}
+		</if>
+		<if test="switching == true">
+ 			order by p.id desc
+		</if>
+		<if test="switching == false">
+ 			order by p.id asc
+		</if>
+	</if>
+	
+	<if test="choice == 'rate'">				
+		<if test="search != null and search != '' ">	
+			where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+		</if>
+		<if test="search == null or search == '' ">
+			where sp.store_id=#{store_id}
+		</if>
+		<if test="switching == true">
+ 			order by productRating desc
+		</if>
+		<if test="switching == false">
+ 			order by productRating asc
+		</if>
+	</if>
+	
+	<if test="choice == 'select'">
+		<if test="search != null and search != '' ">
+			where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+		</if>
+		<if test="search == null or search == '' ">
+			where sp.store_id=#{store_id}
+		</if>
+		order by p.name asc
+	</if>
+	<if test="choice == '' or choice == null">
+		where sp.store_id=#{store_id}
+		order by p.name asc
+	</if>
+	
+	limit ${(pageNumber * 5)}, 5
+</select>
+
+ 
+ <!-- 매장 상품 수 -->
+<select id="getallstoreproduct" parameterType="com.pickme.beeze.store.dto.StoreProductDto"
+				resultType="java.lang.Integer">
+	select count(*) 
+	from store_product sp
+	join product p on sp.product_id = p.id
+	<if test="search != null and search != '' ">
+		where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+	</if>
+	<if test="search == null or search == '' ">
+		where sp.store_id=#{store_id}
+	</if>
+</select>
+ 
+ 
+ 
+</mapper>
