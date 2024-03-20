@@ -1,20 +1,22 @@
-package com.pickme.beeze.product.dto;
+package com.pickme.beeze.store.dto;
 
-public class ProductParam {
-
+public class StoreProductParam {
+	
 	private String choice;
 	private String search;
 	private int pageNumber;
+	private int store_id;
 	private boolean switching;
 	
-	public ProductParam() {
+	public StoreProductParam() {
 	}
 
-	public ProductParam(String choice, String search, int pageNumber, boolean switching) {
+	public StoreProductParam(String choice, String search, int pageNumber, int store_id, boolean switching) {
 		super();
 		this.choice = choice;
 		this.search = search;
 		this.pageNumber = pageNumber;
+		this.store_id = store_id;
 		this.switching = switching;
 	}
 
@@ -42,6 +44,14 @@ public class ProductParam {
 		this.pageNumber = pageNumber;
 	}
 
+	public int getStore_id() {
+		return store_id;
+	}
+
+	public void setStore_id(int store_id) {
+		this.store_id = store_id;
+	}
+
 	public boolean isSwitching() {
 		return switching;
 	}
@@ -52,12 +62,10 @@ public class ProductParam {
 
 	@Override
 	public String toString() {
-		return "ProductParam [choice=" + choice + ", search=" + search + ", pageNumber=" + pageNumber + ", switching="
-				+ switching + "]";
+		return "StoreProductParam [choice=" + choice + ", search=" + search + ", pageNumber=" + pageNumber
+				+ ", store_id=" + store_id + ", switching=" + switching + "]";
 	}
-	
-	
-	
+
 	
 
 }
