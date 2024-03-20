@@ -36,17 +36,18 @@ public class ProductController {
 	
 	// 전체 상품 목록
 	@GetMapping("/productlist")
-	public Map<String, Object> bbslist(ProductParam param){
+	public Map<String, Object> productlist(ProductParam param){
 		System.out.println("ProductController productlist " + new Date());
 		System.out.println(param.toString());
 				
 		// 글목록
 		List<ProductDto> productlist = service.productlist(param);
 		
+		
 		// 글의 총갯수
 		int count = service.getallproduct(param);
-		int pageBbs = count / 8;
-		if((count % 8) > 0) {
+		int pageBbs = count / 5;
+		if((count % 5) > 0) {
 			pageBbs = pageBbs + 1;
 		}
 		
@@ -61,15 +62,14 @@ public class ProductController {
 	// 상품 상세보기
 	@GetMapping("/productdetail")
 	public ProductDto productdetail(int id) {
-		System.out.println("ProductController productdetail" + new Date());		
+		System.out.println("ProductController productdetail" + new Date());
+	
 		
 		return service.productdetail(id);
 	}
 	
 	
 	// 신제품 등록
-
-
 	@PostMapping("/newproductinsert")
 	public String newproductinsert(ProductDto dto, 
 	                        @RequestParam(value = "uploadfile", required = false) MultipartFile uploadfile,
@@ -124,6 +124,8 @@ public class ProductController {
 		return newfilename;
 	}
 	
+	
+
 	
 	// 후기 목록
 	@GetMapping("/productReviewList")
