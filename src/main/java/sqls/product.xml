@@ -4,7 +4,7 @@
    
  <mapper namespace="com.pickme.beeze.product.dao.ProductDao">
  
-  
+
  <!-- 전체 상품 목록 -->
  <select id="productlist" parameterType="com.pickme.beeze.product.dto.ProductParam"
 				resultType="com.pickme.beeze.product.dto.ProductDto">
@@ -15,25 +15,38 @@
 		<if test="search != null and search != '' ">	
 			where name like concat('%', #{search}, '%')
 		</if>
- 		order by id desc
+		<if test="switching == true">
+ 			order by id desc
+		</if>
+		<if test="switching == false">
+ 			order by id asc
+		</if>
 	</if>
+	
 	<if test="choice == 'rate'">				
 		<if test="search != null and search != '' ">	
 			where name like concat('%', #{search}, '%')
 		</if>
- 		order by product_rating desc
+		<if test="switching == true">
+ 			order by productRating desc
+		</if>
+		<if test="switching == false">
+ 			order by productRating asc
+		</if>
 	</if>
+	
 	<if test="choice == 'select'">
 		<if test="search != null and search != '' ">
 			where name like concat('%', #{search}, '%')
 		</if>
-		order by id desc
-	</if>
-	<if test="choice == ''">
-		order by id desc
+		order by name asc
 	</if>
 	
-	limit ${(pageNumber * 8)}, 8
+	<if test="choice == ''">
+		order by name asc
+	</if>
+	
+	limit ${(pageNumber * 5)}, 5
 </select>
 
  
@@ -62,7 +75,19 @@
 	values (#{name}, #{price}, #{url})
 </insert>
 
-  
+
+<!-- 상품 평점 계산 -->
+<update id="productRatingAvg" parameterType="Integer">
+    UPDATE product
+    SET product_rating = (
+        SELECT AVG(rating)
+        FROM review
+        WHERE product_id = #{productId}
+    )
+    WHERE id = #{productId};
+</update>
+
+
 <!-- 후기 목록 -->
  <select id="productReviewList" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductReview">
 	select id, product_id as `productId`, customer_id as `customerId`, content, rating

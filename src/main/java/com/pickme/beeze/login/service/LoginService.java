@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LoginService {
     
+
 	@Autowired
 	private LoginDao dao;
 	
@@ -151,5 +152,4 @@ public class LoginService {
 	public LoginDto searchCeoInfo(int id) {
 		return dao.searchCeoInfo(id);
 	}
-
 }

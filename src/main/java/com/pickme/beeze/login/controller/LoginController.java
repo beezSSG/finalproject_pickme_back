@@ -131,9 +131,8 @@ public class LoginController {
     public ResponseEntity verificationEmail(@RequestParam("email") @Valid @CustomEmail String email,
                                             @RequestParam("code") String authCode) {
         EmailVerificationResult response = memberService.verifiedCode(email, authCode);
-
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
-	*/
-	
+    */
+    
 }
