@@ -28,14 +28,16 @@ public class CcbService {
 	public CcbDto ccbdetail(int id) {
 		return dao.ccbdetail(id);
 	}
+	// 1:1 문의 댓글 보기
+	public List<CcbaDto> ccbcommentlist(int ccbId) {
+		return dao.ccbcommentlist(ccbId);
+	}
 	// 1:1 문의 관리자 댓글 달기
-	public boolean ccbcommentwrtie(CcbaDto dto) {
-		int count = dao.ccbcommentwrite(dto);
-		return count>0?true:false;
+	public void ccbcommentwrtie(CcbaDto dto) {
+		dao.ccbcommentwrite(dto);
 	}
 	// 1:1 문의 관리자 댓글 삭제
-	public boolean ccbcommentdelete(int id) {
-		int count = dao.ccbcommentdelete(id);
-		return count>0?true:false;
+	public void ccbcommentdelete(int id) {
+		dao.ccbcommentdelete(id);
 	}
 }

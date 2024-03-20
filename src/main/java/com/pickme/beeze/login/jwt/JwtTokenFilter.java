@@ -23,7 +23,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		System.out.println("JwtTokenFilter(생성자) " + new Date());
 		this.provider = provider;
 	}
-
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -39,7 +38,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			token = BearerRemove(token);
 		}
 		
-		System.out.println("token : " + token);
+		// System.out.println("token : " + token);
 		
         //유효한 토큰인지 확인합니다.
         if (token != null && provider.validateToken(token)) {

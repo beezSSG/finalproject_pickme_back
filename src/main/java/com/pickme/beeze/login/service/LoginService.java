@@ -11,9 +11,11 @@ import com.pickme.beeze.login.dto.LoginDto;
 @Transactional
 public class LoginService {
     
+
 	@Autowired
 	private LoginDao dao;
 
+	/* 회원가입 */
 	public int addCustomerInfo(LoginDto dto) {
 		return dao.addCustomerInfo(dto);
 	}
@@ -21,6 +23,7 @@ public class LoginService {
 		return dao.addCeoInfo(dto);
 	}
 	
+	/* 이메일(id) 중복확인 */
 	public int countCustomerInfo(String email) {
 		return dao.countCustomerInfo(email);
 	}
@@ -28,46 +31,36 @@ public class LoginService {
 		return dao.countCeoInfo(email);
 	}
 	
+	/* 로그인전 정보확인 */
+	public LoginDto whoCustomer(String email) {
+		return dao.whoCustomer(email);
+	}
+	public LoginDto whoCeo(String email) {
+		return dao.whoCeo(email);
+	}
+	
+	/* 로그인 */
 	public LoginDto selectCustomerInfo(LoginDto dto) {
 		return dao.selectCustomerInfo(dto);
 	}
 	public LoginDto selectCeoInfo(LoginDto dto) {
 		return dao.selectCeoInfo(dto);
 	}
-	public LoginDto whoCustomer(LoginDto dto) {
-		return dao.whoCustomer(dto);
-	}
-	public LoginDto whoCeo(LoginDto dto) {
-		return dao.whoCeo(dto);
+	
+	/* 아이디/비밀번호 찾기 */
+	public String findEmail(LoginDto dto) {
+		String email = dao.findCustomerEmail(dto);
+		if (email == null || email.equals("")) {
+			email = dao.findCeoEmail(dto);
+		}
+		return email;
 	}
 	
+	/* 토큰값을 통한 회원확인 */
 	public LoginDto searchCustomerInfo(int id) {
 		return dao.searchCustomerInfo(id);
 	}
 	public LoginDto searchCeoInfo(int id) {
 		return dao.searchCeoInfo(id);
 	}
-	
-	
-	
-	/*
-	// 토큰 실험용
-	public UserDto selectUserByUserId(String user_id) {
-		return Dao.selectUserByUserId(user_id);
-	}
-
-	public UserDto selectUserAndBranchToInfo(String user_id) {
-		return Dao.selectUserAndBranchToInfo(user_id);
-	}
-
-	public int selectCountToFindUserExist(UserDto dto) {
-		return Dao.selectCountToFindUserExist(dto);
-	}
-
-	public int updateUserByUserIdToChgPW(UserDto dto) {
-		return Dao.updateUserByUserIdToChgPW(dto);
-	}
-	*/
-
-
 }

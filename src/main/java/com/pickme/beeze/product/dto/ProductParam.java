@@ -54,10 +54,7 @@ public class ProductParam {
 	public String toString() {
 		return "ProductParam [choice=" + choice + ", search=" + search + ", pageNumber=" + pageNumber + ", switching="
 				+ switching + "]";
+
 	}
-	
-	
-	
-	
 
 }

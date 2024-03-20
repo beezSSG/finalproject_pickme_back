@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.pickme.beeze.manager.dao.ManagerPurchaseOrderDao">
+<select id="purchaseorderlist" parameterType="com.pickme.beeze.ceo.dto.PurchaseDto" resultType="com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam" >
+	select product.name as `productName`, 
+       product.url as `productUrl`, 
+       store.name as `storeName`, 
+       purchase_order.quantity, 
+       purchase_order.po_yn as `poYn`, 
+       purchase_order.wdate,
+       purchase_order.id,
+       (product.price * purchase_order.quantity) as `price`
+	from purchase_order
+	join product on purchase_order.product_id = product.id
+	join store on purchase_order.ceo_id = store.ceo_id
+	join ceo_info on purchase_order.ceo_id = ceo_info.id;
+</select>
+
+
+</mapper>

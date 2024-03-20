@@ -93,8 +93,8 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 <!-- 1:1 문의 게시글 작성하기   -->
 <!-- answer_yn 0: 답변완료 전, 1:답변완료 후 -->
 <insert id="addCcbList" parameterType="com.pickme.beeze.manager.dto.CcbDto">
-	insert into ccb(id, category, customer_id, title, content, create_at, answer_yn)
-	values (#{category}, #{customerId}, #{title}, #{content}, #{createAt}, 0)
+	insert into ccb(category, customer_id, title, content, create_at, answer_yn)
+	values (#{category}, #{customerId}, #{title}, #{content}, now(), 0)
 </insert>
 
 <!-- 내 1:1 문의 게시판 불러오기 -->
