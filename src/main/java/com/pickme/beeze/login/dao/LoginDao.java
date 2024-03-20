@@ -24,13 +24,12 @@ public interface LoginDao {
 	LoginDto searchCeoInfo(int id);
 	
 	
-	
 	/*
 	// jwt 토큰 실험용
-	int insertUserToJoin(UserDto dto);	
+	int insertUserToJoin(UserDto dto);
 	UserDto selectUserByUserId(String user_id);
-	UserDto selectUserAndBranchToInfo(String string);	
-	int selectCountToFindUserExist(UserDto userDTO);	
+	UserDto selectUserAndBranchToInfo(String string);
+	int selectCountToFindUserExist(UserDto userDTO);
 	int updateUserByUserIdToChgPW(UserDto userDTO);
 	*/
 	

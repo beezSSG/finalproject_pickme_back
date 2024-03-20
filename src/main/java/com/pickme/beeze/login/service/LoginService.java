@@ -11,6 +11,7 @@ import com.pickme.beeze.login.dto.LoginDto;
 @Transactional
 public class LoginService {
     
+
 	@Autowired
 	private LoginDao dao;
 
@@ -20,7 +21,7 @@ public class LoginService {
 	public int addCeoInfo(LoginDto dto) {
 		return dao.addCeoInfo(dto);
 	}
-	
+
 	public int countCustomerInfo(String email) {
 		return dao.countCustomerInfo(email);
 	}
@@ -49,7 +50,6 @@ public class LoginService {
 	}
 	
 	
-	
 	/*
 	// 토큰 실험용
 	public UserDto selectUserByUserId(String user_id) {
@@ -68,6 +68,4 @@ public class LoginService {
 		return Dao.updateUserByUserIdToChgPW(dto);
 	}
 	*/
-
-
 }
