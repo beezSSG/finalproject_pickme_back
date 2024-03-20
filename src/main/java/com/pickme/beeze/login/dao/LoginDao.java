@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.login.dto.LoginDto;
-import com.pickme.beeze.login.dto.UserDto;
 
 @Mapper
 @Repository

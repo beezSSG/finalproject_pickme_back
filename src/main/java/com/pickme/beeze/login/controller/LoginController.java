@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.login.dto.LoginDto;
-import com.pickme.beeze.login.dto.TokenDto;
-import com.pickme.beeze.login.dto.UserDto;
 import com.pickme.beeze.login.service.LoginService;
 
 @RestController
