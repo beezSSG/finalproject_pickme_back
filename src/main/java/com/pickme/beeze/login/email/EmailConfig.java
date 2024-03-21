@@ -1,5 +1,6 @@
 package com.pickme.beeze.login.email;
 
+import java.util.Date;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -41,8 +42,9 @@ public class EmailConfig {
     @Value("${spring.mail.properties.mail.smtp.writetimeout}")
     private int writeTimeout;
 
-    @Bean
+    @Bean	// 이메일전송 기능에 대한 설정을 정의하는 부분
     public JavaMailSender javaMailSender() {
+    	System.out.println("EmailConfig javaMailSender " + new Date());
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
@@ -50,7 +52,7 @@ public class EmailConfig {
         mailSender.setPassword(password);
         mailSender.setDefaultEncoding("UTF-8");
         mailSender.setJavaMailProperties(getMailProperties());
-
+        
         return mailSender;
     }
 
@@ -62,7 +64,7 @@ public class EmailConfig {
         properties.put("mail.smtp.connectiontimeout", connectionTimeout);
         properties.put("mail.smtp.timeout", timeout);
         properties.put("mail.smtp.writetimeout", writeTimeout);
-
+        
         return properties;
     }
 }

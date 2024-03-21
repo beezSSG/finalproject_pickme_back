@@ -72,23 +72,22 @@ public class LoginService {
 	/* 이메일 인증서비스 */
     public String sendCodeToEmail(String toEmail) {
         
-        String title = "[Pick ME] 인증코드";	// 이메일 제목
+        String title = "[Pick ME] 인증코드 요청";	// 이메일 제목
         String authCode = this.createTempPw();	// 이메일 내용 = 임시비번
-        
-        // 프론트로 넘겨서 보낸 인증과 내용이 같은지 확인하기
-        
-//      String content =
-//      		"<html><body>" +
-//              "<p>안녕하세요, 사랑하는  회원님!</p>" +
-//              "<p>비밀번호 재설정을 위한 인증코드를 보내드립니다. </p>"+
-//              "<p>만약 비밀번호 인증코드를 요청하지 않았다면 이 이메일을 무시해주시기 바랍니다.</p><br/><br/>" +
-//              "<p>     비밀번호 인증코드 : " + this.createTempPw() + "</p><br/><br/>" +
-//              "<p>인증코드 입력 시 비밀번호는 직원코드로 초기화됩니다.</p>" +
-//              "<p>도움이 필요하시거나 다른 문의사항이 있다면 언제든지 지원팀에 문의하시거나 Pick ME로 연락해주세요:) </p><br/><br/>" +
-//              "<p> Pick ME팀 드림</p>" ;
-      // 이메일 인증 요청 시 인증 번호
-        
-        mailService.sendEmail(toEmail, title, authCode);
+                                                                                                                                                                                                                                                                                                                                                                                                       
+        // 아래와 같이 메일을 보낼 수 있고 img를 보내고 싶으면 <img>를 사용하여 
+	    String content =
+	    		"<html><body>" +
+	            "<p>안녕하세요, Pick Me를 이용하시는 회원님!</p>" +
+	            "<p>요청하신 인증코드를 보내드립니다. </p>"+
+	            "<p>만약 비밀번호 인증코드를 요청하지 않았다면 이 이메일을 무시해주시기 바랍니다.</p><br/><br/>" +
+	            "<p>     비밀번호 인증코드 : <b>" + this.createTempPw() + "</b></p><br/><br/>" +
+	            "<p>인증코드 입력 후 비밀번호 재설정 화면에서 비밀번호를 변경해주시기 바랍니다.</p>" +
+	            "<p>관련하여 도움이 필요하시거나 다른 문의사항이 있다면 언제든지 Pick ME로 연락해주세요</p><br/><br/>" +
+	            "<p> Pick ME 드림</p>" ;
+
+      	// 이메일 인증 요청 시 인증 번호        
+        mailService.sendEmail(toEmail, title, content);
         
         return authCode;
     }

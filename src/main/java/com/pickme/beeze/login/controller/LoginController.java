@@ -120,19 +120,18 @@ public class LoginController {
     // 이메일 발송 ( 이메일 인증 / 비밀번호 찾기 겸용 )
     @PostMapping("/sendCodeToEmail")
     public ResponseEntity<?> sendCodeToEmail(String email) {
+    	System.out.println("LoginController sendCodeToEmail " + new Date());
         String tempCode = service.sendCodeToEmail(email);
 
         return ResponseEntity.ok(tempCode);
     }
 
-    /*
-    // 이메일 확인후 비밀번호 변경 ->
-    @GetMapping("/emails/verifications")
-    public ResponseEntity verificationEmail(@RequestParam("email") @Valid @CustomEmail String email,
-                                            @RequestParam("code") String authCode) {
-        EmailVerificationResult response = memberService.verifiedCode(email, authCode);
-        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+    // 이메일 확인후 비밀번호 변경시
+    @PostMapping("/changePw")
+    public ResponseEntity<?> changePw(LoginDto dto) {
+    	System.out.println("LoginController changePw " + new Date());
+    	
+        return ResponseEntity.ok(service.changePw(dto));
     }
-    */
     
 }
