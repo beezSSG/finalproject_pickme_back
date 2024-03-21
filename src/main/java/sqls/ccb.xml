@@ -28,6 +28,12 @@
 	values(#{ccbId}, #{managerId}, #{content}, now())
 </insert>
 
+<update id="ccbcommentwriteAf" parameterType="com.pickme.beeze.manager.dto.CcbaDto">
+	update ccb 
+	set answer_yn = 1
+	where id = #{ccbId}
+</update>
+
 <delete id="ccbcommentdelete">
 	delete from ccba
 	where id=#{id}
