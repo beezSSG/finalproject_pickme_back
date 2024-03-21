@@ -126,6 +126,7 @@ public class LoginController {
         return ResponseEntity.ok(tempCode);
     }
 
+    // 생성자를 통해 토큰을 초기화
     // 이메일 확인후 비밀번호 변경시
     @PostMapping("/changePw")
     public ResponseEntity<?> changePw(LoginDto dto) {

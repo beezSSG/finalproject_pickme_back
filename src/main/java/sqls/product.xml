@@ -46,7 +46,7 @@
 		order by name asc
 	</if>
 	
-	limit ${(pageNumber * 5)}, 5
+	limit ${(pageNumber * 9)}, 9
 </select>
 
  

@@ -1,7 +1,7 @@
 package com.pickme.beeze.store.dto;
 
 public class StoreProductParam {
-	
+	 
 	private String choice;
 	private String search;
 	private int pageNumber;
