@@ -15,6 +15,7 @@ public class PickmeApplication {
 	private static final String PROPERTIES =
 	        "spring.config.location="
 	        +"classpath:/application.properties"
+	        +",classpath:/db.properties"
 	        +",classpath:/mail.yml"
 	        +",classpath:/key.properties";
 	
