@@ -46,10 +46,10 @@ public class EmailConfig {
     public JavaMailSender javaMailSender() {
     	System.out.println("EmailConfig javaMailSender " + new Date());
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
+        mailSender.setHost("stmp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("pickme3592@gmail.com");
+        mailSender.setPassword("ekzsgwoawdfjzrxr");
         mailSender.setDefaultEncoding("UTF-8");
         mailSender.setJavaMailProperties(getMailProperties());
         
@@ -58,13 +58,14 @@ public class EmailConfig {
 
     private Properties getMailProperties() {
         Properties properties = new Properties();
+
         properties.put("mail.smtp.auth", auth);
         properties.put("mail.smtp.starttls.enable", starttlsEnable);
         properties.put("mail.smtp.starttls.required", starttlsRequired);
         properties.put("mail.smtp.connectiontimeout", connectionTimeout);
         properties.put("mail.smtp.timeout", timeout);
         properties.put("mail.smtp.writetimeout", writeTimeout);
-        
+      
         return properties;
     }
 }

@@ -57,6 +57,10 @@ public class CcbController {
 	public List<CcbaDto> ccbcommentwrite(CcbaDto dto) {
 		
 		service.ccbcommentwrtie(dto);
+		
+		// 댓글 단 후 상태 변화
+		service.ccbcommentwriteAf(dto);
+		
 		return service.ccbcommentlist(dto.getCcbId());
 	
 	}
