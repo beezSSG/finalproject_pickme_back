@@ -1,8 +1,6 @@
 package com.pickme.beeze;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication
@@ -17,6 +15,7 @@ public class PickmeApplication {
 	private static final String PROPERTIES =
 	        "spring.config.location="
 	        +"classpath:/application.properties"
+	        +",classpath:/db.properties"
 	        +",classpath:/mail.yml"
 	        +",classpath:/key.properties";
 	

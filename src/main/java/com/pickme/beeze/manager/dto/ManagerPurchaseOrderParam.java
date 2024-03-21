@@ -26,6 +26,7 @@ public class ManagerPurchaseOrderParam {
 		this.wdate = wdate;
 		this.price = price;
 		this.quantity = quantity;
+		
 	}
 
 	public int getId() {
