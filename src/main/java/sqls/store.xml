@@ -2,7 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
- <mapper namespace="com.pickme.beeze.store.dao.StoreProductDao">
+ <mapper namespace="com.pickme.beeze.store.dao.StoreDao">
+ 
+ 
+ <!-- 해당 상품이 있는 매장 목록 -->
+ <select id="matchedstorelist" parameterType="java.lang.Integer"
+ 								resultType="com.pickme.beeze.store.dto.StoreDto">
+ 	select s.id, s.ceo_id as `ceoId`, s.br_filename as `brFilename`, s.name, s.lon, s.lat, s.tel,
+ 			s.open_ended as `openEnded`, s.unmanned, s.delivery, s.atm, s.sell_wine as `sellWine`,
+ 			s.sell_coffee as `sellCoffee`, s.smoothieking, s.apple_acc as `appleAcc`, s.toto, s.address
+ 	from product p, store_product sp, store s
+ 	where p.id = sp.product_id and sp.store_id = s.id and p.id = #{id} 								
+ </select>
+ 
  
  <!-- 매장 상품 목록 -->
  <select id="storeproductlist" parameterType="com.pickme.beeze.store.dto.StoreProductParam"

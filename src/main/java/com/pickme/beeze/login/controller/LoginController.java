@@ -153,8 +153,4 @@ public class LoginController {
 	/* TODO 토근 적용 로그인 */
 
         // 생성자를 통해 토큰을 초기화
-        public JwtResponse(String token) {
-            this.token = token;
-        }
-    }
 }
