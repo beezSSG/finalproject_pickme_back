@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.ceo.dao.CeoDao;
 import com.pickme.beeze.ceo.dto.CeoParam;
+import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 
 @Service
@@ -25,8 +26,11 @@ public class CeoService {
 		return dao.getallceo(param);
 	}
 	
-	public boolean powrite(PurchaseDto po) { 
-		return dao.powrite(po)>0?true:false;
+	public List<ProductDto> powrite(CeoParam param) { 
+		return dao.powrite(param);
 	 }
-
+	
+	public ProductDto powriteCn(CeoParam param) {
+		return dao.powriteCn(param);
+	}
 }
