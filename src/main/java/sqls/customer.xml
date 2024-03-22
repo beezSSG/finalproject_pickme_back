@@ -20,9 +20,16 @@
 <!-- 장바구니 목록보기 -->
 <select id="getMyCart" parameterType="Integer" resultType="CartDto" > 
 	<!-- order_yn [0 == 결제완료전 / 1 == 결제완료] -->
-	SELECT customer_id, s_product_id
+	SELECT id, customer_id, s_product_id, quantity
 	  FROM cart
-	 WHERE order_yn = 0 and id = #{id}
+	 WHERE order_yn = 0 and customer_id = #{id}
+</select>
+<!-- 목록에 대한 물품 조회 -->
+<select id="getMyCartProduct" parameterType="CartDto" resultType="CartDto">
+	SELECT p.name as `productName`, p.price as `productPrice`, p.url as `productUrl`
+	  FROM store_product s INNER JOIN  product  p
+	    ON s.product_id = p.id
+	 WHERE s.id = #{sProductId};
 </select>
 
 <!-- 장바구니 목록삭제 -->

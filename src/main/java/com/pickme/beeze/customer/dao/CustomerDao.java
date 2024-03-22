@@ -18,6 +18,7 @@ public interface CustomerDao {
 	
 	// 장바구니 목록 불러오기
 	List<CartDto> getMyCart(int id);
+	CartDto getMyCartProduct(CartDto dto);
 	
 	// 장바구니 물품 삭제 및 변경
 	void delCart(CartDto dto);

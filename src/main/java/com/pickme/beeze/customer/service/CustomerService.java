@@ -30,6 +30,11 @@ public class CustomerService {
 	public List<CartDto> getMyCart(int id){
 		return dao.getMyCart(id);
 	}
+	
+	public CartDto getMyCartProduct(CartDto dto) {
+		return dao.getMyCartProduct(dto);
+	}
+	
 	// 장바구니 물품 수량변경 및 삭제
 	public void delCart(CartDto dto) {
 		dao.delCart(dto);

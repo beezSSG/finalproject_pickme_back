@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.manager.dto.CcbDto;
-import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
