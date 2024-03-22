@@ -1,5 +1,6 @@
 package com.pickme.beeze.customer.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,11 @@ public class CustomerController {
 		int sProductId = service.getsProductId(productName, storeId);
 		
 		// cart DB 에 저장
-		CartDto dto = new CartDto(sProductId, id, quantity);
+		CartDto dto = new CartDto();
+		dto.setSProductId(sProductId);
+		dto.setQuantity(quantity);
+		dto.setProductName(productName);
+		
 		boolean isS = service.cartInsert(dto);		
 		if(isS) {
 			return "YES";
@@ -55,8 +60,21 @@ public class CustomerController {
 		System.out.println("CustomerController getCart " + new Date());
 		
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		//System.out.println(id);
+		List<CartDto> list = service.getMyCart(id);
 		
-		return service.getMyCart(id);
+		List<CartDto> li = new ArrayList<CartDto>();
+		// 점포 상품번호를 통해 상품가격 / 상품이미지 / 상품이름
+		for (CartDto dto : list) {
+			CartDto d = service.getMyCartProduct(dto);
+			d.setId(dto.getId());
+			d.setCustomerId(dto.getCustomerId());
+			d.setSProductId(dto.getSProductId());
+			d.setQuantity(dto.getQuantity());
+			li.add(d);
+		}
+		
+		return li;
 	}
 	
 	// 장바구니 삭제

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dao.MypageDao;
-import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
