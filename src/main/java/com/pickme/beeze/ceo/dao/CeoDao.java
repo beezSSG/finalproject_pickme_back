@@ -17,6 +17,6 @@ public interface CeoDao {
 	int getallceo(CeoParam param);
 	
 	List<ProductDto> powrite(CeoParam param);
-	ProductDto powriteCn(CeoParam param);
+	List<ProductDto> powriteCn(ProductDto dto);
 	
 }
