@@ -30,7 +30,7 @@ public class CeoService {
 		return dao.powrite(param);
 	 }
 	
-	public ProductDto powriteCn(CeoParam param) {
-		return dao.powriteCn(param);
+	public List<ProductDto> powriteCn(ProductDto dto) {
+		return dao.powriteCn(dto);
 	}
 }
