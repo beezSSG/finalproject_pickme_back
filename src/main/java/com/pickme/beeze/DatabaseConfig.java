@@ -46,7 +46,7 @@ public class DatabaseConfig {
 		
 		// @alias 설정시 위치는 여기!
 		// 아래에 alias를 설정할 dto 위치를 , 를 통하여 이어줘야 에러가 나지 않는다.
-		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.mypage.dto, com.pickme.beeze.login.dto");	
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.mypage.dto, com.pickme.beeze.login.dto, com.pickme.beeze.customer.dto");	
 //		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.login.dto");	// 이렇게 여러개 설정시 에러가 난다		
 		sqlSessionFactoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
 		

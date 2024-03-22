@@ -179,26 +179,5 @@ public class MypageController {
 		
 	    return service.delReview(dto);
 	}
-
-	// TODO 장바구니	
-	// 장바구니 목록 불러오기
-	@GetMapping("/cart/getCart")
-	public List<MypageCartDto> getCart() {
-		System.out.println("MypageController getCart " + new Date());
-		
-		return service.getCart();
-	}
-	
-	// 장바구니 삭제
-	@DeleteMapping("/cart/delCart")
-	public List<MypageCartDto> delCart(MypageCartDto dto) {
-		System.out.println("MypageController delCart " + new Date());
-		
-		// 장바구니 삭제
-		service.delCart(dto);
-		
-		// 삭제 진행이 완료된 장바구니 목록 불러와서 리턴		
-	    return service.getCart();
-	}
 	
 }

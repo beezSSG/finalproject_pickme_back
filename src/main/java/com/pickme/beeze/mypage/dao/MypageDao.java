@@ -64,10 +64,4 @@ public interface MypageDao {
 	// 리뷰삭제
 	int delReview(MypageReviewDto dto);
 	
-	/* TODO 장바구니 */
-	// 장바구니 목록 불러오기
-	List<MypageCartDto> getCart();
-	// 장바구니 물품 삭제
-	void delCart(MypageCartDto dto);
-	
 }

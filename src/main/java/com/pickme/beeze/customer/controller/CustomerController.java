@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.customer.dto.CartDto;
 import com.pickme.beeze.customer.service.CustomerService;
-import com.pickme.beeze.mypage.dto.MypageCartDto;
+import com.pickme.beeze.util.InfoUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/customer/*")
@@ -20,32 +24,68 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService service;
-
+	
+	/* TODO 장바구니 */
 	// 장바구니 담기
-	@PostMapping("/cartinsert")
-	public String cartinsert(String productName, int storeId, String email, int quantity) {	// front에서 상품정보를 보낼때 편의점을 검색해서(편의점id) -> 상품 선택(상품명) -> 상품 수량 선택(상품수)
-		System.out.println("CustomerController cartinsert " + new Date());
+	// react에서 점포 상품수량 초과하지 않도록 제어 [ 상품정보 / 가게아이디 / 상품수량 ]
+	@PostMapping("/cart/insert")
+	public String cartInsert(Authentication Authentication, HttpServletRequest request, String productName, int storeId, int quantity) {	
+		System.out.println("CustomerController cartInsert " + new Date());
 		
-		// 카트dto 에는 customer_id 랑 s_product_id 랑 order_yn 이 담겨져있음
-		// 근데 front 에서 가져오는 정보는 상품명과 개수이다. 흠.... 상품명인 id를 가져온다
-		// productName 으로 id를 꺼내온다. --> join으로 처리함!
-		// product_id 를 이용해서 sProductId를 가져오고 email을 가지고 cutomerId를 가져온다. 
-		int sProductId = service.getsProductId(productName,storeId);
-		// email로 cutomer_id 받아오기
-		int customerId = service.getCustomerId(email);	
-		CartDto dto = new CartDto(sProductId, customerId, quantity);
+		// 고객 id 얻기
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		// product_id 를 이용해서 sProductId를 가져오기 
+		int sProductId = service.getsProductId(productName, storeId);
+		
 		// cart DB 에 저장
-		boolean isS = service.cartinsert(dto);
-		
+		CartDto dto = new CartDto(sProductId, id, quantity);
+		boolean isS = service.cartInsert(dto);		
 		if(isS) {
 			return "YES";
 		}
 		else {
 			return "NO";
 		}
+	} 
 	
-	}  
+	// 내 장바구니 목록 불러오기
+	@GetMapping("/cart/getCart")
+	public List<CartDto> getCart(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("CustomerController getCart " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		return service.getMyCart(id);
+	}
 	
+	// 장바구니 삭제
+	@DeleteMapping("/cart/delCart")
+	public List<CartDto> delCart(Authentication Authentication, HttpServletRequest request, CartDto dto) {
+		System.out.println("CustomerController delCart " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		dto.setCustomerId(id);
+		
+		// 장바구니 삭제
+		service.delCart(dto);
+		
+		// 삭제 진행이 완료된 장바구니 목록 불러와서 리턴		
+	    return service.getMyCart(id);
+	}
+	
+	// 장바구니 물품별 수량 변경
+	// react에서 밸류의 값을 정하지 않고 onchange를 통하여 setQuantity 를 바꾸고 그것이 바뀔때 마다 useeffect를 통하여 axios 호출하도록 하기
+	@PostMapping("/cart/changeQuantity")
+	public void changeQuantity(Authentication Authentication, HttpServletRequest request, CartDto dto) {
+		System.out.println("CustomerController changeQuantity " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		dto.setCustomerId(id);
+		
+		service.changeMyQuantity(dto);	
+	}
+
 	// 주문하기
 	@GetMapping("/order")
 	public String order(@RequestParam List<Integer> ids) { // 장바구니 id 목록
@@ -61,10 +101,9 @@ public class CustomerController {
 	    
 	    return "YES";
 	}
-
 	
-	// 택배 신청
+	/* 택배 신청 */
 	
-	// 상품 예약 (점주가 확인 후 발주 할 수 있도록 해야함)
+	/* 상품 예약 (점주가 확인 후 발주 할 수 있도록 해야함) */
 	
 }
