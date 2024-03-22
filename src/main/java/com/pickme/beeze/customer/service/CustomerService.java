@@ -1,5 +1,7 @@
 package com.pickme.beeze.customer.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,16 +16,26 @@ public class CustomerService {
 	@Autowired
 	CustomerDao dao;
 	
+	/* TODO 장바구니 */
 	// 장바구니 담기
 	public int getsProductId(String productName, int storeId) {
 		return dao.getsProductId(productName,storeId);
 	}
-	public int getCustomerId(String email) {
-		return dao.getCustomerId(email);
-	}
-	public boolean cartinsert(CartDto dto) {
-		int count = dao.cartinsert(dto);
+	public boolean cartInsert(CartDto dto) {
+		int count = dao.cartInsert(dto);
 		return count>0?true:false;
+	}
+	
+	// 장바구니 목록 불러오기
+	public List<CartDto> getMyCart(int id){
+		return dao.getMyCart(id);
+	}
+	// 장바구니 물품 수량변경 및 삭제
+	public void delCart(CartDto dto) {
+		dao.delCart(dto);
+	}
+	public void changeMyQuantity(CartDto dto) {
+		dao.changeMyQuantity(dto);
 	}
 	
 	// 주문하기

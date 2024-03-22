@@ -1,5 +1,8 @@
 package com.pickme.beeze.customer.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("CartDto")
 public class CartDto {
 
 	private int id;

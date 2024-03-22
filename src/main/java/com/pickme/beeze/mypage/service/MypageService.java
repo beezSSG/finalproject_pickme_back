@@ -101,14 +101,4 @@ public class MypageService {
 		return dao.delReview(dto);
 	}
 	
-	/* TODO 장바구니 */
-	// 장바구니 목록 불러오기
-	public List<MypageCartDto> getCart(){
-		return dao.getCart();
-	}
-	// 장바구니 물품 삭제
-	public void delCart(MypageCartDto dto) {
-		dao.delCart(dto);
-	}
-	
 }

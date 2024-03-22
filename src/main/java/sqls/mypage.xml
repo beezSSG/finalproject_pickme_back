@@ -43,21 +43,6 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	 where customer_id = #{customerId} and product_id = #{productId}
 </delete>
 
-	<!-- 장바구니 -->
-<!-- 장바구니 목록보기 -->
-<select id="getCart" resultType="com.pickme.beeze.mypage.dto.MypageCartDto"> 
-	<!-- order_yn [0 == 결제완료전 / 1 == 결제완료] -->
-	select customer_id, s_product_id
-	  from cart
-	 where order_yn = 0
-</select>
-
-<!-- 장바구니 목록삭제 -->
-<delete id="delCart" parameterType="com.pickme.beeze.mypage.dto.MypageCartDto">
-	delete from cart
-	 where customer_id = #{customerId} and s_product_id = #{sProductId}
-</delete>
-
 	<!-- 개인정보 관리  -->
 <!-- 개인정보 보기 포인트는 이것을 통해서 보기-->
 <select id="getUserInfo" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">

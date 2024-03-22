@@ -4,6 +4,7 @@
    
 <mapper namespace="com.pickme.beeze.customer.dao.CustomerDao">
 
+	<!-- 장바구니 -->
 <!-- 장바구니 담기 -->
 <select id="getsProductId" parameterType="map" resultType="Integer">
 	select store_product.id
@@ -11,19 +12,36 @@
 	inner join product on store_product.product_id = product.id
 	where product.name = #{productName} and store_product.store_id = #{storeId};
 </select>
-<select id="getCustomerId" parameterType="String" resultType="Integer">
-	select id
-	from customer_info
-	where email=#{email}
-</select>
-<insert id="cartinsert" parameterType="com.pickme.beeze.customer.dto.CartDto">
+<insert id="cartInsert" parameterType="CartDto">
 	insert into cart(customer_id,s_product_id,quantity,order_yn)
 	values(#{customerId},#{sProductId},#{quantity},0)
 </insert>
 
+<!-- 장바구니 목록보기 -->
+<select id="getMyCart" parameterType="Integer" resultType="CartDto" > 
+	<!-- order_yn [0 == 결제완료전 / 1 == 결제완료] -->
+	SELECT customer_id, s_product_id
+	  FROM cart
+	 WHERE order_yn = 0 and id = #{id}
+</select>
+
+<!-- 장바구니 목록삭제 -->
+<delete id="delCart" parameterType="CartDto">
+	delete from cart
+	 where customer_id = #{customerId} and s_product_id = #{sProductId}
+</delete>
+
+<!-- 장바구니 물품 수량 변경 -->
+<update id="changeMyQuantity" parameterType="CartDto">
+	UPDATE cart
+	   SET quantity = #{quantity}
+	 WHERE customer_id = #{customerId} and s_product_id = #{sProductId}
+</update>
+
 <!-- 주문하기 -->
 <insert id="order" parameterType="Integer">
 	insert into `order`(cart_id,date)
-	values(#{id},now())
+	values(#{id}, now())
 </insert>
+
 </mapper>
