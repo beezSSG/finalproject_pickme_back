@@ -3,20 +3,51 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace="com.pickme.beeze.manager.dao.ManagerPurchaseOrderDao">
-<select id="purchaseorderlist" parameterType="com.pickme.beeze.ceo.dto.PurchaseDto" resultType="com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam" >
-	select product.name as `productName`, 
-       product.url as `productUrl`, 
-       store.name as `storeName`, 
-       purchase_order.quantity, 
-       purchase_order.po_yn as `poYn`, 
-       purchase_order.wdate,
-       purchase_order.id,
-       (product.price * purchase_order.quantity) as `price`
-	from purchase_order
-	join product on purchase_order.product_id = product.id
-	join store on purchase_order.ceo_id = store.ceo_id
-	join ceo_info on purchase_order.ceo_id = ceo_info.id;
+<select id="purchaseorderlist" parameterType="com.pickme.beeze.manager.dto.ManagerPurchaseDto" resultType="com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam" >
+    select product.name as `productName`, 
+           product.url as `productUrl`, 
+           store.name as `storeName`, 
+           purchase_order.quantity, 
+           purchase_order.po_yn as `poYn`, 
+           purchase_order.wdate,
+           purchase_order.id,
+           (product.price * purchase_order.quantity) as `price`
+    from purchase_order
+    join product on purchase_order.product_id = product.id
+    join store on purchase_order.ceo_id = store.ceo_id
+    join ceo_info on purchase_order.ceo_id = ceo_info.id
+    where purchase_order.po_yn = 0
+    <if test="storeName != null and storeName != ''">
+        and (store.name like concat('%', #{storeName}, '%'))
+    </if>
+    <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+        and (purchase_order.wdate between #{startDate} and #{endDate})
+    </if>
+    limit ${(pageNumber * 10)}, 10
 </select>
+
+<select id="getPurchaseOrderCount" parameterType="com.pickme.beeze.manager.dto.ManagerPurchaseDto" resultType="Integer">
+    select COUNT(*) 
+    from purchase_order
+    join product on purchase_order.product_id = product.id
+    join store on purchase_order.ceo_id = store.ceo_id
+    join ceo_info on purchase_order.ceo_id = ceo_info.id
+    where purchase_order.po_yn = 0
+    <if test="storeName != null and storeName != ''">
+        and (store.name like concat('%', #{storeName}, '%'))
+    </if>
+    <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+        and (purchase_order.wdate between #{startDate} and #{endDate})
+    </if>
+</select>
+
+
+<update id="purchaseorderapprove" parameterType="Integer">
+	update purchase_order
+	set po_yn = 1
+	where id=#{id}
+</update>
+
 
 
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.ceo.dto.CeoParam;
+import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 
 @Mapper
@@ -15,6 +16,7 @@ public interface CeoDao {
 	List<PurchaseDto> polist(CeoParam param);
 	int getallceo(CeoParam param);
 	
-	int powrite(PurchaseDto po);
-
+	List<ProductDto> powrite(CeoParam param);
+	List<ProductDto> powriteCn(ProductDto dto);
+	
 }

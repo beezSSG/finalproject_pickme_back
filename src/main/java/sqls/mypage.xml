@@ -133,7 +133,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 
 <!-- 내 주문 취소 -->
 <update id="cancelMyOrder" parameterType="MypageOrderDto">
-	UPDATE FROM order 
+	UPDATE order 
 	   SET cancel_yn = 1
 	 WHERE customer_id = #{customerId}
 </update>

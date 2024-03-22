@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.product.dto.ProductDto;
-import com.pickme.beeze.store.dao.StoreProductDao;
+import com.pickme.beeze.store.dao.StoreDao;
 import com.pickme.beeze.store.dto.StoreProductParam;
 
 
@@ -16,7 +16,7 @@ import com.pickme.beeze.store.dto.StoreProductParam;
 public class StoreProductService {
 
 	@Autowired
-	StoreProductDao dao;
+	StoreDao dao;
 	
 	// 매장 상품 목록
 	public List<ProductDto> storeproductlist(StoreProductParam param){
