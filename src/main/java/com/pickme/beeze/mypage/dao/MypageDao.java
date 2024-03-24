@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
+import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
@@ -17,6 +18,9 @@ import com.pickme.beeze.mypage.dto.MypageSaveDto;
 public interface MypageDao {
 	
 	// int를 최종리턴할때 0은 실패 0이상은 성공
+	
+	// 나의 정보 불러오기
+	MypageMainInfoDto getMyInfo(MypageMainInfoDto dto);
 	
 	/* TODO 찜 */
 	// 찜생성

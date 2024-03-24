@@ -4,16 +4,21 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
+import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 import com.pickme.beeze.mypage.service.MypageService;
+import com.pickme.beeze.util.InfoUtil;
 import com.pickme.beeze.util.NaverCloud;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +37,18 @@ public class MypageController {
 	
 	@Autowired
 	MypageService service;
+	
+	// 유저 정보 불러오기
+	@GetMapping("/getMyInfo")
+	public MypageMainInfoDto getMyInfo(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("MypageController getMyInfo " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		MypageMainInfoDto dto = new MypageMainInfoDto();
+		dto.setId(id);
+				
+		return service.getMyInfo(dto);
+	}
 	
 	// TODO 찜
 	// 찜 생성

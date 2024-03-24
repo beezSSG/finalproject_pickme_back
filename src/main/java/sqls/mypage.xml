@@ -4,6 +4,17 @@
    
 <mapper namespace="com.pickme.beeze.mypage.dao.MypageDao">
  
+<!-- 마이페이지 메인화면 정보 확인 [장바구니 수량, 포인트, 쿠폰, 찜 목록, 선물함] -->
+<select id="getMyInfo" parameterType="MyInfoDto" resultType="MyInfoDto">
+SELECT cu.name, cu.grade, cu.point, count(DISTINCT ca.id) as `cartQuantity`, count(DISTINCT co.id) as `couponQuantity`, count(DISTINCT s.id) as `saveQuantity`, count(DISTINCT g.id) as `giftQuantity`
+  FROM customer_info cu
+  LEFT JOIN cart ca ON cu.id = ca.customer_id 
+  LEFT JOIN coupon co ON cu.id = co.user_id
+  LEFT JOIN save s ON cu.id = s.customer_id
+  LEFT JOIN gift g ON cu.id = g.customer_id
+ WHERE cu.id = #{id};
+</select>
+
 	<!-- 찜 -->
 <!-- 찜 추가 -->
 <insert id="addSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">

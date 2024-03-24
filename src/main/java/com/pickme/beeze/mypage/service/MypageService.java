@@ -10,6 +10,7 @@ import com.pickme.beeze.manager.dto.CcbDto;
 import com.pickme.beeze.mypage.dao.MypageDao;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
+import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
@@ -20,6 +21,11 @@ public class MypageService {
 	
 	@Autowired
 	MypageDao dao;
+	
+	// 나의 정보 불러오기
+	public MypageMainInfoDto getMyInfo(MypageMainInfoDto dto) {
+		return dao.getMyInfo(dto);
+	};
 	
 	/* TODO 찜 */
 	// 찜생성
