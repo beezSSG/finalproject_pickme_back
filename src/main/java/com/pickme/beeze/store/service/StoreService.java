@@ -15,6 +15,10 @@ public class StoreService {
 
 	@Autowired
 	StoreDao dao;
+	
+	public List<StoreDto> storelist() {
+		return dao.storelist();
+	}
 
 	// 해당 상품이 있는 매장 목록
 	public List<StoreDto> matchedstorelist(int id){
