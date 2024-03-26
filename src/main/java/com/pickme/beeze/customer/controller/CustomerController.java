@@ -100,6 +100,7 @@ public class CustomerController {
 		
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
 		dto.setCustomerId(id);
+		System.out.println(dto.toString());
 		
 		service.changeMyQuantity(dto);	
 	}
