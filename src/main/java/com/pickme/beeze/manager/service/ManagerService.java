@@ -7,17 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.ceo.dto.PurchaseDto;
-import com.pickme.beeze.manager.dao.ManagerPurchaseOrderDao;
+import com.pickme.beeze.manager.dao.ManagerDao;
 import com.pickme.beeze.manager.dto.ManagerPurchaseDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam;
+import com.pickme.beeze.manager.dto.OrderChartDto;
+import com.pickme.beeze.manager.dto.OrderDto;
 
 @Service
 @Transactional
-public class ManagerPurchaseOrderService {
+public class ManagerService {
 
 	
 	@Autowired
-	ManagerPurchaseOrderDao dao;
+	ManagerDao dao;
 	
 	// 발주 목록 전체보기
 	public List<ManagerPurchaseOrderParam> purchaseorderlist(ManagerPurchaseDto dto) {
@@ -30,5 +32,9 @@ public class ManagerPurchaseOrderService {
 	// 목록 총 수
 	public int getPurchaseOrderCount(ManagerPurchaseDto dto) {
 		return dao.getPurchaseOrderCount(dto);
+	}
+	// 전체 주문 차트 목록 보기
+	public List<OrderChartDto> orderchart(OrderDto dto) {
+		return dao.orderchart(dto);
 	}
 }

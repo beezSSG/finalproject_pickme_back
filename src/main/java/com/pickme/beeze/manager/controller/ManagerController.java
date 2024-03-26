@@ -15,14 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam;
-import com.pickme.beeze.manager.service.ManagerPurchaseOrderService;
+import com.pickme.beeze.manager.dto.OrderChartDto;
+import com.pickme.beeze.manager.dto.OrderDto;
+import com.pickme.beeze.manager.service.ManagerService;
 
 @RestController
 @RequestMapping("/api/v1/manager/*")
-public class ManagerPurchaseOrderController {
+public class ManagerController {
 	
 	@Autowired
-	ManagerPurchaseOrderService service;
+	ManagerService service;
 	
 	// 발주 목록 전체보기
 	@GetMapping("purchaseorderlist")
@@ -70,5 +72,14 @@ public class ManagerPurchaseOrderController {
 		map.put("cnt", count);
 		
 		return map;
+	}
+	
+	// 전체 주문 차트 보기
+	@GetMapping("orderchart")
+	public List<OrderChartDto> orderchart(OrderDto dto) {
+		
+		System.out.println("OrderChartController orderchart " + new Date());
+		
+		return service.orderchart(dto);
 	}
 }
