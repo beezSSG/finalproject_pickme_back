@@ -80,6 +80,8 @@ public class ManagerController {
 		
 		System.out.println("OrderChartController orderchart " + new Date());
 		
+		System.out.println("OderDto :" + dto.toString());
+		
 		return service.orderchart(dto);
 	}
 }
