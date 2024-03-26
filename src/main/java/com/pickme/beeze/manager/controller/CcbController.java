@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.manager.dto.CcbParam;
 import com.pickme.beeze.manager.dto.CcbaDto;
 import com.pickme.beeze.manager.service.CcbService;
 
@@ -30,6 +31,19 @@ public class CcbController {
 		}
 		
 		return ccblist;
+	}
+	
+	// 카테고리 별 글 개수
+	@GetMapping("/ccbcategorycount")
+	public List<CcbParam> ccbcategorycount(CcbDto dto) {
+		System.out.println("CcbController ccbcategorycount " + new Date());
+		
+		List<CcbParam> ccbcategorycountlist = service.ccbcategorycount(dto);
+		for (CcbParam ccbParam : ccbcategorycountlist) {
+			System.out.println("CcbDto : " + ccbParam);
+		}
+		
+		return ccbcategorycountlist;
 	}
 	
 	// 게시판 글 링크를 눌렸을 경우 상세화면

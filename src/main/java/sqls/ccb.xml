@@ -10,6 +10,14 @@
 	order by id desc;
 </select>
 
+<!-- 관리자 페이지에서 카테고리 별 글 개수 파악 용도 -->
+<select id="ccbcategorycount" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbParam">
+    select category, count(*) as count
+    from ccb
+    group by category
+    order by count desc;
+</select>
+
  
 <select id="ccbdetail" parameterType="Integer" resultType="com.pickme.beeze.manager.dto.CcbDto">
 	select id,category,customer_id as `customerId`, title, content, create_at as `createAt`, answer_yn as `answerYn`
