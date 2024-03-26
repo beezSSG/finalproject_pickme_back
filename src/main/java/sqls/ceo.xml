@@ -44,9 +44,9 @@
 		</if>
 	</select>
 
-	<!--발주하기(카테고리이름)-->
+	<!--발주하기(카테고리 목록)-->
 
-	<select id="powriteCn" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
+<!--	<select id="powriteCn" parameterType="Integer"
 		resultType="com.pickme.beeze.ceo.dto.ProductDto"> 
             select p.id, pc.category_id as `categoryId`, c.name as `categoryName`, p.name, p.price
             from product p, category c, product_category pc
@@ -57,7 +57,16 @@
 				where name like concat('%', #{search}, '%') and del=0
 			</if>
 		</if>
+	</select>-->
+	
+	<select id="powriteCn" parameterType="com.pickme.beeze.ceo.dto.ProductDto" resultType="com.pickme.beeze.ceo.dto.ProductDto"> 
+			select p.id as `id`, pc.category_id as `categoryId`, c.name as `categoryName`, p.name, p.price
+            from product p, category c, product_category pc
+            where pc.category_id = c.id and pc.product_id = p.id
 	</select>
+	
+	
+	
 
 	<!-- 발주완료 후 리스트로 뿌려주기-->
 

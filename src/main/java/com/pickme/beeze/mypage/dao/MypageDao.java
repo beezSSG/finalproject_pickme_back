@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.manager.dto.CcbDto;
-import com.pickme.beeze.mypage.dto.MypageCartDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
+import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
@@ -18,6 +18,9 @@ import com.pickme.beeze.mypage.dto.MypageSaveDto;
 public interface MypageDao {
 	
 	// int를 최종리턴할때 0은 실패 0이상은 성공
+	
+	// 나의 정보 불러오기
+	MypageMainInfoDto getMyInfo(MypageMainInfoDto dto);
 	
 	/* TODO 찜 */
 	// 찜생성
@@ -63,11 +66,5 @@ public interface MypageDao {
 	List<MypageReviewDto> getReview(MypageReviewDto dto);
 	// 리뷰삭제
 	int delReview(MypageReviewDto dto);
-	
-	/* TODO 장바구니 */
-	// 장바구니 목록 불러오기
-	List<MypageCartDto> getCart();
-	// 장바구니 물품 삭제
-	void delCart(MypageCartDto dto);
 	
 }
