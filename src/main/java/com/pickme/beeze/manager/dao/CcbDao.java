@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.manager.dto.CcbParam;
 import com.pickme.beeze.manager.dto.CcbaDto;
 
 @Mapper
@@ -16,6 +17,8 @@ public interface CcbDao {
 	
 	// 1:1 문의 게시글 목록
 	List<CcbDto> ccblist(CcbDto dto);
+	// 관리자 카테고리 별 문의 글 개수
+	List<CcbParam> ccbcategorycount(CcbDto dto);
 	// 1:1 문의 게시글 상세보기
 	CcbDto ccbdetail(int id);
 	// 1:1 문의 게시글 지우기
