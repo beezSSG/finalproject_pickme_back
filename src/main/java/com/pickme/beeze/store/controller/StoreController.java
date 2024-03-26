@@ -17,6 +17,14 @@ public class StoreController {
 	
 	@Autowired
 	StoreService service;	
+	
+	// 모든 매장 목록
+	@GetMapping("/storelist")
+	public List<StoreDto> storelist() {
+		System.out.println("StoreController getStoreList() " + new Date());
+		return service.storelist();
+	}
+	
 
 	// 해당 상품이 있는 매장 목록
 	@GetMapping("/matchedstorelist")
