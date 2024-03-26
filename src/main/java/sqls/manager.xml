@@ -50,12 +50,11 @@
 
 <!-- 매출 차트를 위한 전체 order 목록  -->
 <select id="orderchart" parameterType="com.pickme.beeze.manager.dto.OrderDto" resultType="com.pickme.beeze.manager.dto.OrderChartDto">
-	select 
+	SELECT 
 	    o.id as orderId,
 	    o.cart_id as cartId,
 	    c.customer_id as customerId,
 	    p.name as productName,
-	
 	    sp.exp_date as expDate,
 	    p.price as unitPrice,
 	    c.quantity as orderQuantity,
@@ -73,7 +72,9 @@
 	    store s on sp.store_id = s.id
 	WHERE 
 	    o.cancel_yn = 0 
-	    AND c.order_yn = 0;
+	    AND c.order_yn = 0
+	    AND DATE_FORMAT(o.date, '%Y-%m-%d') = #{date}
+	    AND s.address LIKE CONCAT(#{address}, '%');
 </select>
 
 

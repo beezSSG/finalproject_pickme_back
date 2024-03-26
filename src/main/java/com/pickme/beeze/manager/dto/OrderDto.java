@@ -5,17 +5,19 @@ public class OrderDto {
 	private int id;
 	private int cartId;
 	private String date;
+	private String address;
 	private int cancelYn;
 	
 	public OrderDto() {
 		
 	}
 
-	public OrderDto(int id, int cartId, String date, int cancelYn) {
+	public OrderDto(int id, int cartId, String date, String address, int cancelYn) {
 		super();
 		this.id = id;
 		this.cartId = cartId;
 		this.date = date;
+		this.address = address;
 		this.cancelYn = cancelYn;
 	}
 
@@ -43,6 +45,14 @@ public class OrderDto {
 		this.date = date;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public int getCancelYn() {
 		return cancelYn;
 	}
@@ -53,8 +63,8 @@ public class OrderDto {
 
 	@Override
 	public String toString() {
-		return "OrderDto [id=" + id + ", cartId=" + cartId + ", date=" + date + ", cancelYn=" + cancelYn + "]";
+		return "OrderDto [id=" + id + ", cartId=" + cartId + ", date=" + date + ", address=" + address + ", cancelYn="
+				+ cancelYn + "]";
 	}
-	
 	
 }
