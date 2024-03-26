@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-<mapper namespace="com.pickme.beeze.manager.dao.ManagerPurchaseOrderDao">
+<mapper namespace="com.pickme.beeze.manager.dao.ManagerDao">
 <select id="purchaseorderlist" parameterType="com.pickme.beeze.manager.dto.ManagerPurchaseDto" resultType="com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam" >
     select product.name as `productName`, 
            product.url as `productUrl`, 
@@ -47,6 +47,34 @@
 	set po_yn = 1
 	where id=#{id}
 </update>
+
+<!-- 매출 차트를 위한 전체 order 목록  -->
+<select id="orderchart" parameterType="com.pickme.beeze.manager.dto.OrderDto" resultType="com.pickme.beeze.manager.dto.OrderChartDto">
+	select 
+	    o.id as orderId,
+	    o.cart_id as cartId,
+	    c.customer_id as customerId,
+	    p.name as productName,
+	
+	    sp.exp_date as expDate,
+	    p.price as unitPrice,
+	    c.quantity as orderQuantity,
+	    (p.price * c.quantity) as totalPrice,
+	    s.name as storeName
+	FROM 
+	    `order` o
+	INNER JOIN 
+	    cart c ON o.cart_id = c.id
+	INNER JOIN 
+	    store_product sp on c.s_product_id = sp.id
+	INNER JOIN 
+	    product p on sp.product_id = p.id
+	INNER JOIN 
+	    store s on sp.store_id = s.id
+	WHERE 
+	    o.cancel_yn = 0 
+	    AND c.order_yn = 0;
+</select>
 
 
 

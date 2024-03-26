@@ -28,6 +28,10 @@ public class CcbService {
 	public CcbDto ccbdetail(int id) {
 		return dao.ccbdetail(id);
 	}
+	// 1:1 문의 게시글 지우기
+	public void ccbdelete(int id) {
+		dao.ccbdelete(id);
+	}
 	// 1:1 문의 댓글 보기
 	public List<CcbaDto> ccbcommentlist(int ccbId) {
 		return dao.ccbcommentlist(ccbId);

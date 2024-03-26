@@ -42,6 +42,16 @@ public class CcbController {
 		return dto;
 	}
 	
+	// 게시판 글 지우기
+	@GetMapping("/ccbdelete")
+	public List<CcbDto> ccbdelete(CcbDto dto) {
+		System.out.println("CcbController ccbdelete " + new Date());
+		
+		service.ccbdelete(dto.getId());
+		
+		return service.ccblist(dto);
+	}
+	
 	// 댓글 불러오기
 	@GetMapping("/ccbcommentlist")
 	public List<CcbaDto> ccbcommentlist(int ccbId) {

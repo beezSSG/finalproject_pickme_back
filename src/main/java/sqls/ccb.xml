@@ -17,6 +17,11 @@
 	where id=#{id}
 </select>
 
+<delete id="ccbdelete">
+	delete from ccb
+	where id=#{id}
+</delete>
+
 <select id="ccbcommentlist" parameterType="Integer" resultType="com.pickme.beeze.manager.dto.CcbaDto">
 	select id, ccb_id as `ccbId`, manager_id as `managerId`, content, create_at as `createAt`
 	from ccba
