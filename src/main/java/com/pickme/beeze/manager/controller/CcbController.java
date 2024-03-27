@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.manager.dto.CcbParam;
 import com.pickme.beeze.manager.dto.CcbaDto;
 import com.pickme.beeze.manager.service.CcbService;
 
@@ -32,6 +33,19 @@ public class CcbController {
 		return ccblist;
 	}
 	
+	// 카테고리 별 글 개수
+	@GetMapping("/ccbcategorycount")
+	public List<CcbParam> ccbcategorycount(CcbDto dto) {
+		System.out.println("CcbController ccbcategorycount " + new Date());
+		
+		List<CcbParam> ccbcategorycountlist = service.ccbcategorycount(dto);
+		for (CcbParam ccbParam : ccbcategorycountlist) {
+			System.out.println("CcbDto : " + ccbParam);
+		}
+		
+		return ccbcategorycountlist;
+	}
+	
 	// 게시판 글 링크를 눌렸을 경우 상세화면
 	@GetMapping("/ccbdetail")
 	public CcbDto ccbdetail(int id) {
@@ -40,6 +54,16 @@ public class CcbController {
 		CcbDto dto = service.ccbdetail(id);
 		
 		return dto;
+	}
+	
+	// 게시판 글 지우기
+	@GetMapping("/ccbdelete")
+	public List<CcbDto> ccbdelete(CcbDto dto) {
+		System.out.println("CcbController ccbdelete " + new Date());
+		
+		service.ccbdelete(dto.getId());
+		
+		return service.ccblist(dto);
 	}
 	
 	// 댓글 불러오기

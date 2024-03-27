@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.pickme.beeze.manager.dao.CcbDao;
 import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.manager.dto.CcbParam;
 import com.pickme.beeze.manager.dto.CcbaDto;
 
 
@@ -24,9 +25,17 @@ public class CcbService {
 	public List<CcbDto> ccblist(CcbDto dto) {
 		return dao.ccblist(dto);
 	}
+	// 관리자 카테고리 별 문의 글 개수
+	public List<CcbParam> ccbcategorycount(CcbDto dto) {
+		return dao.ccbcategorycount(dto);
+	}
 	// 1:1 문의 게시글 상세보기
 	public CcbDto ccbdetail(int id) {
 		return dao.ccbdetail(id);
+	}
+	// 1:1 문의 게시글 지우기
+	public void ccbdelete(int id) {
+		dao.ccbdelete(id);
 	}
 	// 1:1 문의 댓글 보기
 	public List<CcbaDto> ccbcommentlist(int ccbId) {

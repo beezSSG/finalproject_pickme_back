@@ -85,6 +85,13 @@
 	</if>
 </select>
  
- 
- 
+ <!-- 모든 매장 list -->
+<select id="storelist" resultType="com.pickme.beeze.store.dto.StoreDto">
+	select name, lon, lat, tel, address,
+	open_ended as `openEnded`, unmanned, delivery, atm, 
+	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
+	smoothieking, apple_acc as `appleAcc`, toto
+	from store
+</select>
+
 </mapper>

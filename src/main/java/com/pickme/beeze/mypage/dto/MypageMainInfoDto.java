@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Alias("MyInfoDto")
 public class MypageMainInfoDto {
-	private int id;
-	private String name;
-	private int point;
-	private int grade;
 	private int cartQuantity;
+	private int point;
 	private int couponQuantity;
 	private int saveQuantity;
 	private int giftQuantity;
+	private int id;
+	private String name;
+	private String grade;
 }
