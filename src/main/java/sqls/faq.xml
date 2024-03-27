@@ -25,8 +25,8 @@
 
 <!--  faq 생성 -->
 <insert id="faqcreate" parameterType="com.pickme.beeze.manager.dto.FaqDto">
-	insert into faq(title,content,del)
-	values(#{title},#{content},0)
+	insert into faq(title,content,del,readcount)
+	values(#{title},#{content},0,0)
 </insert>
 
 <!-- faq 삭제(del을 1로) -->
@@ -35,4 +35,19 @@
 	set del = 1
 	where id=#{id}
 </update>
+
+<!-- faq 조회수 카운트 -->
+<update id="faqreadcount" parameterType="Integer">
+	update faq
+	set readcount = readcount+1
+	where id=#{id}
+</update>
+
+<!-- top faq 리스트 -->
+<select id="topfaqlist" parameterType="com.pickme.beeze.manager.dto.FaqDto" resultType="com.pickme.beeze.manager.dto.FaqDto">
+	select id, title, content, del, readcount
+	from faq
+	order by readcount desc
+	limit 10;
+</select>
 </mapper>

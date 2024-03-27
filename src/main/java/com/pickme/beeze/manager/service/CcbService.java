@@ -53,4 +53,8 @@ public class CcbService {
 	public void ccbcommentdelete(int id) {
 		dao.ccbcommentdelete(id);
 	}
+	// 1:1 답변 안된 리스트 개수
+	public int notanswercount(CcbDto dto) {
+		return dao.notanswercount(dto);
+	}
 }

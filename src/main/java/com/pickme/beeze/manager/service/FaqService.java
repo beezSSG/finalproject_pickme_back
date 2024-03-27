@@ -31,4 +31,12 @@ public class FaqService {
 		int count = dao.faqdelete(id);
 		return count>0?true:false;
 	}
+	// faq 조회수
+	public void faqreadcount(int id) {
+		dao.faqreadcount(id);
+	}
+	// top faq 리스트
+	public List<FaqDto> topfaqlist(FaqDto dto) {
+		return dao.topfaqlist(dto);
+	}
 }

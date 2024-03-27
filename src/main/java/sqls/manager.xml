@@ -77,6 +77,12 @@
 	    AND s.address LIKE CONCAT(#{address}, '%');
 </select>
 
+<select id="notpocount" parameterType="com.pickme.beeze.manager.dto.ManagerPurchaseDto" resultType="Integer">
+	select count(*)
+	from purchase_order
+    where po_yn = 0;
+</select>
+
 
 
 </mapper>

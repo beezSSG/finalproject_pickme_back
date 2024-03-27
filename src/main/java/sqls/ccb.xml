@@ -51,4 +51,10 @@
 	delete from ccba
 	where id=#{id}
 </delete>
+
+<select id="notanswercount" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="Integer">
+    select count(*)
+    from ccb
+    where answer_yn = 0;
+</select>
  </mapper>

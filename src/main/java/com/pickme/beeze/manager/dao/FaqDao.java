@@ -18,5 +18,9 @@ public interface FaqDao {
 	int faqcreate(FaqDto dto);
 	// faq 삭제
 	int faqdelete(int id);
+	// faq 조회수
+	void faqreadcount(int id);
+	// top faq 리스트
+	List<FaqDto> topfaqlist(FaqDto dto);
 
 }

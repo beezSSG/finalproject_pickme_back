@@ -23,5 +23,6 @@ public interface ManagerDao {
 	int getPurchaseOrderCount(ManagerPurchaseDto dto);
 	// 전체 주문 차트 보기
 	List<OrderChartDto> orderchart(OrderDto dto);
-	
+	// 발주 안된 목록 개수
+	int notpocount(ManagerPurchaseDto dto);
 }
