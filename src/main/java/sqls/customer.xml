@@ -45,6 +45,29 @@
 	 WHERE customer_id = #{customerId} and s_product_id = #{sProductId}
 </update>
 
+
+	<!-- 찜하기 -->
+<!-- 찜 목록 확인 (중복여부 체크) -->
+<select id="checkZZIM" parameterType="map" resultType="Integer">
+	select count(*)
+	from save
+	where product_id = #{productId} and customer_email = #{customerEmail}
+</select>
+
+<!-- 상품 찜 추가 -->
+<insert id="insertZZIM" parameterType="map">
+	insert into save(product_id, customer_email)
+	values ( #{productId}, #{customerEmail})
+</insert>
+
+<!-- 상품 찜 추가 -->
+<delete id="deleteZZIM" parameterType="map">
+	delete from save
+	where product_id = #{productId} and customer_email = #{customerEmail}
+</delete>
+
+
+
 <!-- 주문하기 -->
 <insert id="order" parameterType="Integer">
 	insert into `order`(cart_id,date)

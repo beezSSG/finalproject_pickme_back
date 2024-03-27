@@ -27,4 +27,11 @@ public interface CustomerDao {
 	// 주문하기
 	int order(int id);
 
+	// 찜 중복 확인
+	int checkZZIM(int productId, String customerEmail);
+	// 상품 찜 추가
+	int insertZZIM(int productId, String customerEmail);
+	// 상품 찜 삭제
+	int deleteZZIM(int productId, String customerEmail);
+
 }
