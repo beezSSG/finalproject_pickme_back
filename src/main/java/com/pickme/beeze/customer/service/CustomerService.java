@@ -43,6 +43,21 @@ public class CustomerService {
 		dao.changeMyQuantity(dto);
 	}
 	
+
+	// 찜 중복 확인
+	public boolean checkZZIM(int productId, String customerEmail) {
+		return dao.checkZZIM(productId, customerEmail)>0 ? true:false;
+	}
+	// 상품 찜 추가
+	public boolean insertZZIM(int productId, String customerEmail) {
+		return dao.insertZZIM(productId, customerEmail)>0 ? true:false;
+	}
+	// 상품 찜 삭제
+	public boolean deleteZZIM(int productId, String customerEmail) {
+		return dao.deleteZZIM(productId, customerEmail)>0 ? true:false;
+	}
+	
+	
 	// 주문하기
 	public boolean order(int id) {
 		int count = dao.order(id);

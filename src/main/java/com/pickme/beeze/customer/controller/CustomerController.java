@@ -54,6 +54,45 @@ public class CustomerController {
 		}
 	} 
 	
+	@GetMapping("/checkZZIM")
+	public String checkZZIM(int productId, String customerEmail) {
+		System.out.println("CustomerController checkZZIM " + new Date());
+		
+		boolean isS = service.checkZZIM(productId, customerEmail);		
+		if(isS) {
+			return "YES";
+		}
+		else {
+			return "NO";
+		}
+	}
+	
+	@PostMapping("/insertZZIM")
+	public String insertZZIM(int productId, String customerEmail) {
+		System.out.println("CustomerController insertZZIM " + new Date());
+		
+		boolean isS = service.insertZZIM(productId, customerEmail);		
+		if(isS) {
+			return "YES";
+		}
+		else {
+			return "NO";
+		}
+	}
+	
+	@PostMapping("/deleteZZIM")
+	public String deleteZZIM(int productId, String customerEmail) {
+		System.out.println("CustomerController deleteZZIM " + new Date());
+		
+		boolean isS = service.deleteZZIM(productId, customerEmail);		
+		if(isS) {
+			return "YES";
+		}
+		else {
+			return "NO";
+		}
+	}
+	
 	// 내 장바구니 목록 불러오기
 	@GetMapping("/cart/getCart")
 	public List<CartDto> getCart(Authentication Authentication, HttpServletRequest request) {
