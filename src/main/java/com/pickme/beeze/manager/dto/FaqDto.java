@@ -6,17 +6,19 @@ public class FaqDto {
 	private String title;
 	private String content;
 	private int del; // 0: 삭제 전, 1: 삭제 후
+	private int readcount;
 	
 	public FaqDto() {
 		
 	}
 
-	public FaqDto(int id, String title, String content, int del) {
+	public FaqDto(int id, String title, String content, int del, int readcount) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.del = del;
+		this.readcount = readcount;
 	}
 
 	public int getId() {
@@ -51,10 +53,18 @@ public class FaqDto {
 		this.del = del;
 	}
 
+	public int getReadcount() {
+		return readcount;
+	}
+
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
+
 	@Override
 	public String toString() {
-		return "FaqDto [id=" + id + ", title=" + title + ", content=" + content + ", del=" + del + "]";
+		return "FaqDto [id=" + id + ", title=" + title + ", content=" + content + ", del=" + del + ", readcount="
+				+ readcount + "]";
 	}
-	
-	
+
 }

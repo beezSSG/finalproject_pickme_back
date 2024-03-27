@@ -31,5 +31,7 @@ public interface CcbDao {
 	void ccbcommentwriteAf(CcbaDto dto);
 	// 1:1 문의 관리자 댓글 삭제
 	void ccbcommentdelete(int id);
+	// 1:1 문의 답변 안된 리스트 개수
+	int notanswercount(CcbDto dto);
 	
 }

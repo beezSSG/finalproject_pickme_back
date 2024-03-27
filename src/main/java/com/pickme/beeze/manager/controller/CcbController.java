@@ -104,4 +104,13 @@ public class CcbController {
 		return service.ccbcommentlist(dto.getCcbId());
 	}
 	
+	// 1:1 문의 답변 안된 리스트 개수
+	@GetMapping("/notanswercount")
+	public int notanswercount(CcbDto dto) {
+		
+		System.out.println("CcbController notanswercount " + new Date());
+		
+		return service.notanswercount(dto);
+	}
+	
 }

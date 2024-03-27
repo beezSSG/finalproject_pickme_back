@@ -63,4 +63,21 @@ public class FaqController {
 		}
 
 	}
+	
+	// faq 조회수
+	@GetMapping("/faqreadcount")
+	public void faqreadcount(int id) {
+		
+		System.out.println("FaqController faqreadcount " + new Date());
+		service.faqreadcount(id);
+	}
+	
+	// top faq 리스트
+	@GetMapping("/topfaqlist")
+	public List<FaqDto> topfaqlist(FaqDto dto) {
+		
+		System.out.println("FaqController topfaqlist " + new Date());
+		
+		return service.topfaqlist(dto);
+	}
 }

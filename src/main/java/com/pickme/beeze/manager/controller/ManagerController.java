@@ -84,4 +84,13 @@ public class ManagerController {
 		
 		return service.orderchart(dto);
 	}
+	
+	// 발주 승인 안된 목록 개수
+	@GetMapping("/notpocount")
+	public int notpocount(ManagerPurchaseDto dto) {
+		
+		System.out.println("OrderChartController notpocount " + new Date());
+		
+		return service.notpocount(dto);
+	}
 }

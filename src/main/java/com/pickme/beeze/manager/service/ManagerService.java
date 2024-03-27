@@ -37,4 +37,8 @@ public class ManagerService {
 	public List<OrderChartDto> orderchart(OrderDto dto) {
 		return dao.orderchart(dto);
 	}
+	// 발주승인 안된 목록 개수
+	public int notpocount(ManagerPurchaseDto dto) {
+		return dao.notpocount(dto);
+	}
 }
