@@ -24,22 +24,22 @@ public class MypageService {
 	
 	// 나의 정보 불러오기
 	public MypageMainInfoDto getMyInfo(MypageMainInfoDto dto) {
+		
+		/*
+		MypageMainInfoDto d = dao.getMyInfo(dto);
+		int i = dao.getMyInfoTwo(email);
+		d.setSaveQuantity(i);
+		return d;
+		*/
 		return dao.getMyInfo(dto);
 	};
 	
 	/* TODO 찜 */
-	// 찜생성
-	public int addSave(MypageSaveDto dto) {
-		return dao.addSave(dto);
-	}
 	// 찜목록 불러오기
-	public List<MypageSaveDto> getSave(){
-		return dao.getSave();
+	public List<MypageSaveDto> getSave(int id){
+		return dao.getSave(id);
 	}
-	// 찜삭제
-	public int delSave(MypageSaveDto dto) {
-		return dao.delSave(dto);
-	}
+
 	
 	/* TODO 개인정보 */
 	// 개인정보 보기

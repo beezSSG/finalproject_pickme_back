@@ -57,10 +57,15 @@ public class CustomerService {
 		return dao.deleteZZIM(productId, customerEmail)>0 ? true:false;
 	}
 	
-	
 	// 주문하기
-	public boolean order(int id) {
-		int count = dao.order(id);
-		return count>0?true:false;
+	public void order(CartDto dto) {
+	    // #1. 구매한 물품에 대한 주문완료 처리
+		dao.order(dto);
+	    // #2. 구매물품을 장바구니 화면에서 제거
+		dao.buyCart(dto);
+
+	    // #3. 구매물품에 대한 수량을 지점 점포에 수량에 맞춰 처리
+		CartDto d = dao.cartQuantity(dto);
+		dao.minusStoreProductQuantity(d);
 	}
 }

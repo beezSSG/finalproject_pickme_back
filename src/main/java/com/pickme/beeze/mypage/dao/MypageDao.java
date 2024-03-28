@@ -21,14 +21,11 @@ public interface MypageDao {
 	
 	// 나의 정보 불러오기
 	MypageMainInfoDto getMyInfo(MypageMainInfoDto dto);
+	// int getMyInfoTwo(String email);
 	
 	/* TODO 찜 */
-	// 찜생성
-	int addSave(MypageSaveDto dto);
 	// 찜목록 불러오기
-	List<MypageSaveDto> getSave();
-	// 찜삭제
-	int delSave(MypageSaveDto dto);
+	List<MypageSaveDto> getSave(int id);
 		
 	/* TODO 개인정보 */
 	// 개인정보 보기

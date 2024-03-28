@@ -18,8 +18,7 @@ public class CartDto {
 	private int orederYn;
 	private int quantity;
 	private String productName;
-	private String productPrice;
+	private int productPrice;
 	private String productUrl;
-	
-
+	private int pickDel;
 }
