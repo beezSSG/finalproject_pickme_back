@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.ceo.dto.PurchaseDto;
+import com.pickme.beeze.manager.dto.EventDto;
+import com.pickme.beeze.manager.dto.EventEnddateDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam;
 import com.pickme.beeze.manager.dto.OrderChartDto;
@@ -82,7 +84,10 @@ public class ManagerController {
 		
 		System.out.println("OderDto :" + dto.toString());
 		
-		return service.orderchart(dto);
+		List<OrderChartDto> list = service.orderchart(dto);
+		System.out.println("OderCharDto :" + list.toString());
+		
+		return list;
 	}
 	
 	// 발주 승인 안된 목록 개수
@@ -92,5 +97,14 @@ public class ManagerController {
 		System.out.println("OrderChartController notpocount " + new Date());
 		
 		return service.notpocount(dto);
+	}
+	
+	// 종료날짜를 담은 이벤트 목록
+	@GetMapping("/eventenddate")
+	public List<EventEnddateDto> eventenddate(EventDto dto) {
+		
+		System.out.println("ManagerController eventenddate " + new Date());
+		
+		return service.eventenddate(dto);
 	}
 }

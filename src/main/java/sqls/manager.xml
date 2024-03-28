@@ -50,7 +50,7 @@
 
 <!-- 매출 차트를 위한 전체 order 목록  -->
 <select id="orderchart" parameterType="com.pickme.beeze.manager.dto.OrderDto" resultType="com.pickme.beeze.manager.dto.OrderChartDto">
-	SELECT 
+	select 
 	    o.id as orderId,
 	    o.cart_id as cartId,
 	    c.customer_id as customerId,
@@ -60,21 +60,21 @@
 	    c.quantity as orderQuantity,
 	    (p.price * c.quantity) as totalPrice,
 	    s.name as storeName
-	FROM 
+	from 
 	    `order` o
-	INNER JOIN 
+	inner join 
 	    cart c ON o.cart_id = c.id
-	INNER JOIN 
+	inner join
 	    store_product sp on c.s_product_id = sp.id
-	INNER JOIN 
+	inner join
 	    product p on sp.product_id = p.id
-	INNER JOIN 
+	inner join 
 	    store s on sp.store_id = s.id
-	WHERE 
+	where 
 	    o.cancel_yn = 0 
-	    AND c.order_yn = 0
-	    AND DATE_FORMAT(o.date, '%Y-%m-%d') = #{date}
-	    AND s.address LIKE CONCAT(#{address}, '%');
+	    and c.order_yn = 1
+	    and date_format(o.date, '%Y-%m-%d') = #{date}
+	    and s.address like concat(#{address}, '%');
 </select>
 
 <select id="notpocount" parameterType="com.pickme.beeze.manager.dto.ManagerPurchaseDto" resultType="Integer">
@@ -82,6 +82,12 @@
 	from purchase_order
     where po_yn = 0;
 </select>
+
+<select id="eventenddate" parameterType="com.pickme.beeze.manager.dto.EventDto" resultType="com.pickme.beeze.manager.dto.EventEnddateDto">
+ 	select end_date as `endDate`
+ 	from promotion_post
+ 	where promotion_yn = 0;
+ </select>
 
 
 

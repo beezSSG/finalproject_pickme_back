@@ -39,10 +39,7 @@ public class CcbController {
 		System.out.println("CcbController ccbcategorycount " + new Date());
 		
 		List<CcbParam> ccbcategorycountlist = service.ccbcategorycount(dto);
-		for (CcbParam ccbParam : ccbcategorycountlist) {
-			System.out.println("CcbDto : " + ccbParam);
-		}
-		
+
 		return ccbcategorycountlist;
 	}
 	

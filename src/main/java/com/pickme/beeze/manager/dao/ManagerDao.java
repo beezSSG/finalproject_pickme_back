@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.ceo.dto.PurchaseDto;
+import com.pickme.beeze.manager.dto.EventDto;
+import com.pickme.beeze.manager.dto.EventEnddateDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam;
 import com.pickme.beeze.manager.dto.OrderChartDto;
@@ -25,4 +27,6 @@ public interface ManagerDao {
 	List<OrderChartDto> orderchart(OrderDto dto);
 	// 발주 안된 목록 개수
 	int notpocount(ManagerPurchaseDto dto);
+	// 종료날짜를 담은 이벤트 목록
+	List<EventEnddateDto> eventenddate(EventDto dto);
 }
