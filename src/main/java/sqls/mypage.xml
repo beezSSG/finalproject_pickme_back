@@ -5,6 +5,7 @@
 <mapper namespace="com.pickme.beeze.mypage.dao.MypageDao">
  
 <!-- 마이페이지 메인화면 정보 확인 [장바구니 수량, 포인트, 쿠폰, 찜 목록, 선물함] -->
+<!-- 장바구니 물품을 구매하거나 쿠폰을 사용하고나면 집계되지 않도록 해야한다. -->
 <select id="getMyInfo" parameterType="MyInfoDto" resultType="MyInfoDto">
 SELECT cu.name, cu.grade, cu.point, count(DISTINCT ca.id) as `cartQuantity`, count(DISTINCT co.id) as `couponQuantity`, count(DISTINCT s.id) as `saveQuantity`, count(DISTINCT g.id) as `giftQuantity`
   FROM customer_info cu
@@ -15,24 +16,21 @@ SELECT cu.name, cu.grade, cu.point, count(DISTINCT ca.id) as `cartQuantity`, cou
  WHERE cu.id = #{id};
 </select>
 
+<!-- <select id="getMyInfoTwo" parameterType="String" resultType="Integer">
+SELECT count(*)
+  FROM save
+ WHERE customer_email = #{email}
+</select> -->
+
+
 	<!-- 찜 -->
-<!-- 찜 추가 -->
-<insert id="addSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
-	insert into save(product_id, customer_id)
-	values (#{productId}, #{customerId})
-</insert>
-
 <!-- 찜목록 가져오기 -->
-<select id="getSave" resultType="com.pickme.beeze.mypage.dto.MypageSaveDto">
-	select product_id as `productId`, customer_id as `customerId`
-	  from save
+<select id="getSave" parameterType="Integer" resultType="MypageSaveDto">
+	select p.id, p.name, p.price, p.url, p.product_rating 
+	  from save s
+	 INNER JOIN product p ON s.product_id = p.id
+	 WHERE s.customer_id = #{id}
 </select>
-
-<!-- 찜목록 삭제 -->
-<delete id="delSave" parameterType="com.pickme.beeze.mypage.dto.MypageSaveDto">
-	delete from save
-	 where product_id = #{productId} and customer_id = #{customerId}
-</delete>
 
 	<!-- 리뷰 -->
 <!-- 리뷰추가 -->
@@ -55,9 +53,9 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 </delete>
 
 	<!-- 개인정보 관리  -->
-<!-- 개인정보 보기 포인트는 이것을 통해서 보기-->
+<!-- 개인정보 보기-->
 <select id="getUserInfo" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
-	select email, pw, name, address, phone, point, grade
+	select email, name, address, phone, point, grade, rdate
 	  from customer_info
 	 where id = #{id}
 	 <!-- id = customer_id -->
@@ -66,7 +64,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 <!-- 개인정보 수정 -->
 <update id="updateUserInfo" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
 	update customer_info
-	   set email = #{email}, pw = #{pw}, name = #{name}, address = #{address}, phone = #{phone}
+	   set address = #{address}, phone = #{phone}
 	 where id = #{id}
 </update>
 

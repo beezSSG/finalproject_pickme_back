@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -92,6 +93,7 @@ public class CustomerController {
 			return "NO";
 		}
 	}
+
 	
 	// 내 장바구니 목록 불러오기
 	@GetMapping("/cart/getCart")
@@ -145,19 +147,20 @@ public class CustomerController {
 	}
 
 	// 주문하기
-	@GetMapping("/order")
-	public String order(@RequestParam List<Integer> ids) { // 장바구니 id 목록
+	@PostMapping("/order")
+	public String order(@RequestBody List<Integer> checkItems, int pickDel) { // 장바구니 id 목록
 	    System.out.println("CustomerController order " + new Date());
 	    
-	    // 각 장바구니 id에 대해 주문을 처리
-	    for (Integer id : ids) {
-	        boolean isS = service.order(id);
-	        if (!isS) {
-	            return "NO";
-	        }
-	    }
+	    CartDto dto = new CartDto();
+	    dto.setPickDel(pickDel);
 	    
-	    return "YES";
+	    System.out.println(checkItems);
+	    for (Integer id : checkItems) {
+	    	// System.out.println(id);
+	    	dto.setId(id);
+	        service.order(dto);	        
+	    }
+	    return "제대로 작업이 완료되었습니다";
 	}
 	
 	/* 택배 신청 */

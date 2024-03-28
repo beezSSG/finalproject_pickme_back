@@ -44,42 +44,21 @@ public class MypageController {
 		System.out.println("MypageController getMyInfo " + new Date());
 		
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		// String email = InfoUtil.getUserEmailInfo(Authentication, request);
 		MypageMainInfoDto dto = new MypageMainInfoDto();
 		dto.setId(id);
 				
 		return service.getMyInfo(dto);
 	}
 	
-	// TODO 찜
-	// 찜 생성
-	@PostMapping("/save/addSave")
-	public int addSave(MypageSaveDto dto) {	// 유저 토큰이 들어와야함
-		System.out.println("MypageController addSave " + new Date());
-		
-		System.out.println(dto.toString());
-		// 유저정보 받아오기
-		
-		// 제품정보 받아오기
-		
-		// 받아온 정보로 dto 생성
-		
-		return service.addSave(dto);
-	}
-	
+	// TODO 찜	
 	// 찜목록 불러오기
 	@GetMapping("/save/getSave")
-	public List<MypageSaveDto> getSave() {
+	public List<MypageSaveDto> getSave(Authentication Authentication, HttpServletRequest request) {
 		System.out.println("MypageController getSave " + new Date());
 		
-		return service.getSave();
-	}
-	
-	// 찜 삭제
-	@DeleteMapping("/save/delSave")
-	public int delSave(MypageSaveDto dto) {
-		System.out.println("MypageController delSave " + new Date());
-		
-	    return service.delSave(dto);
+    	int id = InfoUtil.getUserIdInfo(Authentication, request);
+		return service.getSave(id);
 	}
 	
 	// TODO 챗봇
