@@ -22,6 +22,13 @@ public class EventDto {
 		this.endDate = endDate;
 		this.promotionYn = promotionYn;
 	}
+	
+	
+
+	public EventDto(String endDate) {
+		super();
+		this.endDate = endDate;
+	}
 
 	public int getId() {
 		return id;

@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.manager.dao.ManagerDao;
+import com.pickme.beeze.manager.dto.EventDto;
+import com.pickme.beeze.manager.dto.EventEnddateDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseOrderParam;
 import com.pickme.beeze.manager.dto.OrderChartDto;
@@ -40,5 +42,9 @@ public class ManagerService {
 	// 발주승인 안된 목록 개수
 	public int notpocount(ManagerPurchaseDto dto) {
 		return dao.notpocount(dto);
+	}
+	// 종료날짜를 담은 이벤트 목록
+	public List<EventEnddateDto> eventenddate(EventDto dto) {
+		return dao.eventenddate(dto);
 	}
 }
