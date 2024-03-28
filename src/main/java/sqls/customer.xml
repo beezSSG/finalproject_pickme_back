@@ -75,11 +75,13 @@
 	VALUES(#{id}, now(), 0 , #{pickDel})
 </insert>
 
+
 <!-- 택배 예약하기 -->
 <insert id="postreservation" parameterType="PostDto">
 	insert into post(customer_id,to_user,to_address,reservation_name,item_price,item_weight)
 	values(#{customerId},#{toUser},#{toAddress},#{reservationName},#{itemPrice},#{itemWeight})
 </insert>
+
 <!-- 장바구니에서 제거  -->
 <update id="buyCart" parameterType="CartDto">
 	UPDATE cart
@@ -101,5 +103,6 @@
 </update>
 	
 	<!-- 결제 취소시 행동 -->
+
 
 </mapper>
