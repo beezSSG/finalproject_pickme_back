@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.customer.dao.CustomerDao;
 import com.pickme.beeze.customer.dto.CartDto;
+import com.pickme.beeze.customer.dto.PostDto;
 
 @Service
 @Transactional
@@ -62,5 +63,10 @@ public class CustomerService {
 	public boolean order(int id) {
 		int count = dao.order(id);
 		return count>0?true:false;
+	}
+	
+	// 택배 예약 신청
+	public boolean postreservation(PostDto dto) {
+		return dao.postreservation(dto)>0?true:false;
 	}
 }

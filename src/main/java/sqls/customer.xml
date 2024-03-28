@@ -74,4 +74,10 @@
 	values(#{id}, now())
 </insert>
 
+<!-- 택배 예약하기 -->
+<insert id="postreservation" parameterType="PostDto">
+	insert into post(customer_id,to_user,to_address,reservation_name,item_price,item_weight)
+	values(#{customerId},#{toUser},#{toAddress},#{reservationName},#{itemPrice},#{itemWeight})
+</insert>
+
 </mapper>

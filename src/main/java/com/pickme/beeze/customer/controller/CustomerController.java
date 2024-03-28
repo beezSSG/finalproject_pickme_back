@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.customer.dto.CartDto;
+import com.pickme.beeze.customer.dto.PostDto;
 import com.pickme.beeze.customer.service.CustomerService;
 import com.pickme.beeze.util.InfoUtil;
 
@@ -160,7 +161,28 @@ public class CustomerController {
 	    return "YES";
 	}
 	
-	/* 택배 신청 */
+	// 택배 신청하기
+	@PostMapping("postreservation") 
+	public String postreservation(Authentication Authentication, HttpServletRequest request, PostDto dto) {
+		
+		System.out.println("CustomerController test " + new Date());
+		
+		
+    	
+    	int id = InfoUtil.getUserIdInfo(Authentication, request);
+    	System.out.println("id = " + id);
+    	dto.setCustomerId(id);
+    	System.out.println("PostDto : " + dto.toString());
+    	
+    	boolean isS = service.postreservation(dto);
+    	
+    	if(isS) {
+    		return "YES";
+    	}
+    	else {
+    		return "NO";
+    	}
+	}
 	
 	/* 상품 예약 (점주가 확인 후 발주 할 수 있도록 해야함) */
 	

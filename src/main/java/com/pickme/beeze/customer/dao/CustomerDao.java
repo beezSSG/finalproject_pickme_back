@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.customer.dto.CartDto;
+import com.pickme.beeze.customer.dto.PostDto;
 
 @Mapper
 @Repository
@@ -33,5 +34,8 @@ public interface CustomerDao {
 	int insertZZIM(int productId, String customerEmail);
 	// 상품 찜 삭제
 	int deleteZZIM(int productId, String customerEmail);
+	
+	// 택배 예약 신청
+	int postreservation(PostDto dto);
 
 }
