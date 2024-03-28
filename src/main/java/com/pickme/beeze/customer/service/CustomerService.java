@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.customer.dao.CustomerDao;
 import com.pickme.beeze.customer.dto.CartDto;
+import com.pickme.beeze.customer.dto.PostDto;
 
 @Service
 @Transactional
@@ -67,5 +68,10 @@ public class CustomerService {
 	    // #3. 구매물품에 대한 수량을 지점 점포에 수량에 맞춰 처리
 		CartDto d = dao.cartQuantity(dto);
 		dao.minusStoreProductQuantity(d);
+	}
+	
+	// 택배 예약 신청
+	public boolean postreservation(PostDto dto) {
+		return dao.postreservation(dto)>0?true:false;
 	}
 }
