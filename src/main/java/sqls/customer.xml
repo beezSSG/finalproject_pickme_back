@@ -68,16 +68,41 @@
 
 
 
-<!-- 주문하기 -->
-<insert id="order" parameterType="Integer">
-	insert into `order`(cart_id,date)
-	values(#{id}, now())
+	<!-- 주문하기 -->
+<!-- order에 넣기 -->
+<insert id="order" parameterType="CartDto">
+	INSERT INTO `order`(cart_id, date, cancel_yn, pick_del)
+	VALUES(#{id}, now(), 0 , #{pickDel})
 </insert>
+
 
 <!-- 택배 예약하기 -->
 <insert id="postreservation" parameterType="PostDto">
 	insert into post(customer_id,to_user,to_address,reservation_name,item_price,item_weight)
 	values(#{customerId},#{toUser},#{toAddress},#{reservationName},#{itemPrice},#{itemWeight})
 </insert>
+
+<!-- 장바구니에서 제거  -->
+<update id="buyCart" parameterType="CartDto">
+	UPDATE cart
+	   SET order_yn = 1
+	 WHERE id = #{id}
+</update>
+<!-- 점포 수량변경 -->
+<!-- 장바구니에 대한 수량 불러오기 -->
+<select id="cartQuantity" parameterType="CartDto" resultType="CartDto">
+	SELECT quantity, s_product_id as `sProductId`
+	  FROM cart
+	 WHERE id = #{id}
+</select>
+<!-- 수량을 점포에 바꿔 변경하기 -->
+<update id="minusStoreProductQuantity" parameterType="CartDto">
+	UPDATE store_product
+	   SET quantity = quantity - #{quantity}
+	 WHERE id = #{sProductId};
+</update>
+	
+	<!-- 결제 취소시 행동 -->
+
 
 </mapper>
