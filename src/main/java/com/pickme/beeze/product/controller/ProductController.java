@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pickme.beeze.manager.service.CcbService;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
-import com.pickme.beeze.product.dto.ProductReview;
 import com.pickme.beeze.product.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -123,17 +122,5 @@ public class ProductController {
 		
 		return newfilename;
 	}
-	
-	
-
-	
-	// 후기 목록
-	@GetMapping("/productReviewList")
-	public List<ProductReview> productReviewtList(int id) {
-		System.out.println("ProductController productReviewtList " + new Date());
-	
-		return service.productReviewtList(id);
-	}
-	
 
 }

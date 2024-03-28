@@ -46,16 +46,16 @@ public class CustomerService {
 	
 
 	// 찜 중복 확인
-	public boolean checkZZIM(int productId, String customerEmail) {
-		return dao.checkZZIM(productId, customerEmail)>0 ? true:false;
+	public boolean checkZZIM(int productId, int customerId) {
+		return dao.checkZZIM(productId, customerId)>0 ? true:false;
 	}
 	// 상품 찜 추가
-	public boolean insertZZIM(int productId, String customerEmail) {
-		return dao.insertZZIM(productId, customerEmail)>0 ? true:false;
+	public boolean insertZZIM(int productId, int customerId) {
+		return dao.insertZZIM(productId, customerId)>0 ? true:false;
 	}
 	// 상품 찜 삭제
-	public boolean deleteZZIM(int productId, String customerEmail) {
-		return dao.deleteZZIM(productId, customerEmail)>0 ? true:false;
+	public boolean deleteZZIM(int productId, int customerId) {
+		return dao.deleteZZIM(productId, customerId)>0 ? true:false;
 	}
 	
 	// 주문하기
