@@ -35,6 +35,17 @@ public class LoginController {
     @Autowired
     private JwtTokenProvider provider;
     
+    // 테스트[방식을 이렇게 해야함]
+    @GetMapping("/test")
+    public String test(Authentication Authentication, HttpServletRequest request) {
+    	System.out.println("LoginController test " + new Date());
+    	
+    	int id = InfoUtil.getUserIdInfo(Authentication, request);
+    	System.out.println("id = " + id);
+    	
+    	return "성공";
+    }
+    
     /* TODO 통합 로그인 기능 */
 	// 고객 회원가입
 	@PostMapping("/regiCustomer")
@@ -96,17 +107,6 @@ public class LoginController {
         
         // 생성된 JWT 토큰을 응답 본문에 담아 반환            
         return ResponseEntity.ok(jwt);
-    }
-
-    // 테스트[방식을 이렇게 해야함]
-    @GetMapping("/test")
-    public String test(Authentication Authentication, HttpServletRequest request) {
-    	System.out.println("LoginController test " + new Date());
-    	
-    	int id = InfoUtil.getUserIdInfo(Authentication, request);
-    	System.out.println("id = " + id);
-    	
-    	return "성공";
     }
     
     // 아이디 찾기

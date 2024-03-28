@@ -25,8 +25,14 @@ public interface CustomerDao {
 	void delCart(CartDto dto);
 	void changeMyQuantity(CartDto dto);
 	
-	// 주문하기
-	int order(int id);
+	/* TODO 주문하기 */
+	// 주문상품 order 처리
+	void order(CartDto dto);
+	// 장바구니 제거
+	void buyCart(CartDto dto);
+	// 점포 수량 변경
+	CartDto cartQuantity(CartDto dto);
+	void minusStoreProductQuantity(CartDto dto);
 
 	// 찜 중복 확인
 	int checkZZIM(int productId, String customerEmail);

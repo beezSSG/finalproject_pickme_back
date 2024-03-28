@@ -21,9 +21,17 @@ public class StoreController {
 	// 모든 매장 목록
 	@GetMapping("/storelist")
 	public List<StoreDto> storelist() {
-		System.out.println("StoreController getStoreList() " + new Date());
+		System.out.println("StoreController storelist() " + new Date());
 		return service.storelist();
 	}
+	
+	// 매장 검색
+	@GetMapping("/searchstore")
+	public List<StoreDto> searchstore() {
+		System.out.println("StoreController searchstore() " + new Date());
+		return service.searchstore();
+	}
+	
 	
 
 	// 해당 상품이 있는 매장 목록
