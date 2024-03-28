@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pickme.beeze.product.dao.ProductDao;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
-import com.pickme.beeze.product.dto.ProductReview;
 
 @Service
 @Transactional
@@ -43,10 +42,6 @@ public class ProductService {
 		dao.productRatingAvg(productId);
 	}
 	
-	// 후기 목록
-	public List<ProductReview> productReviewtList(int id){
-		return dao.productReviewList(id);
-	}
 	
 	
 	
