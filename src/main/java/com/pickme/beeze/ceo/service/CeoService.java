@@ -33,4 +33,8 @@ public class CeoService {
 	public List<ProductDto> powriteCn(ProductDto dto) {
 		return dao.powriteCn(dto);
 	}
+	
+	public boolean deleteProduct(int id) {
+		return dao.deleteProduct(id)>0?true:false;
+	}
 }

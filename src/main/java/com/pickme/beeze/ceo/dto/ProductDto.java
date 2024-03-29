@@ -19,6 +19,7 @@ public class ProductDto {
 	private String name;
 	private String categoryName;
 	private int price;
+	private int quantity;
 	private String url;
 	
 }

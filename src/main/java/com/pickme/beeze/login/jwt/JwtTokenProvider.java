@@ -118,7 +118,4 @@ public class JwtTokenProvider {
         return email;
     }
 
-
-    
-    
 }

@@ -15,6 +15,7 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.service.CeoService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
  
 
@@ -30,16 +31,20 @@ public class CeoController {
    public Map<String, Object> polist(CeoParam param) {
       
       System.out.println("CeoController polist " + new Date());
+      System.out.println(param.toString());
       
       //발주 물품 목록
       List<PurchaseDto> list = service.poList(param);  
       
       // 발주 물품 총 수
+
+      
       int count = service.getallceo(param);
       int pageBbs = count / 10;
       if( (count % 10) > 0) {
          pageBbs = pageBbs + 1;
       }
+     
       
       Map<String, Object> map = new HashMap<String, Object>();
       map.put("polist", list);
@@ -73,5 +78,15 @@ public class CeoController {
       System.out.println(lst);
       return lst;
    }
-
+   
+   // 발주 승인완료 물품 사라지기
+	@PostMapping("deleteProduct")
+	public String deleteProduct(int id) {
+		System.out.println("BbsController deleteProduct " + new Date());
+		boolean isS = service.deleteProduct(id);
+		if(isS) {
+			return "YES";
+		}
+		return "NO";
+	}
 }
