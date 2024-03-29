@@ -43,8 +43,8 @@ public class MypageService {
 	
 	/* TODO 개인정보 */
 	// 개인정보 보기
-	public MypageCustomerDto getUserInfo() {
-		return dao.getUserInfo();
+	public MypageCustomerDto getUserInfo(int id) {
+		return dao.getUserInfo(id);
 	}
 	// 개인정보 수정
 	public void updateUserInfo(MypageCustomerDto dto) {

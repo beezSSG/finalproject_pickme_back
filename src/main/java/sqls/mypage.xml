@@ -54,7 +54,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 
 	<!-- 개인정보 관리  -->
 <!-- 개인정보 보기-->
-<select id="getUserInfo" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
+<select id="getUserInfo" parameterType="Integer" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
 	select email, name, address, phone, point, grade, rdate
 	  from customer_info
 	 where id = #{id}
