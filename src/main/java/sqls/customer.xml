@@ -51,19 +51,19 @@
 <select id="checkZZIM" parameterType="map" resultType="Integer">
 	select count(*)
 	from save
-	where product_id = #{productId} and customer_email = #{customerEmail}
+	where product_id = #{productId} and customer_id = #{customerId}
 </select>
 
 <!-- 상품 찜 추가 -->
 <insert id="insertZZIM" parameterType="map">
-	insert into save(product_id, customer_email)
-	values ( #{productId}, #{customerEmail})
+	insert into save(product_id, customer_id)
+	values ( #{productId}, #{customerId})
 </insert>
 
 <!-- 상품 찜 추가 -->
 <delete id="deleteZZIM" parameterType="map">
 	delete from save
-	where product_id = #{productId} and customer_email = #{customerEmail}
+	where product_id = #{productId} and customer_id = #{customerId}
 </delete>
 
 

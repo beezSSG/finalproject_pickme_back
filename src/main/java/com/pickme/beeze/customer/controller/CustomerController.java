@@ -57,10 +57,12 @@ public class CustomerController {
 	} 
 	
 	@GetMapping("/checkZZIM")
-	public String checkZZIM(int productId, String customerEmail) {
+	public String checkZZIM(int productId, Authentication Authentication, HttpServletRequest request) {
 		System.out.println("CustomerController checkZZIM " + new Date());
+
+		int customerId = InfoUtil.getUserIdInfo(Authentication, request);
 		
-		boolean isS = service.checkZZIM(productId, customerEmail);		
+		boolean isS = service.checkZZIM(productId, customerId);		
 		if(isS) {
 			return "YES";
 		}
@@ -70,10 +72,11 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/insertZZIM")
-	public String insertZZIM(int productId, String customerEmail) {
+	public String insertZZIM(int productId, Authentication Authentication, HttpServletRequest request) {
 		System.out.println("CustomerController insertZZIM " + new Date());
 		
-		boolean isS = service.insertZZIM(productId, customerEmail);		
+		int customerId = InfoUtil.getUserIdInfo(Authentication, request);
+		boolean isS = service.insertZZIM(productId, customerId);		
 		if(isS) {
 			return "YES";
 		}
@@ -83,10 +86,11 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/deleteZZIM")
-	public String deleteZZIM(int productId, String customerEmail) {
+	public String deleteZZIM(int productId, Authentication Authentication, HttpServletRequest request) {
 		System.out.println("CustomerController deleteZZIM " + new Date());
-		
-		boolean isS = service.deleteZZIM(productId, customerEmail);		
+
+		int customerId = InfoUtil.getUserIdInfo(Authentication, request);
+		boolean isS = service.deleteZZIM(productId, customerId);		
 		if(isS) {
 			return "YES";
 		}
