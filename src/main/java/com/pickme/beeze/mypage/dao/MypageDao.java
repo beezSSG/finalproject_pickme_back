@@ -29,7 +29,7 @@ public interface MypageDao {
 		
 	/* TODO 개인정보 */
 	// 개인정보 보기
-	MypageCustomerDto getUserInfo();
+	MypageCustomerDto getUserInfo(int id);
 	// 개인정보 수정
 	void updateUserInfo(MypageCustomerDto dto);
 	

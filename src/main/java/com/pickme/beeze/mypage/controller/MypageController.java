@@ -78,10 +78,12 @@ public class MypageController {
 	// TODO 개인정보
 	// 개인정보 보기
 	@GetMapping("/user/getUserInfo")
-	public MypageCustomerDto getUserInfo() {
+	public MypageCustomerDto getUserInfo(Authentication Authentication, HttpServletRequest request) {
 		System.out.println("MypageController getUserInfo " + new Date());
 		
-		return service.getUserInfo();
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		return service.getUserInfo(id);
 	}
 	
 	// 개인정보 수정

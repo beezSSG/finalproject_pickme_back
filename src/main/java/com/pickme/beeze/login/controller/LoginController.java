@@ -96,10 +96,10 @@ public class LoginController {
         // email, pw 통한 사용자 구분
         System.out.println(dto.toString());
     	LoginDto member2 = service.selectCustomerInfo(dto);
-		if (member2.getRdate() != null || !member2.getRdate().equals("")) {	// 고객 로그인
-			member2 = service.selectCustomerInfo(dto);
-		} else {	// 점주 로그인
+		if (member2 == null || member2.getRdate() == null || member2.getRdate().equals("")) {	// 고객 로그인
 			member2 = service.selectCeoInfo(dto);
+		} else {	// 점주 로그인
+			member2 = service.selectCustomerInfo(dto);
 		}			// 관리자 로그인
 
         // JWT 토큰 생성 및 반환
