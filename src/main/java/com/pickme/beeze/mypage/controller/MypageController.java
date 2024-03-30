@@ -1,5 +1,6 @@
 package com.pickme.beeze.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
+import com.pickme.beeze.mypage.dto.MypageOrderdayDto;
+import com.pickme.beeze.mypage.dto.MypageProductDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 import com.pickme.beeze.mypage.service.MypageService;
@@ -38,6 +41,7 @@ public class MypageController {
 	@Autowired
 	MypageService service;
 	
+	// TODO 마이페이지 메인화면
 	// 유저 정보 불러오기
 	@GetMapping("/getMyInfo")
 	public MypageMainInfoDto getMyInfo(Authentication Authentication, HttpServletRequest request) {
@@ -50,7 +54,20 @@ public class MypageController {
 				
 		return service.getMyInfo(dto);
 	}
-	
+
+	// 최근 본 상품 불러오기
+	@GetMapping("/getRecentlyProduct")
+	public List<MypageProductDto> getRecentlyProduct(@RequestParam("id") List<Integer> id) {
+		System.out.println("MypageController getRecentlyProduct " + new Date());
+		
+		List<MypageProductDto> list = new ArrayList<MypageProductDto>(); 
+		for (Integer i : id) {
+			MypageProductDto dto = service.getRecentlyProduct(i);
+			list.add(dto);
+		}
+				
+		return list;
+	}
 	// TODO 찜	
 	// 찜목록 불러오기
 	@GetMapping("/save/getSave")
@@ -105,10 +122,12 @@ public class MypageController {
 
 	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까);
 	@PostMapping("/user/getCoupon")
-	public List<MypageCouponDto> getCoupon(MypageCouponDto dto) {
+	public List<MypageCouponDto> getCoupon(Authentication Authentication, HttpServletRequest request) {
 		System.out.println("MypageController getCoupon " + new Date());
 		
-		return service.getCoupon(dto);
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		return service.getCoupon(id);
 	}
 	
 	// TODO 1:1 문의 게시판
@@ -128,6 +147,16 @@ public class MypageController {
 	}
 	
 	// TODO 주문내역
+	// 내 결제정보 보기
+	@GetMapping("/MyOrdersList")
+	public 	List<MypageOrderdayDto> MyOrdersList(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("MypageController MyOrdersList " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		System.out.println(id);
+		return service.MyOrdersList(id);
+	}
+	
 	// 내 주문내역 보기
 	@GetMapping("/getMyOrderList")
 	public List<MypageOrderDto> getMyOrderList(MypageOrderDto dto) {
@@ -144,8 +173,27 @@ public class MypageController {
 		service.cancelMyOrder(dto);
 	}
 	
+	
+	
 	/* 여기서 부터는 합칠것 */
 	// TODO 리뷰
+	// 리뷰 목록 불러오기
+	@GetMapping("/review/getReview")
+	public List<MypageReviewDto> getReview(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("MypageController getReview " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		return service.getMyReview(id);
+	}
+	
+	// 리뷰 삭제
+	@DeleteMapping("/review/delReview")
+	public int delReview(MypageReviewDto dto) {
+		System.out.println("MypageController delReview " + new Date());
+		
+	    return service.delReview(dto);
+	}
+	
 	// 리뷰 생성
 	@PostMapping("/review/addReview")
 	public int addReview(MypageReviewDto dto) {	// 유저 토큰이 들어와야함
@@ -159,22 +207,6 @@ public class MypageController {
 		// 받아온 정보로 dto 생성
 		
 		return service.addReview(dto);
-	}
-	
-	// 리뷰 목록 불러오기
-	@GetMapping("/review/getReview")
-	public List<MypageReviewDto> getReview(MypageReviewDto dto) {
-		System.out.println("MypageController getReview " + new Date());
-		
-		return service.getReview(dto);
-	}
-	
-	// 리뷰 삭제
-	@DeleteMapping("/review/delReview")
-	public int delReview(MypageReviewDto dto) {
-		System.out.println("MypageController delReview " + new Date());
-		
-	    return service.delReview(dto);
 	}
 	
 }

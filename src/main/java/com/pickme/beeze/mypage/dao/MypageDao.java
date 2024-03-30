@@ -10,6 +10,8 @@ import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
+import com.pickme.beeze.mypage.dto.MypageOrderdayDto;
+import com.pickme.beeze.mypage.dto.MypageProductDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -22,6 +24,7 @@ public interface MypageDao {
 	// 나의 정보 불러오기
 	MypageMainInfoDto getMyInfo(MypageMainInfoDto dto);
 	// int getMyInfoTwo(String email);
+	MypageProductDto getRecentlyProduct(int id);
 	
 	/* TODO 찜 */
 	// 찜목록 불러오기
@@ -37,7 +40,7 @@ public interface MypageDao {
 	// 내 포인트 적립/차감 하기
 	void updatePoint(MypageCustomerDto dto);
 	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까)
-	List<MypageCouponDto> getCoupon(MypageCouponDto dto);
+	List<MypageCouponDto> getCoupon(int id);
 	
 	/* TODO 1:1 문의 게시판 */
 	// 내 문의 작성하기
@@ -46,6 +49,9 @@ public interface MypageDao {
 	List<CcbDto> getMyCcbList(CcbDto dto);
 
 	/* TODO 주문내역 */
+	// 내 주문 내역 불러오기
+	List<MypageOrderdayDto> MyOrdersList(int id);
+	
 	// 내 주문 내역 불러오기
 	List<MypageOrderDto> getMyOrderList(MypageOrderDto dto);
 	MypageOrderDto getMYOrderProduct(MypageOrderDto dto);
@@ -57,11 +63,11 @@ public interface MypageDao {
 
 	// 여기서 부터 변경
 	/* TODO 리뷰 */
-	// 리뷰작성
-	int addReview(MypageReviewDto dto);
 	// 리뷰목록 불러오기
-	List<MypageReviewDto> getReview(MypageReviewDto dto);
+	List<MypageReviewDto> getMyReview(int id);
 	// 리뷰삭제
 	int delReview(MypageReviewDto dto);
+	// 리뷰작성
+	int addReview(MypageReviewDto dto);
 	
 }

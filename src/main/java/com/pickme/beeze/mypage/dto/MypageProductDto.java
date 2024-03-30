@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Alias("MypageCouponDto")
-public class MypageCouponDto {
-
+@Alias("MypageProductDto")
+public class MypageProductDto {
+	
 	private int id;
-	private String content;
-	private String startDate;
-	private String endDate;
-	private int useYn;
+	private String name;
+	private int price;
+	private String url;
+	private int productRating; 
 }
