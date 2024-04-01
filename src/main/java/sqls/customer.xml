@@ -78,9 +78,11 @@
 
 <!-- 택배 예약하기 -->
 <insert id="postreservation" parameterType="PostDto">
-	insert into post(customer_id,to_user,to_address,reservation_name,item_price,item_weight)
-	values(#{customerId},#{toUser},#{toAddress},#{reservationName},#{itemPrice},#{itemWeight})
+	insert into post(customer_id,to_user,to_phone,to_address,reservation_name,reservation_password,item_category,item_price,item_weight,important_info,total_price,date)
+	values(#{customerId},#{toUser},#{toPhone},#{toAddress},#{reservationName},#{reservationPassword},#{itemCategory},#{itemPrice},#{itemWeight},#{importantInfo},#{totalPrice},now())
 </insert>
+
+
 
 <!-- 장바구니에서 제거  -->
 <update id="buyCart" parameterType="CartDto">
