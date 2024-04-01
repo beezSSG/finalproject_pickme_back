@@ -12,6 +12,8 @@ import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.mypage.dto.MypageOrderDto;
+import com.pickme.beeze.mypage.dto.MypageOrderdayDto;
+import com.pickme.beeze.mypage.dto.MypageProductDto;
 import com.pickme.beeze.mypage.dto.MypageReviewDto;
 import com.pickme.beeze.mypage.dto.MypageSaveDto;
 
@@ -24,7 +26,6 @@ public class MypageService {
 	
 	// 나의 정보 불러오기
 	public MypageMainInfoDto getMyInfo(MypageMainInfoDto dto) {
-		
 		/*
 		MypageMainInfoDto d = dao.getMyInfo(dto);
 		int i = dao.getMyInfoTwo(email);
@@ -33,6 +34,10 @@ public class MypageService {
 		*/
 		return dao.getMyInfo(dto);
 	};
+	// 최근본 상품 불러오기
+	public MypageProductDto getRecentlyProduct(int id) {
+		return dao.getRecentlyProduct(id);
+	}
 	
 	/* TODO 찜 */
 	// 찜목록 불러오기
@@ -43,8 +48,8 @@ public class MypageService {
 	
 	/* TODO 개인정보 */
 	// 개인정보 보기
-	public MypageCustomerDto getUserInfo() {
-		return dao.getUserInfo();
+	public MypageCustomerDto getUserInfo(int id) {
+		return dao.getUserInfo(id);
 	}
 	// 개인정보 수정
 	public void updateUserInfo(MypageCustomerDto dto) {
@@ -57,8 +62,8 @@ public class MypageService {
 		dao.updatePoint(dto);
 	}
 	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까)
-	public List<MypageCouponDto> getCoupon(MypageCouponDto dto) {
-		return dao.getCoupon(dto);
+	public List<MypageCouponDto> getCoupon(int id) {
+		return dao.getCoupon(id);
 	}
 	
 	/* TODO 1:1 문의 게시판 */
@@ -72,6 +77,11 @@ public class MypageService {
 	}
 	
 	/* TODO 주문내역 */
+	// 내 주문 내역 불러오기
+	public 	List<MypageOrderdayDto> MyOrdersList(int id) {
+		return dao.MyOrdersList(id);
+	}
+	
 	// 내 주문 내역 불러오기
 	public List<MypageOrderDto> getMyOrderList(MypageOrderDto dto) {
 		List<MypageOrderDto> list = dao.getMyOrderList(dto);
@@ -93,17 +103,17 @@ public class MypageService {
 	
 	// 여기서 부터 변경
 	/* TODO 리뷰 */
-	// 리뷰작성
-	public int addReview(MypageReviewDto dto) {
-		return dao.addReview(dto);
-	}
 	// 리뷰목록 불러오기
-	public List<MypageReviewDto> getReview(MypageReviewDto dto) {
-		return dao.getReview(dto);
+	public List<MypageReviewDto> getMyReview(int id) {
+		return dao.getMyReview(id);
 	}
 	// 리뷰삭제
 	public int delReview(MypageReviewDto dto) {
 		return dao.delReview(dto);
+	}
+	// 리뷰작성
+	public int addReview(MypageReviewDto dto) {
+		return dao.addReview(dto);
 	}
 	
 }

@@ -7,14 +7,21 @@
 <!-- 마이페이지 메인화면 정보 확인 [장바구니 수량, 포인트, 쿠폰, 찜 목록, 선물함] -->
 <!-- 장바구니 물품을 구매하거나 쿠폰을 사용하고나면 집계되지 않도록 해야한다. -->
 <select id="getMyInfo" parameterType="MyInfoDto" resultType="MyInfoDto">
-SELECT cu.name, cu.grade, cu.point, count(DISTINCT ca.id) as `cartQuantity`, count(DISTINCT co.id) as `couponQuantity`, count(DISTINCT s.id) as `saveQuantity`, count(DISTINCT g.id) as `giftQuantity`
-  FROM customer_info cu
-  LEFT JOIN cart ca ON cu.id = ca.customer_id 
-  LEFT JOIN coupon co ON cu.id = co.user_id
-  LEFT JOIN save s ON cu.id = s.customer_id
-  LEFT JOIN gift g ON cu.id = g.customer_id
- WHERE cu.id = #{id};
+	SELECT cu.name, cu.grade, cu.point, count(DISTINCT ca.id) as `cartQuantity`, count(DISTINCT co.id) as `couponQuantity`, count(DISTINCT s.id) as `saveQuantity`, count(DISTINCT g.id) as `giftQuantity`
+	  FROM customer_info cu
+	  LEFT JOIN cart ca ON cu.id = ca.customer_id 
+	  LEFT JOIN coupon co ON cu.id = co.user_id
+	  LEFT JOIN save s ON cu.id = s.customer_id
+	  LEFT JOIN gift g ON cu.id = g.customer_id
+	 WHERE cu.id = #{id};
 </select>
+
+<select id="getRecentlyProduct" parameterType="Integer" resultType="MypageProductDto">
+	SELECT id, name, price, url, product_rating
+	  FROM product
+	 WHERE id = #{id}
+</select>
+
 
 <!-- <select id="getMyInfoTwo" parameterType="String" resultType="Integer">
 SELECT count(*)
@@ -34,28 +41,29 @@ SELECT count(*)
 
 	<!-- 리뷰 -->
 <!-- 리뷰추가 -->
-<insert id="addReview" parameterType="com.pickme.beeze.mypage.dto.MypageReviewDto">
+<insert id="addReview" parameterType="MypageReviewDto">
 insert into review(product_id, customer_id, content, rating)
 values(#{productId}, #{customerId}, #{content}, #{rating})
 </insert>
 
 <!-- 리뷰보기 -->
-<select id="getReview" parameterType="com.pickme.beeze.mypage.dto.MypageReviewDto" resultType="com.pickme.beeze.mypage.dto.MypageReviewDto">
-	select product_id, content, rating
-	  from review
-	 where customer_id = #{customerId}
+<select id="getMyReview" parameterType="Integer" resultType="MypageReviewDto">
+	SELECT p.url, p.name, content, rating, product_rating
+	  FROM review r
+	 INNER JOIN product p ON r.product_id = p.id 
+	 where customer_id = #{id}
 </select>
 
 <!-- 리뷰삭제 -->
-<delete id="delReview" parameterType="com.pickme.beeze.mypage.dto.MypageReviewDto">
+<delete id="delReview" parameterType="MypageReviewDto">
 	delete from review
 	 where customer_id = #{customerId} and product_id = #{productId}
 </delete>
 
 	<!-- 개인정보 관리  -->
 <!-- 개인정보 보기-->
-<select id="getUserInfo" parameterType="com.pickme.beeze.mypage.dto.MypageCustomerDto" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
-	select email, name, address, phone, point, grade, rdate
+<select id="getUserInfo" parameterType="Integer" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
+	select email, name, address, phone, point, grade, LEFT(rdate, 10) as `rdate`
 	  from customer_info
 	 where id = #{id}
 	 <!-- id = customer_id -->
@@ -77,11 +85,18 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 </update>
 
 <!-- 내 쿠폰 보기 -->
-<select id="getCoupon" parameterType="com.pickme.beeze.mypage.dto.MypageCouponDto" resultType="com.pickme.beeze.mypage.dto.MypageCouponDto">
-	select content, start_date as `startDate`, end_date as `endDate`
+<select id="getCoupon" parameterType="Integer" resultType="com.pickme.beeze.mypage.dto.MypageCouponDto">
+	select id, content, start_date as `startDate`, end_date as `endDate`
 	  from coupon
-	 where user_id = #{id}
+	 where user_id = #{id} and use_yn = 0
 </select>
+
+<!-- 쿠폰 사용시 -->
+<update id="">
+	UPDATE coupon
+	   SET use_yn = 1
+	 WHERE id = #{id}
+</update>
 
 	<!-- 1:1문의게시판 보기 -->
 <!-- 1:1 문의 게시글 작성하기   -->
@@ -99,12 +114,26 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 </select>
 
 	<!-- 내 주문내역 -->
-<!-- 내 주문내역 불러오기 -->
+<!-- 내 주문내역 불러오기 날짜 및 해당 주문에 대한 수량-->
+<select id="MyOrdersList" parameterType="Integer" resultType="MypageOrderdayDto">
+	SELECT date, COUNT(cart_id) as quantity 
+	  FROM pickme.order o
+	 INNER JOIN cart c ON o.cart_id = c.id 
+	 WHERE cancel_yn = 0 and c.customer_id = #{id}
+	 GROUP BY date
+</select>
+
+<!-- 원하는 날짜에 대한 주문 리스트 출력 -->
+<select id="MyOrdersCartList" parameterType="MypageOrderdayDto" resultType="MypageOrderDto">
+	SELECT cart_id
+	  FROM order
+	 WHERE date = #{date} and cancel_yn = 0
+</select>
 <!-- id 주문번호 / cartId 카트번호 / date 날짜 / cancelYn 결제취소 / sProductId 제품번호 / quantity 수량 -->
 <select id="getMyOrderList" parameterType="MypageOrderDto" resultType="MypageOrderDto">
 	SELECT id, e.cart_id as `cartId`, date, cancel_yn as `cancelYn`, s_product_id as `sProductId`, quantity
-	  FROM order o INNER JOIN cart c
-	    ON e.cart_id = c.id
+	  FROM order o 
+	 INNER JOIN cart c ON o.cart_id = c.id
 	 WHERE c.customer_id = #{customerId} and order_yn = 1
 </select>
 
