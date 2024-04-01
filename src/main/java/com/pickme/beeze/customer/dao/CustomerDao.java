@@ -43,6 +43,6 @@ public interface CustomerDao {
 	
 	// 택배 예약 신청
 	int postreservation(PostDto dto);
-	int deleteZZIM(int productId, int customerId);
+
 
 }

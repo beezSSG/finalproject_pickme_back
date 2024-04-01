@@ -98,6 +98,9 @@ public class CcbController {
 		
 		service.ccbcommentdelete(dto.getId());
 		
+		// 댓글 삭제 후 상태 변화
+		service.ccbcommentdeleteAf(dto);
+		
 		return service.ccbcommentlist(dto.getCcbId());
 	}
 	
