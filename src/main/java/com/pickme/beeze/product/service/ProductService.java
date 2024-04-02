@@ -36,11 +36,6 @@ public class ProductService {
 		return count>0?true:false;
 	}
 
-
-	// 상품 평점 계산
-	void productRatingAvg(int productId) {
-		dao.productRatingAvg(productId);
-	}
 	
 	
 	

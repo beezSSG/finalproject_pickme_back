@@ -16,7 +16,12 @@ public interface ReviewDao {
 	List<ReviewDto> productReviewList(int id);
 	
 	//	후기 등록
+	int reviewInsert(ReviewDto dto);
+
+	// 상품 평점 계산
+	int productRatingAvg(int productId);
 	
-	
+	// 상품 후기 수
+	int productReviewCnt(int productId);
 
 }
