@@ -8,25 +8,38 @@ public class PostDto {
 	private int id;
 	private int customerId;
 	private String toUser;
+	private String toPhone;
 	private String toAddress;
 	private String reservationName;
+	private String reservationPassword;
 	private int itemPrice;
-	private int itemWeight;
+	private String itemWeight;
+	private String itemCategory;
+	private String importantInfo;
+	private int totalPrice;
+	private String date;
 	
 	public PostDto() {
 		
 	}
 
-	public PostDto(int id, int customerId, String toUser, String toAddress, String reservationName, int itemPrice,
-			int itemWeight) {
+	public PostDto(int id, int customerId, String toUser, String toPhone, String toAddress, String reservationName,
+			String reservationPassword, int itemPrice, String itemWeight, String itemCategory, String importantInfo,
+			int totalPrice, String date) {
 		super();
 		this.id = id;
 		this.customerId = customerId;
 		this.toUser = toUser;
+		this.toPhone = toPhone;
 		this.toAddress = toAddress;
 		this.reservationName = reservationName;
+		this.reservationPassword = reservationPassword;
 		this.itemPrice = itemPrice;
 		this.itemWeight = itemWeight;
+		this.itemCategory = itemCategory;
+		this.importantInfo = importantInfo;
+		this.totalPrice = totalPrice;
+		this.date = date;
 	}
 
 	public int getId() {
@@ -53,6 +66,14 @@ public class PostDto {
 		this.toUser = toUser;
 	}
 
+	public String getToPhone() {
+		return toPhone;
+	}
+
+	public void setToPhone(String toPhone) {
+		this.toPhone = toPhone;
+	}
+
 	public String getToAddress() {
 		return toAddress;
 	}
@@ -69,6 +90,14 @@ public class PostDto {
 		this.reservationName = reservationName;
 	}
 
+	public String getReservationPassword() {
+		return reservationPassword;
+	}
+
+	public void setReservationPassword(String reservationPassword) {
+		this.reservationPassword = reservationPassword;
+	}
+
 	public int getItemPrice() {
 		return itemPrice;
 	}
@@ -77,18 +106,52 @@ public class PostDto {
 		this.itemPrice = itemPrice;
 	}
 
-	public int getItemWeight() {
+	public String getItemWeight() {
 		return itemWeight;
 	}
 
-	public void setItemWeight(int itemWeight) {
+	public void setItemWeight(String itemWeight) {
 		this.itemWeight = itemWeight;
+	}
+
+	public String getItemCategory() {
+		return itemCategory;
+	}
+
+	public void setItemCategory(String itemCategory) {
+		this.itemCategory = itemCategory;
+	}
+
+	public String getImportantInfo() {
+		return importantInfo;
+	}
+
+	public void setImportantInfo(String importantInfo) {
+		this.importantInfo = importantInfo;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	@Override
 	public String toString() {
-		return "PostDto [id=" + id + ", customerId=" + customerId + ", toUser=" + toUser + ", toAddress=" + toAddress
-				+ ", reservationName=" + reservationName + ", itemPrice=" + itemPrice + ", itemWeight=" + itemWeight
+		return "PostDto [id=" + id + ", customerId=" + customerId + ", toUser=" + toUser + ", toPhone=" + toPhone
+				+ ", toAddress=" + toAddress + ", reservationName=" + reservationName + ", reservationPassword="
+				+ reservationPassword + ", itemPrice=" + itemPrice + ", itemWeight=" + itemWeight + ", itemCategory="
+				+ itemCategory + ", importantInfo=" + importantInfo + ", totalPrice=" + totalPrice + ", date=" + date
 				+ "]";
 	}
 

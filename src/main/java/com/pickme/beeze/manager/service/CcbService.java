@@ -49,6 +49,10 @@ public class CcbService {
 	public void ccbcommentwriteAf(CcbaDto dto) {
 		dao.ccbcommentwriteAf(dto);
 	}
+	// 1:1 문의 관리자 댓글 삭제 후 상태 변경
+	public void ccbcommentdeleteAf(CcbaDto dto) {
+		dao.ccbcommentdeleteAf(dto);
+	}
 	// 1:1 문의 관리자 댓글 삭제
 	public void ccbcommentdelete(int id) {
 		dao.ccbcommentdelete(id);

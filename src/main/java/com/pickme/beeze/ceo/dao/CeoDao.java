@@ -19,4 +19,6 @@ public interface CeoDao {
 	List<ProductDto> powrite(CeoParam param);
 	List<ProductDto> powriteCn(ProductDto dto);
 	
+	int deleteProduct(int id);
+	
 }

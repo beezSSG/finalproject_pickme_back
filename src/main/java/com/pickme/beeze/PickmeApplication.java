@@ -12,7 +12,7 @@ public class PickmeApplication {
 					.run(args);
 	}
 	
-	private static final String PROPERTIES =
+	private static final String PROPERTIES = 
 	        "spring.config.location="
 	        +"classpath:/application.properties"
 	        +",classpath:/db.properties"
