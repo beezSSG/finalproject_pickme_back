@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pickme.beeze.customer.dao.CustomerDao;
 import com.pickme.beeze.customer.dto.CartDto;
 import com.pickme.beeze.customer.dto.PostDto;
+import com.pickme.beeze.product.dto.ProductDto;
+import com.pickme.beeze.product.dto.ProductParam;
 
 @Service
 @Transactional
@@ -74,4 +76,10 @@ public class CustomerService {
 	public boolean postreservation(PostDto dto) {
 		return dao.postreservation(dto)>0?true:false;
 	}
+	
+	// 상품 예약의 상품 목록 불러오기
+	public List<ProductDto> reservationproductlist(ProductParam param) {
+		return dao.reservationproductlist(param);
+	}
+
 }
