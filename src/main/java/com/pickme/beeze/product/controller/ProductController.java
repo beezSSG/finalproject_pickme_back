@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pickme.beeze.manager.service.CcbService;
 import com.pickme.beeze.product.dto.ProductDto;
+import com.pickme.beeze.product.dto.ProductGiftDto;
+import com.pickme.beeze.product.dto.ProductGiftParam;
 import com.pickme.beeze.product.dto.ProductParam;
 import com.pickme.beeze.product.service.ProductService;
+import com.pickme.beeze.util.InfoUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -121,6 +125,44 @@ public class ProductController {
 		}
 		
 		return newfilename;
+	}
+	
+	/* 선물함기능 */
+	// 선물 보내기
+	@PostMapping("/sendGift")
+	public void sendGift(ProductGiftDto dto, Authentication Authentication, HttpServletRequest request) {
+	    System.out.println("ProductController sendGift " + new Date());
+	    	    
+	    int id = InfoUtil.getUserIdInfo(Authentication, request);
+	    dto.setSendCustomerId(id);
+	    
+	    service.sendGift(dto);	    
+	}
+	@GetMapping("/findFromUser")
+	public ProductGiftParam findFromUser(String name) {
+		System.out.println("ProductController findFromUser" + new Date());
+		
+		return service.findFromUser(name);
+	}	
+
+	// 내 선물보기
+	@GetMapping("/getMyGift")
+	public List<ProductGiftDto> getMyGift(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("ProductController getMyGift" + new Date());
+	
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		return service.getMyGift(id);
+	}
+	
+	// 선물 사용
+	@PostMapping("/useGift")
+	public void useGift(Authentication Authentication, HttpServletRequest request) {
+	    System.out.println("ProductController useGift " + new Date());
+	    	    
+	    int id = InfoUtil.getUserIdInfo(Authentication, request);
+	    
+	    service.useGift(id);
 	}
 
 }

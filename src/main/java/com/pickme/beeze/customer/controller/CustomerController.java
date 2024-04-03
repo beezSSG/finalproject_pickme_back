@@ -2,7 +2,9 @@ package com.pickme.beeze.customer.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pickme.beeze.customer.dto.CartDto;
 import com.pickme.beeze.customer.dto.PostDto;
 import com.pickme.beeze.customer.service.CustomerService;
+import com.pickme.beeze.product.dto.ProductDto;
+import com.pickme.beeze.product.dto.ProductParam;
 import com.pickme.beeze.util.InfoUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -192,5 +196,15 @@ public class CustomerController {
 	}
 	
 	/* 상품 예약 (점주가 확인 후 발주 할 수 있도록 해야함) */
+	@GetMapping("reservationproductlist")
+	public List<ProductDto> reservationproductlist(ProductParam param) {
+		
+		System.out.println(param.toString());
+		
+	    int start = (param.getPageNumber() - 1) * param.getPerPage();
+	    param.setStart(start);
+	    return service.reservationproductlist(param);
+	}
+
 	
 }

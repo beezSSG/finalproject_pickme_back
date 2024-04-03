@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.product.dao.ProductDao;
 import com.pickme.beeze.product.dto.ProductDto;
+import com.pickme.beeze.product.dto.ProductGiftDto;
+import com.pickme.beeze.product.dto.ProductGiftParam;
 import com.pickme.beeze.product.dto.ProductParam;
 
 @Service
@@ -37,7 +39,23 @@ public class ProductService {
 	}
 
 	
+	/* 선물하기 */
+	// 선물보내기
+	public void sendGift(ProductGiftDto dto) {
+		dao.sendGift(dto);
+	}
+	public ProductGiftParam findFromUser(String name) {
+		return dao.findFromUser(name);
+	};
 	
+	// 내선물 보기
+	public List<ProductGiftDto> getMyGift(int id) {
+		return dao.getMyGift(id);
+	}
+	// 선물 사용
+	public void useGift(int id) {
+		dao.useGift(id);
+	}
 	
 	
 
