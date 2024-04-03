@@ -87,5 +87,35 @@
     WHERE id = #{productId};
 </update>
 
- </mapper>
+	<!-- 선물하기 -->
+<!-- 선물보내기 비회원일경우 이메일로 보내기 -->
+<insert id="sendGift" parameterType="ProductGiftDto">
+	INSERT INTO gift(customer_id, send_customer_id, product_id, exp_day, use_yn)
+	VALUES (#{customerId}, #{sendCustomerId}, #{productId}, #{expDay}, #{useYn})
+</insert>
+
+<!-- 선물할사람 정보 조회 -->
+<select id="findFromUser" parameterType="String" resultType="ProductGiftParam">
+	SELECT id, email, name
+	  FROM customer_info
+	 WHERE name=#{name}
+</select>
+
+<!-- 내 선물목록보기 -->
+<select id="getMyGift" parameterType="Integer">
+	SELECT c.name as `giftUserName`, p.name as `productName`, p.url as `productUrl`, g.exp_day
+	  FROM gift g
+	 INNER JOIN customer_info c ON g.customer_id = c.id
+	 INNER JOIN product p ON g.product_id = p.id
+	 WHERE send_customer_id = #{id} and use_yn = 0
+</select>
+
+<!-- 선물사용 -->
+<update id="useGift" parameterType="Integer">
+	UPDATE gift 
+	   SET use_yn = 1
+	 WHERE send_customer_id = #{id}
+</update>
+
+</mapper>
  
