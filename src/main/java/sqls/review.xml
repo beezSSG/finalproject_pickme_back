@@ -12,6 +12,19 @@
 	order by id desc;
 </select>
 
+<!-- 상품 후기 작성 여부 -->
+<select id="productReviewCheck" parameterType="Map" resultType="Map">
+	select count(*) as `cnt`, customer_id as `cd`
+	from review
+	where product_id=#{id} and customer_id = #{customerId}
+</select>
+
+<!-- 리뷰 삭제 -->
+<delete id="reviewDelete" parameterType="Map">
+    delete from review
+    where product_id = #{productId} and customer_id = #{customerId} and id = #{id}
+</delete>
+
 <!-- 상품 후기 등록 -->
 <insert id="reviewInsert" parameterType="com.pickme.beeze.review.dto.ReviewDto">
 	insert into review(product_id, customer_id, content, rating)

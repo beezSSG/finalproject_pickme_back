@@ -1,7 +1,9 @@
 package com.pickme.beeze.review.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,6 +30,21 @@ public class ReviewController {
 	@Autowired
 	ReviewService service;
 	
+	// 후기 작성 여부 확인
+	@GetMapping("/productReviewCheck")
+	public Map<String, Object> productReviewCheck(int id, Authentication Authentication, HttpServletRequest request) {
+		System.out.println("ReviewController productReviewCheck " + new Date());
+		
+		int customerId = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		HashMap<String, Object> ids = new HashMap<String, Object>();
+		
+		ids.put("id", id);
+		ids.put("customerId", customerId);
+		
+		return service.productReviewCheck(ids);
+	}
+		
 	// 후기 목록
 	@GetMapping("/productReviewList")
 	public List<ReviewDto> productReviewtList(int id) {
@@ -46,6 +63,28 @@ public class ReviewController {
 		
 		boolean isS = service.reviewInsert(dto);
 			    
+	    if (isS) {
+	        return "YES";
+	    } else {
+	        return "NO";
+	    }
+	}
+	
+	// 후기 삭제
+	@GetMapping("/reviewDelete")
+	public String reviewDelete(int id, int productId, Authentication Authentication, HttpServletRequest request) {
+		System.out.println("ReviewController reviewDelete " + new Date());
+		
+		int customerId = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		HashMap<String, Object> ids = new HashMap<String, Object>();
+		
+		ids.put("customerId", customerId);
+		ids.put("productId", productId);
+		ids.put("id", id);
+		
+		boolean isS = service.reviewDelete(ids);
+	    
 	    if (isS) {
 	        return "YES";
 	    } else {

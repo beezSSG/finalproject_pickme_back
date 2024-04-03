@@ -44,3 +44,4 @@ public interface CustomerDao {
 	int postreservation(PostDto dto);
 
 	int deleteZZIM(int productId, int customerId);
+}
