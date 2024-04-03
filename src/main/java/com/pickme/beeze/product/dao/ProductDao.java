@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.product.dto.ProductDto;
+import com.pickme.beeze.product.dto.ProductGiftDto;
+import com.pickme.beeze.product.dto.ProductGiftParam;
 import com.pickme.beeze.product.dto.ProductParam;
 
 @Mapper
@@ -27,6 +29,16 @@ public interface ProductDao {
   
 	// 상품 평점 계산
 	void productRatingAvg(int productId);
+	
+	/* 선물하기 */
+	// 선물보내기
+	void sendGift(ProductGiftDto dto);
+	ProductGiftParam findFromUser(String name);
+	// 내선물 보기
+	List<ProductGiftDto> getMyGift(int id);
+	
+	// 선물 사용
+	void useGift(int id);
 	
 
 }

@@ -3,13 +3,12 @@ package com.pickme.beeze.login.service;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.login.dao.LoginDao;
 import com.pickme.beeze.login.dto.LoginDto;
-import com.pickme.beeze.login.email.MailService;
+import com.pickme.beeze.util.MailService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -80,9 +79,8 @@ public class LoginService {
 	    		"<html><body>" +
 	            "<p>안녕하세요, Pick Me를 이용하시는 회원님!</p>" +
 	            "<p>요청하신 인증코드를 보내드립니다. </p>"+
-	            "<p>만약 비밀번호 인증코드를 요청하지 않았다면 이 이메일을 무시해주시기 바랍니다.</p><br/><br/>" +
-	            "<p>     비밀번호 인증코드 : <b>" + this.createTempPw() + "</b></p><br/><br/>" +
-	            "<p>인증코드 입력 후 비밀번호 재설정 화면에서 비밀번호를 변경해주시기 바랍니다.</p>" +
+	            "<p>만약 인증코드를 요청하지 않았다면 이 이메일을 무시해주시기 바랍니다.</p><br/><br/>" +
+	            "<p>     인증코드 : <b>" + this.createTempPw() + "</b></p><br/><br/>" +
 	            "<p>관련하여 도움이 필요하시거나 다른 문의사항이 있다면 언제든지 Pick ME로 연락해주세요</p><br/><br/>" +
 	            "<p> Pick ME 드림</p>" ;
 
