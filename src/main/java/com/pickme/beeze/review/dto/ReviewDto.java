@@ -3,21 +3,23 @@ package com.pickme.beeze.review.dto;
 public class ReviewDto {
 	
 	private int id;
-	private int product_id;
-	private int customer_id;
+	private int productId;
+	private int customerId;
 	private String content;
 	private int rating;
+	private String name;
 	
 	public ReviewDto() {		
 	}
 
-	public ReviewDto(int id, int product_id, int customer_id, String content, int rating) {
+	public ReviewDto(int id, int productId, int customerId, String content, int rating, String name) {
 		super();
 		this.id = id;
-		this.product_id = product_id;
-		this.customer_id = customer_id;
+		this.productId = productId;
+		this.customerId = customerId;
 		this.content = content;
 		this.rating = rating;
+		this.name = name;
 	}
 
 	public int getId() {
@@ -28,20 +30,20 @@ public class ReviewDto {
 		this.id = id;
 	}
 
-	public int getProduct_id() {
-		return product_id;
+	public int getProductId() {
+		return productId;
 	}
 
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getContent() {
@@ -60,11 +62,21 @@ public class ReviewDto {
 		this.rating = rating;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return "ReviewDto [id=" + id + ", product_id=" + product_id + ", customer_id=" + customer_id + ", content="
-				+ content + ", rating=" + rating + "]";
+		return "ReviewDto [id=" + id + ", productId=" + productId + ", customerId=" + customerId + ", content="
+				+ content + ", rating=" + rating + ", name=" + name + "]";
 	}
+
+	
 	
 	
 

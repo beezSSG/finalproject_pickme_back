@@ -27,8 +27,6 @@ public interface ProductDao {
 	int newproductinsert(ProductDto dto);
 
   
-	// 상품 평점 계산
-	void productRatingAvg(int productId);
 	
 	/* 선물하기 */
 	// 선물보내기

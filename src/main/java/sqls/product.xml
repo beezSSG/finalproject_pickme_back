@@ -68,13 +68,12 @@
  	where id=#{id}
  </select>
  
+ 
 <!-- 신제품 등록 -->
-
 <insert id="newproductinsert" parameterType="com.pickme.beeze.product.dto.ProductDto">
 	insert into product(name,price,url)
 	values (#{name}, #{price}, #{url})
 </insert>
-
 
 <!-- 상품 평점 계산 -->
 <update id="productRatingAvg" parameterType="Integer">

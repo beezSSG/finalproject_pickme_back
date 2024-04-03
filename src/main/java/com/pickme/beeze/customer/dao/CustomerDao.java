@@ -41,7 +41,6 @@ public interface CustomerDao {
 	// 상품 찜 추가
 	int insertZZIM(int productId, int customerId);
 	// 상품 찜 삭제
-	int deleteZZIM(int productId, int customerId);
 	
 	// 택배 예약 신청
 	int postreservation(PostDto dto);
@@ -49,5 +48,5 @@ public interface CustomerDao {
 	// 상품 예약의 상품목록 불러오기
 	List<ProductDto> reservationproductlist(ProductParam param);
 
-
+	int deleteZZIM(int productId, int customerId);
 }
