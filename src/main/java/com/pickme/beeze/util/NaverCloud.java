@@ -158,6 +158,8 @@ public class NaverCloud {
 	public String OcrProc(String filepath) {
 		
 		String imageFile = filepath;
+		String secretKey = "bUhXTlRXbGNOa29MSHpIYXJheHBzcEtJRGV3SnF2U1A=";
+	    String apiURL = "https://8f42qnolaa.apigw.ntruss.com/custom/v1/28888/dd181cae05ef8e929627ddd65538159ee07ffd63ab82ed5f0760fb3d9ad88d34/infer";
 		String message = null;
 
 		try {

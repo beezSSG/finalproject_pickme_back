@@ -149,4 +149,9 @@ public class LoginService {
 	public LoginDto searchCeoInfo(int id) {
 		return dao.searchCeoInfo(id);
 	}
+	
+	/* ocr url 넣기(관리자에 필요함)*/
+	public void ocrurl(String fullUrl) {
+		dao.ocrurl(fullUrl);
+	}
 }
