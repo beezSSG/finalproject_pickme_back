@@ -1,4 +1,4 @@
-package com.pickme.beeze.login.email;
+package com.pickme.beeze.util;
 
 import java.util.Date;
 import java.util.Properties;

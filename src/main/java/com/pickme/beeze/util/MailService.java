@@ -1,4 +1,4 @@
-package com.pickme.beeze.login.email;
+package com.pickme.beeze.util;
 
 import java.io.UnsupportedEncodingException;
 
