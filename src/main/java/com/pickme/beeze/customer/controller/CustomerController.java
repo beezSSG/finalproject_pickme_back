@@ -196,6 +196,7 @@ public class CustomerController {
 	}
 	
 	/* 상품 예약 (점주가 확인 후 발주 할 수 있도록 해야함) */
+	// 상품 예약 상품리스트 보기
 	@GetMapping("reservationproductlist")
 	public List<ProductDto> reservationproductlist(ProductParam param) {
 		

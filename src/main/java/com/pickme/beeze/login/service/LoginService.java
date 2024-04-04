@@ -1,6 +1,7 @@
 package com.pickme.beeze.login.service;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pickme.beeze.login.dao.LoginDao;
 import com.pickme.beeze.login.dto.LoginDto;
+import com.pickme.beeze.login.dto.OcrListDto;
 import com.pickme.beeze.util.MailService;
 
 import lombok.RequiredArgsConstructor;
@@ -148,5 +150,22 @@ public class LoginService {
 	}
 	public LoginDto searchCeoInfo(int id) {
 		return dao.searchCeoInfo(id);
+	}
+	
+	/* ocr url 넣기(관리자에 필요함)*/
+	public void ocrurl(String fullUrl) {
+		dao.ocrurl(fullUrl);
+	}
+	public List<OcrListDto> selectocrlist(OcrListDto dto) {
+		return dao.selectocrlist(dto);
+	}
+	public OcrListDto ocrlistdetail(int id) {
+		return dao.ocrlistdetail(id);
+	}
+	public boolean ocrapproval(int id) {
+		return dao.ocrapproval(id)>0?true:false;
+	}
+	public int notocrcount(OcrListDto dto) {
+		return dao.notocrcount(dto);
 	}
 }

@@ -32,6 +32,12 @@ public class NaverCloud {
 	@Value("${chatbot.secretKey}")
 	private String secretKey;
 	
+	@Value("${chatbot.apiURL}")
+	private String OCRapiURL;
+	
+	@Value("${chatbot.secretKey}")
+	private String OCRsecretKey;
+	
 	public NaverCloud() {
 	}
 	
@@ -158,10 +164,12 @@ public class NaverCloud {
 	public String OcrProc(String filepath) {
 		
 		String imageFile = filepath;
+		String secretKey = "bUhXTlRXbGNOa29MSHpIYXJheHBzcEtJRGV3SnF2U1A=";
+	    String apiURL = "https://8f42qnolaa.apigw.ntruss.com/custom/v1/28888/dd181cae05ef8e929627ddd65538159ee07ffd63ab82ed5f0760fb3d9ad88d34/infer";
 		String message = null;
 
 		try {
-			URL url = new URL(apiURL);
+			URL url = new URL(OCRapiURL);
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
 			con.setUseCaches(false);
 			con.setDoInput(true);
@@ -170,7 +178,7 @@ public class NaverCloud {
 			con.setRequestMethod("POST");
 			String boundary = "----" + UUID.randomUUID().toString().replaceAll("-", "");
 			con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-			con.setRequestProperty("X-OCR-SECRET", secretKey);
+			con.setRequestProperty("X-OCR-SECRET", OCRsecretKey);
 
 			JSONObject json = new JSONObject();
 			json.put("version", "V2");
