@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -122,6 +123,47 @@ public class LoginController {
 		return newfilename;
 	}
 	
+	// 사업자 등록 리스트 불러오기
+	@GetMapping("/selectocrlist")
+	public List<OcrListDto> selectocrlist(OcrListDto dto) {
+		
+		System.out.println("LoginController selectocrlist " + new Date());
+		
+		return service.selectocrlist(dto);
+	}
+	
+	// 사업자 등록 디테일보기
+	@GetMapping("ocrlistdetail")
+	public OcrListDto ocrlistdetail(int id) {
+		
+		System.out.println("Login Controller ocrlistdetail " + new Date());
+		
+		return service.ocrlistdetail(id);
+	}
+	
+	// 사업자 등록 승인하기
+	@GetMapping("/ocrapproval")
+	public String ocrapproval(int id) {
+		
+		System.out.println("Login Controller ocrapproval " + new Date());
+		
+		boolean isS = service.ocrapproval(id);
+		
+		if(isS) {
+			return "YES";
+		}else {
+			return "NO";
+		}
+	}
+	
+	// 승인안된 사업자 등록 개수 세기
+	@GetMapping("/notocrcount")
+	public int notocrcount(OcrListDto dto) {
+		
+		System.out.println("Login Controller notocrcount " + new Date());
+		
+		return service.notocrcount(dto);
+	}
     
     // 토큰 적용 로그인
     @PostMapping("/login")
