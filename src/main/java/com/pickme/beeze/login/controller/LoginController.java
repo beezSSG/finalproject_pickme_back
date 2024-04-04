@@ -64,6 +64,20 @@ public class LoginController {
 		return service.addCeoInfo(dto);	// 0: 회원가입실패 / 1: 회원가입성공
 	}
 	
+    // 이메일 체크
+    @GetMapping("/countEmail")
+    public int countEmail(String email) {
+    	System.out.println("LoginController countEmail " + new Date());
+    	
+    	int count = service.countCustomerInfo(email);
+    	
+    	if (count == 0) {
+			count = service.countCeoInfo(email);
+		}
+    	
+    	return count;
+    }
+	
 	// 점주 회원가입시 OCR
 	@PostMapping("/ocr")
 	public String ocr(@RequestParam("uploadfile")MultipartFile uploadfile,
