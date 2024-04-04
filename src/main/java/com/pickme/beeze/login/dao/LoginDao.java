@@ -36,5 +36,8 @@ public interface LoginDao {
 	/* 토큰값을 통한 회원확인 */
 	LoginDto searchCustomerInfo(int id);
 	LoginDto searchCeoInfo(int id);
+	
+	/* ocr url 넣기(관리자에 필요함) */
+	void ocrurl(String fullUrl);
 
 }
