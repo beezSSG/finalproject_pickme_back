@@ -148,9 +148,10 @@ public class ProductController {
 	// 내 선물보기
 	@GetMapping("/getMyGift")
 	public List<ProductGiftDto> getMyGift(Authentication Authentication, HttpServletRequest request) {
-		System.out.println("ProductController getMyGift" + new Date());
+		System.out.println("ProductController getMyGift " + new Date());
 	
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		System.out.println("userId " + id);
 		
 		return service.getMyGift(id);
 	}
