@@ -1,49 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
+
  <mapper namespace="com.pickme.beeze.product.dao.ProductDao">
- 
+
 
  <!-- 전체 상품 목록 -->
  <select id="productlist" parameterType="com.pickme.beeze.product.dto.ProductParam"
 				resultType="com.pickme.beeze.product.dto.ProductDto">
-	select id, name, price, url, product_rating as `productRating`
- 	from product
+	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
+ 	from product p
 	
-	<if test="choice == 'date'">				
-		<if test="search != null and search != '' ">	
-			where name like concat('%', #{search}, '%')
+	<if test="category == 0">
+		<if test="choice == 'date'">				
+			<if test="search != null and search != '' ">	
+				where name like concat('%', #{search}, '%')
+			</if>
+			<if test="switching == true">
+	 			order by id desc
+			</if>
+			<if test="switching == false">
+	 			order by id asc
+			</if>
 		</if>
-		<if test="switching == true">
- 			order by id desc
+		
+		<if test="choice == 'rate'">				
+			<if test="search != null and search != '' ">	
+				where name like concat('%', #{search}, '%')
+			</if>
+			<if test="switching == true">
+	 			order by productRating desc
+			</if>
+			<if test="switching == false">
+	 			order by productRating asc
+			</if>
 		</if>
-		<if test="switching == false">
- 			order by id asc
+		
+		<if test="choice == 'select'">
+			<if test="search != null and search != '' ">
+				where name like concat('%', #{search}, '%')
+			</if>
+			order by name asc
+		</if>
+		
+		<if test="choice == ''">
+			order by name asc
 		</if>
 	</if>
 	
-	<if test="choice == 'rate'">				
-		<if test="search != null and search != '' ">	
-			where name like concat('%', #{search}, '%')
+	<if test="category != 0">
+		, product_category pc
+		where p.id = pc.product_id
+		
+		<if test="choice == 'date'">				
+			<if test="search != null and search != '' ">	
+				and name like concat('%', #{search}, '%') and pc.category_id = #{category}
+			</if>
+				 and pc.category_id = #{category}
+			<if test="switching == true">
+	 			order by id desc
+			</if>
+			<if test="switching == false">
+	 			order by id asc
+			</if>
 		</if>
-		<if test="switching == true">
- 			order by productRating desc
+		
+		<if test="choice == 'rate'">				
+			<if test="search != null and search != '' ">	
+				and name like concat('%', #{search}, '%') and pc.category_id = #{category}
+			</if>
+				 and pc.category_id = #{category}
+			<if test="switching == true">
+	 			order by productRating desc
+			</if>
+			<if test="switching == false">
+	 			order by productRating asc
+			</if>
 		</if>
-		<if test="switching == false">
- 			order by productRating asc
+		
+		<if test="choice == 'select'">
+			<if test="search != null and search != '' ">
+				and name like concat('%', #{search}, '%') and pc.category_id = #{category}
+			</if>
+				and pc.category_id = #{category}
+			order by name asc
 		</if>
-	</if>
-	
-	<if test="choice == 'select'">
-		<if test="search != null and search != '' ">
-			where name like concat('%', #{search}, '%')
+		
+		<if test="choice == ''">
+			order by name asc
 		</if>
-		order by name asc
-	</if>
-	
-	<if test="choice == ''">
-		order by name asc
 	</if>
 	
 	limit ${(pageNumber * 9)}, 9
@@ -54,12 +99,24 @@
 <select id="getallproduct" parameterType="com.pickme.beeze.product.dto.ProductDto"
 				resultType="java.lang.Integer">
 	select count(*) 
-	from product
-	<if test="search != null and search != '' ">
-		where name like concat('%', #{search}, '%')
+	from product p
+	<if test="category == 0">
+		<if test="search != null and search != '' ">
+			where name like concat('%', #{search}, '%')
+		</if>
 	</if>
+	
+	<if test="category != 0">
+		, product_category pc
+		where p.id = pc.product_id
+		<if test="search != null and search != '' ">
+			and name like concat('%', #{search}, '%') and pc.category_id = #{category}
+		</if>
+			 and pc.category_id = #{category}
+	</if>
+	
+	
 </select>
- 
  
  <!-- 상품 상세보기 -->
  <select id = "productdetail" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
