@@ -41,6 +41,9 @@ public class MypageController {
 	@Autowired
 	MypageService service;
 	
+    @Autowired
+    private NaverCloud nc;
+	
 	// TODO 마이페이지 메인화면
 	// 유저 정보 불러오기
 	@GetMapping("/getMyInfo")
@@ -86,7 +89,6 @@ public class MypageController {
 		System.out.println("voiceMessage : " + voiceMessage);
 		
 		// 네이버 클라우드 불러오기
-		NaverCloud nc = new NaverCloud();
 		String chatbotMessage = nc.ChatBot(voiceMessage);
 		
 		return chatbotMessage;
