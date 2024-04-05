@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pickme.beeze.ceo.dao.CeoDao">
+	<!-- 점주 메인화면 정보 확인[점주 이름, 점포 이름]-->
+	<select id="getCeoInfo" parameterType="com.pickme.beeze.ceo.dto.CeoInfoDto" resultType="com.pickme.beeze.ceo.dto.CeoInfoDto">
+		select ci.name as `ceoname`, st.name as `storename`
+		  from pickme.ceo_info ci join
+		pickme.store st on ci.id = st.ceo_id 
+	</select>
 
 	<!-- 글의 목록 -->
 	<select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
@@ -42,9 +48,8 @@
 
 	<select id="powrite" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
 		resultType="com.pickme.beeze.ceo.dto.ProductDto"> 
-		select p.id, p.name,
-		p.price from pickme.product p join pickme.product_category pc on
-		pc.product_id = p.id 
+		select p.id, p.name, p.price 
+		from pickme.product p join pickme.product_category pc on pc.product_id = p.id 
 		<if	test="choice != null and choice != '' and search != null and search != ''">
 			<if test="choice == 'name'">
 				where name like concat('%', #{search}, '%') and del=0
@@ -76,12 +81,37 @@
 	<!--  화면에서 승인이 완료된 물품을 사라지게 하기 -->
 	<update id="deleteProduct" parameterType="Integer">
 		update pickme.purchase_order
-		set po_yn as `poYn` = 1
+		set po_yn as `poYn` = 1, quantity = #{quantity}
 		where id=#{id}
 	</update>
 	
-	
-
-
-
+	<!-- 월별 매출 차트를 위한 전체 order 목록  -->
+	<select id="salechart" parameterType="com.pickme.beeze.ceo.dto.OrderDto" 
+		resultType="com.pickme.beeze.ceo.dto.SaleChartDto">
+	select 
+	    o.id as orderId,
+	    o.cart_id as cartId,
+	    c.customer_id as customerId,
+	    p.name as productName,
+	    sp.exp_date as expDate,
+	    p.price as unitPrice,
+	    c.quantity as orderQuantity,
+	    (p.price * c.quantity) as totalPrice,
+	    s.name as storeName
+	from 
+	    `order` o
+	inner join 
+	    cart c ON o.cart_id = c.id
+	inner join
+	    store_product sp on c.s_product_id = sp.id
+	inner join
+	    product p on sp.product_id = p.id
+	inner join 
+	    store s on sp.store_id = s.id
+	where 
+	    o.cancel_yn = 0 
+	    and c.order_yn = 1
+	    and date_format(o.date, '%Y-%m-%d') = #{date}
+	    and s.address like concat(#{address}, '%')	    
+	</select>
 </mapper>

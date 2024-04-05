@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class PurchaseDto {
 
 	private int id;
-	private int ceoId;	// 점주 id
+	private int ceoId;		// 점주 id
 	private int productId;	// 상품 id
 	private String url;		// 대표이미지
 	private String name;	// 상품 네임
@@ -25,7 +25,5 @@ public class PurchaseDto {
 	private String wdate;
 	private int del;
 
-	
-	
 }
 
