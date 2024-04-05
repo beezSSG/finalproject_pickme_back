@@ -16,8 +16,9 @@ public class PickmeApplication {
 	        "spring.config.location="
 	        +"classpath:/application.properties"
 	        +",classpath:/db.properties"
-	        +",classpath:/mail.yml"
-	        +",classpath:/key.properties";
+	        +",classpath:/key.properties"
+	        +",classpath:/mail.yml";
+	        
 	
 //	public static void main(String[] args) {
 //		SpringApplication.run(PickmeApplication.class, args)

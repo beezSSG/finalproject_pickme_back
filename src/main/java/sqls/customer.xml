@@ -105,6 +105,21 @@
 </update>
 	
 	<!-- 결제 취소시 행동 -->
+	
+	
+<!-- 상품 예약 -->
+<!--  상품 목록 불러오기 -->
+<select id="reservationproductlist" parameterType="com.pickme.beeze.product.dto.ProductParam" resultType="com.pickme.beeze.product.dto.ProductDto">
+    SELECT name, price, url
+    FROM product
+    <if test="search != null and search != ''">
+        WHERE (name LIKE CONCAT('%', #{search}, '%'))
+    </if>
+    LIMIT #{start}, #{perPage}
+</select>
+
+
+
 
 
 </mapper>

@@ -1,4 +1,4 @@
-package com.pickme.beeze.login.email;
+package com.pickme.beeze.util;
 
 import java.util.Date;
 import java.util.Properties;
@@ -46,10 +46,10 @@ public class EmailConfig {
     public JavaMailSender javaMailSender() {
     	System.out.println("EmailConfig javaMailSender " + new Date());
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("stmp.gmail.com");
+        mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername("pickme3592@gmail.com");
-        mailSender.setPassword("ekzsgwoawdfjzrxr");
+        mailSender.setPassword(password);
         mailSender.setDefaultEncoding("UTF-8");
         mailSender.setJavaMailProperties(getMailProperties());
         
@@ -58,7 +58,7 @@ public class EmailConfig {
 
     private Properties getMailProperties() {
         Properties properties = new Properties();
-
+        
         properties.put("mail.smtp.auth", auth);
         properties.put("mail.smtp.starttls.enable", starttlsEnable);
         properties.put("mail.smtp.starttls.required", starttlsRequired);

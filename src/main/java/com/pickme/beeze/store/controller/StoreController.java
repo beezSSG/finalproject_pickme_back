@@ -27,12 +27,12 @@ public class StoreController {
 	
 	// 매장 검색
 	@GetMapping("/searchstore")
-	public List<StoreDto> searchstore() {
+	public List<StoreDto> searchstore(String storeName) {
 		System.out.println("StoreController searchstore() " + new Date());
-		return service.searchstore();
+		
+		System.out.println("storeName : " + storeName);
+		return service.searchstore(storeName);
 	}
-	
-	
 
 	// 해당 상품이 있는 매장 목록
 	@GetMapping("/matchedstorelist")

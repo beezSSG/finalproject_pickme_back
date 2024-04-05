@@ -62,7 +62,7 @@ public class SecurityConfig{
         http.csrf(AbstractHttpConfigurer::disable)
         	.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
         	.authorizeHttpRequests((authorize) -> authorize
-        	.requestMatchers("api/v1/mypage/save/getSave").authenticated()
+//        	.requestMatchers("api/v1/mypage/*").authenticated()
         	.requestMatchers("api/v1/user/test").authenticated()
         	.anyRequest().permitAll()
 //        	.requestMatchers("/test", "/test1").authenticated()	// 이렇게 해도 된다        	

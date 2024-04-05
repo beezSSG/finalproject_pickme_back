@@ -4,16 +4,13 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.security.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.crypto.Mac;
@@ -23,14 +20,22 @@ import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NaverCloud {
 
-	@Value("${chatbot.apiURL}")
+	@Value("${chatbot.api_url}")
 	private String apiURL;
 	
-	@Value("${chatbot.secretKey}")
+	@Value("${chatbot.secret_key}")
 	private String secretKey;
+	
+	@Value("${ocr.api_url}")
+	private String OCRapiURL;
+	
+	@Value("${ocr.secret_key}")
+	private String OCRsecretKey;
 	
 	public NaverCloud() {
 	}
@@ -142,7 +147,12 @@ public class NaverCloud {
             bubbles_array.put(bubbles_obj);
 
             obj.put("bubbles", bubbles_array);
-            obj.put("event", "send");
+            
+            if(Objects.equals(voiceMessage, "")) {
+                obj.put("event", "open"); // 월컴 메세지
+            } else {
+                obj.put("event", "send");
+            }
 
             requestBody = obj.toString();
 
@@ -161,7 +171,7 @@ public class NaverCloud {
 		String message = null;
 
 		try {
-			URL url = new URL(apiURL);
+			URL url = new URL(OCRapiURL);
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
 			con.setUseCaches(false);
 			con.setDoInput(true);
@@ -170,7 +180,7 @@ public class NaverCloud {
 			con.setRequestMethod("POST");
 			String boundary = "----" + UUID.randomUUID().toString().replaceAll("-", "");
 			con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-			con.setRequestProperty("X-OCR-SECRET", secretKey);
+			con.setRequestProperty("X-OCR-SECRET", OCRsecretKey);
 
 			JSONObject json = new JSONObject();
 			json.put("version", "V2");
@@ -183,14 +193,14 @@ public class NaverCloud {
 			images.put(image);
 			json.put("images", images);
 			String postParams = json.toString();
-
+			
 			con.connect();
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			long start = System.currentTimeMillis();
 			File file = new File(imageFile);
 			writeMultiPart(wr, postParams, file, boundary);
 			wr.close();
-
+			
 			int responseCode = con.getResponseCode();
 			BufferedReader br;
 			if (responseCode == 200) {

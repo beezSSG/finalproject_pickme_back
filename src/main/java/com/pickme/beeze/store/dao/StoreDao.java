@@ -17,7 +17,7 @@ public interface StoreDao {
 	List<StoreDto> storelist();
 	
 	// 검색한 결과값을 매장명에 포함한 매장 목록 모두 들고오기
-	List<StoreDto> searchstore();
+	List<StoreDto> searchstore(String storeName);
 	
 	// 해당 상품이 있는 매장 목록
 	List<StoreDto> matchedstorelist(int id);

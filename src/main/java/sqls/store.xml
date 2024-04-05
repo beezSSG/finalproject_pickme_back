@@ -101,7 +101,7 @@
 	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
 	smoothieking, apple_acc as `appleAcc`, toto
 	from store
-	where name like '%#{name}%'
+	where name like concat('%', #{storeName}, '%')
 </select>
 
 </mapper>

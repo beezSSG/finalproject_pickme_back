@@ -1,5 +1,8 @@
 package com.pickme.beeze.product.dto;
 
+import org.apache.ibatis.type.Alias;
+
+
 public class ProductDto {
 
 	private int id;
