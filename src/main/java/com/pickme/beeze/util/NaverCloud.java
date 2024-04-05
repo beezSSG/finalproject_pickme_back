@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.crypto.Mac;
@@ -146,7 +147,12 @@ public class NaverCloud {
             bubbles_array.put(bubbles_obj);
 
             obj.put("bubbles", bubbles_array);
-            obj.put("event", "send");
+            
+            if(Objects.equals(voiceMessage, "")) {
+                obj.put("event", "open"); // 월컴 메세지
+            } else {
+                obj.put("event", "send");
+            }
 
             requestBody = obj.toString();
 
