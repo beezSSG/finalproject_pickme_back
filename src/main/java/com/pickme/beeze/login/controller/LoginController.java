@@ -37,6 +37,10 @@ public class LoginController {
     @Autowired
     private JwtTokenProvider provider;
     
+    @Autowired
+    private NaverCloud nc;
+
+
     // 테스트[방식을 이렇게 해야함]
     @GetMapping("/test")
     public String test(Authentication Authentication, HttpServletRequest request) {
@@ -104,7 +108,6 @@ public class LoginController {
 	    service.ocrurl(fullUrl);
 	    
 		// Naver cloud
-		NaverCloud nc = new NaverCloud();
 		String response = nc.OcrProc(filepath);
 		return response;
 	}
