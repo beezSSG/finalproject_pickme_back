@@ -20,54 +20,103 @@
  <select id="storeproductlist" parameterType="com.pickme.beeze.store.dto.StoreProductParam"
 				resultType="com.pickme.beeze.product.dto.ProductDto">
 	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
- 	from store_product sp
-	join product p on sp.product_id = p.id
+ 	from store_product sp, product p 	
 	
-	<if test="choice == 'date'">				
-		<if test="search != null and search != '' ">	
-			where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+	<if test="category == 0">
+		where p.id = sp.product_id
+		<if test="choice == 'date'">				
+			<if test="search != null and search != '' ">	
+				and p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+			</if>
+			<if test="search == null or search == '' ">
+				and sp.store_id=#{store_id}
+			</if>
+			<if test="switching == true">
+	 			order by p.id desc
+			</if>
+			<if test="switching == false">
+	 			order by p.id asc
+			</if>
 		</if>
-		<if test="search == null or search == '' ">
-			where sp.store_id=#{store_id}
+		
+		<if test="choice == 'rate'">				
+			<if test="search != null and search != '' ">	
+				and p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+			</if>
+			<if test="search == null or search == '' ">
+				and sp.store_id=#{store_id}
+			</if>
+			<if test="switching == true">
+	 			order by productRating desc
+			</if>
+			<if test="switching == false">
+	 			order by productRating asc
+			</if>
 		</if>
-		<if test="switching == true">
- 			order by p.id desc
-		</if>
-		<if test="switching == false">
- 			order by p.id asc
+		
+		<if test="choice == 'select'">
+			<if test="search != null and search != '' ">
+				and p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+			</if>
+			<if test="search == null or search == '' ">
+				and sp.store_id=#{store_id}
+			</if>
+			order by p.name asc
 		</if>
 	</if>
 	
-	<if test="choice == 'rate'">				
-		<if test="search != null and search != '' ">	
-			where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+	<if test="category != 0">
+		, product_category pc
+		where p.id = sp.product_id and p.id = pc.product_id
+		<if test="choice == 'date'">				
+			<if test="search != null and search != '' ">	
+				and p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id} and pc.category_id = #{category}
+			</if>
+			<if test="search == null or search == '' ">
+				and sp.store_id=#{store_id} and pc.category_id = #{category}
+			</if>
+			 and pc.category_id = #{category}
+			<if test="switching == true">
+	 			order by p.id desc
+			</if>
+			<if test="switching == false">
+	 			order by p.id asc
+			</if>
 		</if>
-		<if test="search == null or search == '' ">
-			where sp.store_id=#{store_id}
+		
+		<if test="choice == 'rate'">				
+			<if test="search != null and search != '' ">	
+				and p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id} and pc.category_id = #{category}
+			</if>
+			<if test="search == null or search == '' ">
+				and sp.store_id=#{store_id} and pc.category_id = #{category}
+			</if>
+			 and pc.category_id = #{category}
+			<if test="switching == true">
+	 			order by productRating desc
+			</if>
+			<if test="switching == false">
+	 			order by productRating asc
+			</if>
 		</if>
-		<if test="switching == true">
- 			order by productRating desc
+		
+		<if test="choice == 'select'">
+			<if test="search != null and search != '' ">
+				and p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id} and pc.category_id = #{category}
+			</if>
+			<if test="search == null or search == '' ">
+				and sp.store_id=#{store_id} and pc.category_id = #{category}
+			</if>
+			 and pc.category_id = #{category}
+			order by p.name asc
 		</if>
-		<if test="switching == false">
- 			order by productRating asc
+		<if test="choice == '' or choice == null">
+			and sp.store_id=#{store_id} and pc.category_id = #{category}
+			order by p.name asc
 		</if>
 	</if>
 	
-	<if test="choice == 'select'">
-		<if test="search != null and search != '' ">
-			where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
-		</if>
-		<if test="search == null or search == '' ">
-			where sp.store_id=#{store_id}
-		</if>
-		order by p.name asc
-	</if>
-	<if test="choice == '' or choice == null">
-		where sp.store_id=#{store_id}
-		order by p.name asc
-	</if>
-	
-	limit ${(pageNumber * 5)}, 5
+	limit ${(pageNumber * 10)}, 10
 </select>
 
  
@@ -75,13 +124,22 @@
 <select id="getallstoreproduct" parameterType="com.pickme.beeze.store.dto.StoreProductDto"
 				resultType="java.lang.Integer">
 	select count(*) 
-	from store_product sp
-	join product p on sp.product_id = p.id
-	<if test="search != null and search != '' ">
-		where p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id}
+	from product p, store_product sp
+	
+	<if test="category == 0">
+		where p.id = sp.product_id and sp.store_id=#{store_id}
+		<if test="search != null and search != '' ">
+			and p.name like concat('%', #{search}, '%')
+		</if>
 	</if>
-	<if test="search == null or search == '' ">
-		where sp.store_id=#{store_id}
+	
+	<if test="category != 0">
+		, product_category pc
+		where p.id = pc.product_id and p.id = sp.product_id and sp.store_id=#{store_id}
+		<if test="search != null or search != '' ">
+			and p.name like concat('%', #{search}, '%')
+		</if>
+		and pc.category_id = #{category}
 	</if>
 </select>
  

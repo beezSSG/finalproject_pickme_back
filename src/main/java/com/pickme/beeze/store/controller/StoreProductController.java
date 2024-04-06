@@ -33,12 +33,11 @@ public class StoreProductController {
 		
 		// 글 목록
 		List<ProductDto> storeproductlist = service.storeproductlist(param);
-		System.out.println(storeproductlist.toString());
 		
 		// 글의 총 갯수 
 		int count = service.getallstoreproduct(param);
-		int pageBbs = count / 5;
-		if((count % 5) > 0) {
+		int pageBbs = count / 10;
+		if((count % 10) > 0) {
 			pageBbs = pageBbs + 1;
 		}
 		

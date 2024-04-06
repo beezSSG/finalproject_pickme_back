@@ -10,7 +10,7 @@
 	select store_product.id
 	from store_product
 	inner join product on store_product.product_id = product.id
-	where product.name = #{productName} and store_product.store_id = #{storeId};
+	where product.id = #{productId} and store_product.store_id = #{storeId};
 </select>
 <insert id="cartInsert" parameterType="CartDto">
 	insert into cart(customer_id,s_product_id,quantity,order_yn)

@@ -7,17 +7,20 @@ public class StoreProductParam {
 	private int pageNumber;
 	private int store_id;
 	private boolean switching;
+	private int category;
 	
 	public StoreProductParam() {
 	}
 
-	public StoreProductParam(String choice, String search, int pageNumber, int store_id, boolean switching) {
+	public StoreProductParam(String choice, String search, int pageNumber, int store_id, boolean switching,
+			int category) {
 		super();
 		this.choice = choice;
 		this.search = search;
 		this.pageNumber = pageNumber;
 		this.store_id = store_id;
 		this.switching = switching;
+		this.category = category;
 	}
 
 	public String getChoice() {
@@ -60,11 +63,21 @@ public class StoreProductParam {
 		this.switching = switching;
 	}
 
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "StoreProductParam [choice=" + choice + ", search=" + search + ", pageNumber=" + pageNumber
-				+ ", store_id=" + store_id + ", switching=" + switching + "]";
+				+ ", store_id=" + store_id + ", switching=" + switching + ", category=" + category + "]";
 	}
+	
+	
 
 	
 

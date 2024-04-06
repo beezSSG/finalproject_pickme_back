@@ -21,8 +21,8 @@ public class CustomerService {
 	
 	/* TODO 장바구니 */
 	// 장바구니 담기
-	public int getsProductId(String productName, int storeId) {
-		return dao.getsProductId(productName,storeId);
+	public int getsProductId(int productId, int storeId) {
+		return dao.getsProductId(productId,storeId);
 	}
 	public boolean cartInsert(CartDto dto) {
 		int count = dao.cartInsert(dto);
