@@ -110,21 +110,20 @@
 		, product_category pc
 		where p.id = pc.product_id
 		<if test="search != null and search != '' ">
-			and name like concat('%', #{search}, '%') and pc.category_id = #{category}
+			and name like concat('%', #{search}, '%')
 		</if>
-			 and pc.category_id = #{category}
-	</if>
-	
-	
+		and pc.category_id = #{category}
+	</if>	
 </select>
  
  <!-- 상품 상세보기 -->
  <select id = "productdetail" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
- 	select id, name, price, url, product_rating
- 	from product
- 	where id=#{id}
+ 	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.category_id as `categoryId`
+ 	from product p, product_category pc
+ 	where p.id=#{id} and p.id = pc.product_id
  </select>
- 
+
+
  
 <!-- 신제품 등록 -->
 <insert id="newproductinsert" parameterType="com.pickme.beeze.product.dto.ProductDto">

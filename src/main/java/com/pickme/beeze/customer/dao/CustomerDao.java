@@ -16,7 +16,7 @@ public interface CustomerDao {
 	
 	/* TODO 장바구니 */
 	// 장바구니 담기
-	int getsProductId(String productName,int storeId);
+	int getsProductId(int productId,int storeId);
 	int cartInsert(CartDto dto);
 	
 	// 장바구니 목록 불러오기

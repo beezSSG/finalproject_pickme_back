@@ -10,18 +10,19 @@ public class ProductDto {
 	private int price;
 	private String url;
 	private int productRating;
+	private int categoryId;
 	
-	public ProductDto() {
-		
+	public ProductDto() {		
 	}
 
-	public ProductDto(int id, String name, int price, String url, int productRating) {
+	public ProductDto(int id, String name, int price, String url, int productRating, int categoryId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.url = url;
 		this.productRating = productRating;
+		this.categoryId = categoryId;
 	}
 
 	public int getId() {
@@ -64,10 +65,18 @@ public class ProductDto {
 		this.productRating = productRating;
 	}
 
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", url=" + url + ", productRating="
-				+ productRating + "]";
+				+ productRating + ", categoryId=" + categoryId + "]";
 	}
 	
 	
