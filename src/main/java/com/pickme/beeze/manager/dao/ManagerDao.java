@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.manager.dto.EventDto;
 import com.pickme.beeze.manager.dto.EventEnddateDto;
 import com.pickme.beeze.manager.dto.ManagerPurchaseDto;

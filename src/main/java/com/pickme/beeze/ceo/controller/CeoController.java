@@ -10,10 +10,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pickme.beeze.ceo.dto.CeoInfoDto;
 import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
+import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.service.CeoService;
+import com.pickme.beeze.manager.dto.OrderChartDto;
+import com.pickme.beeze.manager.dto.OrderDto;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +30,17 @@ public class CeoController {
    
    @Autowired
    CeoService service;
+   
+   // 점주 정보
+   @PostMapping("getCeoInfo")
+   public List<CeoInfoDto> getCeoInfo(CeoInfoDto dto) {
+	   
+	   System.out.println("CeoController getCeoInfo " + new Date());
+	   
+	   List<CeoInfoDto> list = service.getCeoInfo(dto);
+       return list;
+   }
+   
    
    //   발주목록
    @GetMapping("polist")
@@ -89,4 +105,21 @@ public class CeoController {
 		}
 		return "NO";
 	}
+	
+	
+	// 전체 주문 차트 보기
+	
+	@GetMapping("salechart")
+	public List<SaleChartDto> salechart(OrderDto dto) {
+		
+		System.out.println("salechartController salechart " + new Date());
+		
+		System.out.println("salechart :" + dto.toString());
+		
+		List<SaleChartDto> list = service.salechart(dto);
+		System.out.println("SaleChartDto :" + list.toString());
+		
+		return list;
+	}
+	
 }
