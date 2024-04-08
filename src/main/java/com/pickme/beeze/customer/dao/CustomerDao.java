@@ -43,12 +43,6 @@ public interface CustomerDao {
 	// 상품 찜 삭제
 
 	int deleteZZIM(int productId, String customerEmail);
-	
-	// 택배 예약 신청
-	int postreservation(PostDto dto);
-
-
-	int deleteZZIM(int productId, int customerId);
 
 	int deleteZZIM(int productId, int customerId);
 	
