@@ -112,6 +112,8 @@
 	    o.cancel_yn = 0 
 	    and c.order_yn = 1
 	    and date_format(o.date, '%Y-%m-%d') = #{date}
-	    and s.address like concat(#{address}, '%')	    
+	    and s.address like concat(#{address}, '%')	 
+	    
+	    
 	</select>
 </mapper>
