@@ -36,6 +36,9 @@ jobs:
           echo "${{ secrets.KEY_PROPERTIES }}" > src/main/resources/key.properties
           echo "${{ secrets.MAIL_YML }}" > src/main/resources/mail.yml
       
+      - name: Print properties content
+        run: cat src/main/resources/application.properties
+
       #- name: Login to Amazon ECR Public
         #run: |
           #aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
