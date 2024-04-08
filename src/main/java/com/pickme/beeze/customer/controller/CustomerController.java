@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,59 @@ public class CustomerController {
 		}
 	} 
 	
+	// 내 장바구니 목록 불러오기
+	@GetMapping("/cart/getCart")
+	public List<CartDto> getCart(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("CustomerController getCart " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		//System.out.println(id);
+		List<CartDto> list = service.getMyCart(id);
+		
+		List<CartDto> li = new ArrayList<CartDto>();
+		// 점포 상품번호를 통해 상품가격 / 상품이미지 / 상품이름
+		for (CartDto dto : list) {
+			CartDto d = service.getMyCartProduct(dto);
+			d.setId(dto.getId());
+			d.setCustomerId(dto.getCustomerId());
+			d.setSProductId(dto.getSProductId());
+			d.setQuantity(dto.getQuantity());
+			li.add(d);
+		}
+		
+		return li;
+	}
+	
+	// 장바구니 삭제
+	@DeleteMapping("/cart/delCart/{sProductId}")
+	public void delCart(Authentication Authentication, HttpServletRequest request, @PathVariable Integer sProductId) {
+		System.out.println("CustomerController delCart " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		CartDto dto = new CartDto();
+		dto.setSProductId(sProductId);
+		dto.setCustomerId(id);
+		
+		System.out.println(dto.toString());
+		// 장바구니 삭제
+		service.delCart(dto);
+		
+	}
+	
+	// 장바구니 물품별 수량 변경
+	// react에서 밸류의 값을 정하지 않고 onchange를 통하여 setQuantity 를 바꾸고 그것이 바뀔때 마다 useeffect를 통하여 axios 호출하도록 하기
+	@PostMapping("/cart/changeQuantity")
+	public void changeQuantity(Authentication Authentication, HttpServletRequest request, CartDto dto) {
+		System.out.println("CustomerController changeQuantity " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		dto.setCustomerId(id);
+		System.out.println(dto.toString());
+		
+		service.changeMyQuantity(dto);	
+	}
+	
+	/* 찜하기 */
 	@GetMapping("/checkZZIM")
 	public String checkZZIM(int productId, Authentication Authentication, HttpServletRequest request) {
 		System.out.println("CustomerController checkZZIM " + new Date());
@@ -103,58 +157,6 @@ public class CustomerController {
 		}
 	}
 
-	
-	// 내 장바구니 목록 불러오기
-	@GetMapping("/cart/getCart")
-	public List<CartDto> getCart(Authentication Authentication, HttpServletRequest request) {
-		System.out.println("CustomerController getCart " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		//System.out.println(id);
-		List<CartDto> list = service.getMyCart(id);
-		
-		List<CartDto> li = new ArrayList<CartDto>();
-		// 점포 상품번호를 통해 상품가격 / 상품이미지 / 상품이름
-		for (CartDto dto : list) {
-			CartDto d = service.getMyCartProduct(dto);
-			d.setId(dto.getId());
-			d.setCustomerId(dto.getCustomerId());
-			d.setSProductId(dto.getSProductId());
-			d.setQuantity(dto.getQuantity());
-			li.add(d);
-		}
-		
-		return li;
-	}
-	
-	// 장바구니 삭제
-	@DeleteMapping("/cart/delCart")
-	public List<CartDto> delCart(Authentication Authentication, HttpServletRequest request, CartDto dto) {
-		System.out.println("CustomerController delCart " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		dto.setCustomerId(id);
-		
-		// 장바구니 삭제
-		service.delCart(dto);
-		
-		// 삭제 진행이 완료된 장바구니 목록 불러와서 리턴		
-	    return service.getMyCart(id);
-	}
-	
-	// 장바구니 물품별 수량 변경
-	// react에서 밸류의 값을 정하지 않고 onchange를 통하여 setQuantity 를 바꾸고 그것이 바뀔때 마다 useeffect를 통하여 axios 호출하도록 하기
-	@PostMapping("/cart/changeQuantity")
-	public void changeQuantity(Authentication Authentication, HttpServletRequest request, CartDto dto) {
-		System.out.println("CustomerController changeQuantity " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		dto.setCustomerId(id);
-		System.out.println(dto.toString());
-		
-		service.changeMyQuantity(dto);	
-	}
-
 	// 주문하기
 	@PostMapping("/order")
 	public String order(@RequestBody List<Integer> checkItems, int pickDel) { // 장바구니 id 목록
@@ -176,9 +178,7 @@ public class CustomerController {
 	@PostMapping("postreservation") 
 	public String postreservation(Authentication Authentication, HttpServletRequest request, PostDto dto) {
 		
-		System.out.println("CustomerController test " + new Date());
-		
-		
+		System.out.println("CustomerController test " + new Date());	
     	
     	int id = InfoUtil.getUserIdInfo(Authentication, request);
     	System.out.println("id = " + id);

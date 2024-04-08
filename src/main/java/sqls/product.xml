@@ -158,7 +158,7 @@
 
 <!-- 내 선물목록보기 -->
 <select id="getMyGift" parameterType="Integer" resultType="ProductGiftDto">
-	SELECT c.name as `giftUserName`, p.name as `productName`, p.url as `productUrl`, g.exp_day
+	SELECT c.name as `giftUserName`, p.name as `productName`, p.url as `productUrl`, g.exp_day, g.id
 	  FROM gift g
 	 INNER JOIN customer_info c ON g.customer_id = c.id
 	 INNER JOIN product p ON g.product_id = p.id
@@ -169,7 +169,7 @@
 <update id="useGift" parameterType="Integer">
 	UPDATE gift 
 	   SET use_yn = 1
-	 WHERE send_customer_id = #{id}
+	 WHERE id = #{id}
 </update>
 
 </mapper>

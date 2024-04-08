@@ -7,7 +7,7 @@
 <!-- 마이페이지 메인화면 정보 확인 [장바구니 수량, 포인트, 쿠폰, 찜 목록, 선물함] -->
 <!-- 장바구니 물품을 구매하거나 쿠폰을 사용하고나면 집계되지 않도록 해야한다. -->
 <select id="getMyInfo" parameterType="MyInfoDto" resultType="MyInfoDto">
-	SELECT cu.name, cu.grade, cu.point, count(DISTINCT ca.id) as `cartQuantity`, count(DISTINCT co.id) as `couponQuantity`, count(DISTINCT s.id) as `saveQuantity`, count(DISTINCT g.id) as `giftQuantity`
+	SELECT cu.name, cu.grade, cu.point, count(DISTINCT s.id) as `saveQuantity`, count(DISTINCT co.id) as `couponQuantity`, count(DISTINCT ca.id) as `cartQuantity`, count(DISTINCT g.id) as `giftQuantity`
 	  FROM customer_info cu
 	  LEFT JOIN cart ca ON cu.id = ca.customer_id 
 	  LEFT JOIN coupon co ON cu.id = co.user_id
