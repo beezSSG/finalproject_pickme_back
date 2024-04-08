@@ -24,11 +24,18 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
-          
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-
+      
+      - name: Create properties files
+        run: |
+          echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
+          echo "${{ secrets.DB_PROPERTIES }}" > src/main/resources/db.properties
+          echo "${{ secrets.KEY_PROPERTIES }}" > src/main/resources/key.properties
+          echo "${{ secrets.MAIL_YML }}" > src/main/resources/mail.yml
+      
       #- name: Login to Amazon ECR Public
         #run: |
           #aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
