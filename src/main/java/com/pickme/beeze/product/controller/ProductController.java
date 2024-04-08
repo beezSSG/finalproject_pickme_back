@@ -158,10 +158,8 @@ public class ProductController {
 	
 	// 선물 사용
 	@PostMapping("/useGift")
-	public void useGift(Authentication Authentication, HttpServletRequest request) {
+	public void useGift(int id) {
 	    System.out.println("ProductController useGift " + new Date());
-	    	    
-	    int id = InfoUtil.getUserIdInfo(Authentication, request);
 	    
 	    service.useGift(id);
 	}
