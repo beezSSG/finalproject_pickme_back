@@ -11,7 +11,7 @@ jobs:
 
     env:
       ECR_REPOSITORY: pickme_back
-      ECR_REGISTRY: public.ecr.aws/e3s0f1s6
+      ECR_REGISTRY: 709745608741.dkr.ecr.ap-northeast-2.amazonaws.com
       IMAGE_TAG: ${{ github.sha }}
 
     steps:
@@ -25,9 +25,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
-      - name: Login to Amazon ECR Public
-        run: |
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+      #- name: Login to Amazon ECR Public
+        #run: |
+          #aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 
       #- name: Create .env file
         #run: |
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: pickme_back
-      ECR_REGISTRY: public.ecr.aws/e3s0f1s6
+      ECR_REGISTRY: 709745608741.dkr.ecr.ap-northeast-2.amazonaws.com
       EKS_PATH: helm-projects/prickme-back
       IMAGE_TAG: ${{ github.sha }}
     steps:
