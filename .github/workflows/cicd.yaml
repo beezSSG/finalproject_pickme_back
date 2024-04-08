@@ -37,7 +37,7 @@ jobs:
           echo "${{ secrets.MAIL_YML }}" > src/main/resources/mail.yml
       
       - name: Print properties content
-        run: cat src/main/resources/application.properties
+        run: cat src/main/resources/db.properties
 
       #- name: Login to Amazon ECR Public
         #run: |
