@@ -15,20 +15,23 @@
 	  LEFT JOIN gift g ON cu.id = g.customer_id
 	 WHERE cu.id = #{id};
 </select>
+<select id="getMyInfoCart" parameterType="MyInfoDto" resultType="Integer">
+	SELECT count(id) as `cartQuantity`
+	  FROM cart
+	 WHERE customer_id = #{id} and order_yn = 0;
+</select>
+
+<select id="getMyInfoGift" parameterType="MyInfoDto" resultType="Integer">
+	SELECT count(id) as `giftQuantity`
+	  FROM gift
+	 WHERE send_customer_id = #{id} and use_yn = 0;
+</select>
 
 <select id="getRecentlyProduct" parameterType="Integer" resultType="MypageProductDto">
 	SELECT id, name, price, url, product_rating
 	  FROM product
 	 WHERE id = #{id}
 </select>
-
-
-<!-- <select id="getMyInfoTwo" parameterType="String" resultType="Integer">
-SELECT count(*)
-  FROM save
- WHERE customer_email = #{email}
-</select> -->
-
 
 	<!-- 찜 -->
 <!-- 찜목록 가져오기 -->

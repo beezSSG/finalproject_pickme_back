@@ -23,7 +23,8 @@ public interface MypageDao {
 	
 	// 나의 정보 불러오기
 	MypageMainInfoDto getMyInfo(MypageMainInfoDto dto);
-	// int getMyInfoTwo(String email);
+	int getMyInfoCart(MypageMainInfoDto dto);
+	int getMyInfoGift(MypageMainInfoDto dto);
 	MypageProductDto getRecentlyProduct(int id);
 	
 	/* TODO 찜 */

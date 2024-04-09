@@ -27,13 +27,12 @@ public class MypageService {
 	
 	// 나의 정보 불러오기
 	public MypageMainInfoDto getMyInfo(MypageMainInfoDto dto) {
-		/*
-		MypageMainInfoDto d = dao.getMyInfo(dto);
-		int i = dao.getMyInfoTwo(email);
-		d.setSaveQuantity(i);
-		return d;
-		*/
-		return dao.getMyInfo(dto);
+		
+		MypageMainInfoDto newDto = dao.getMyInfo(dto);
+		newDto.setCartQuantity(dao.getMyInfoCart(dto));
+		newDto.setGiftQuantity(dao.getMyInfoGift(dto));
+
+		return newDto;
 	};
 	// 최근본 상품 불러오기
 	public MypageProductDto getRecentlyProduct(int id) {
