@@ -7,6 +7,7 @@ import jakarta.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,7 @@ import io.jsonwebtoken.SignatureException;
 
 @Lazy
 @Component
+@PropertySource("classpath:/key.properties")
 public class JwtTokenProvider {
 
     public static String httpHeaderKey = "Authorization";  // 프론트에서 요청보낼때의 key값
