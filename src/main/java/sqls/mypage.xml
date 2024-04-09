@@ -134,10 +134,12 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 </select>
 
 <select id="MyOrdersLists" parameterType="Integer" resultType="MypageOrderdayDto">
-	SELECT date, p.name as `pName`, c.quantity as `quantity`, p.price as `price`
+	SELECT date, p.name as `pName`, c.quantity as `quantity`, p.price as `price`, st.address as `sAddress`, ce.name as `ceoName`
 	  FROM pickme.order o
 	 INNER JOIN cart c ON o.cart_id = c.id
 	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN store st ON s.store_id = st.id
+	 INNER JOIN ceo_info ce ON st.ceo_id = ce.id
 	 INNER JOIN product p ON s.product_id = p.id
 	 WHERE cancel_yn = 0 and c.customer_id = #{id}
 </select>
