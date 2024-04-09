@@ -50,10 +50,6 @@ public interface CustomerDao {
 
 	int deleteZZIM(int productId, int customerId);
 
-	int deleteZZIM(int productId, int customerId);
-	
-	// 택배 예약 신청
-	int postreservation(PostDto dto);
 	
 	// 상품 예약의 상품목록 불러오기
 	List<ProductDto> reservationproductlist(ProductParam param);

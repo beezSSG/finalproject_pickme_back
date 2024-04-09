@@ -134,15 +134,17 @@ public class ProductController {
 	    System.out.println("ProductController sendGift " + new Date());
 	    	    
 	    int id = InfoUtil.getUserIdInfo(Authentication, request);
-	    dto.setSendCustomerId(id);
+	    dto.setCustomerId(id);
 	    
 	    service.sendGift(dto);	    
 	}
+	
+	// 받는 사람 조회
 	@GetMapping("/findFromUser")
-	public ProductGiftParam findFromUser(String name) {
+	public ProductGiftParam findFromUser(String phone) {
 		System.out.println("ProductController findFromUser" + new Date());
 		
-		return service.findFromUser(name);
+		return service.findFromUser(phone);
 	}	
 
 	// 내 선물보기
