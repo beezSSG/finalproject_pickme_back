@@ -34,7 +34,7 @@ jobs:
           echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
           echo "${{ secrets.DB_PROPERTIES }}" > src/main/resources/db.properties
           echo "${{ secrets.KEY_PROPERTIES }}" > src/main/resources/key.properties
-          echo "${{ secrets.MAIL_YML }}" > src/main/resources/mail.yml
+          echo "${{ secrets.MAIL_PROPERTIES }}" > src/main/resources/mail.properties
       
       - name: Print properties content
         run: cat src/main/resources/db.properties

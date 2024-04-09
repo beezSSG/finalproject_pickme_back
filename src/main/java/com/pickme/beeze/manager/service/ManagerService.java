@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.manager.dao.ManagerDao;
 import com.pickme.beeze.manager.dto.EventDto;
 import com.pickme.beeze.manager.dto.EventEnddateDto;

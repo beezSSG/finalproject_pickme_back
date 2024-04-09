@@ -22,8 +22,11 @@ import com.pickme.beeze.login.dto.LoginDto;
 @Transactional
 public class SecurityService implements UserDetailsService {
 	
-	@Autowired
-	LoginDao dao;
+	private final LoginDao dao;
+
+    public SecurityService(LoginDao dao) {
+        this.dao = dao;
+    }
 	
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	

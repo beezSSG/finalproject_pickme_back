@@ -3,6 +3,7 @@ package com.pickme.beeze.login.jwt;
 import java.io.IOException;
 import java.util.Date;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

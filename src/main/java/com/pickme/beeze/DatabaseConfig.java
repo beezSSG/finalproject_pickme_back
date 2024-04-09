@@ -19,6 +19,9 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties") // 기본 경로에 있는 application.properties 를 불러들여라
+@PropertySource("classpath:db.properties")
+@PropertySource("classpath:key.properties")
+@PropertySource("classpath:mail.properties")
 public class DatabaseConfig {
 
 	@Bean // 자동 생성해라!
