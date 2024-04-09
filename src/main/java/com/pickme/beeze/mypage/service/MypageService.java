@@ -1,5 +1,6 @@
 package com.pickme.beeze.mypage.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,24 @@ public class MypageService {
 	/* TODO 주문내역 */
 	// 내 주문 내역 불러오기
 	public 	List<MypageOrderdayDto> MyOrdersList(int id) {
-		return dao.MyOrdersList(id);
+		List<MypageOrderdayDto> list = new ArrayList<MypageOrderdayDto>(); 
+		List<MypageOrderdayDto> list2 = new ArrayList<MypageOrderdayDto>();
+		list2 = dao.MyOrdersList(id);
+		for (MypageOrderdayDto dto : list2) {
+			List<MypageOrderdayDto> list3 = new ArrayList<MypageOrderdayDto>();
+			list3 = dao.MyOrdersListName(dto.getDate());
+			MypageOrderdayDto dto2 = list3.get(0);
+			int number = 0;
+			for (MypageOrderdayDto dto3 : list3) {
+				number = number + dto3.getQuantity();
+			}
+			System.out.println(number);
+			dto.setPName(dto2.getPName());
+			dto.setQuantity(number);
+			list.add(dto);
+		}
+		
+		return list;
 	}
 	
 	// 내 주문 내역 불러오기

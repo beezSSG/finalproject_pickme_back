@@ -14,4 +14,6 @@ public class MypageOrderdayDto {
 	
 	private String date;
 	private int quantity;
+	private int pQuantity;
+	private String pName;
 }
