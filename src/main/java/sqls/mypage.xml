@@ -114,7 +114,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 </select>
 
 	<!-- 내 주문내역 -->
-<!-- 내 주문내역 불러오기 날짜 및 해당 주문에 대한 수량-->
+<!-- 내 주문내역 불러오기 날짜 및 해당 주문에 대한 수량 날짜 / 상품종류 숫자-->
 <select id="MyOrdersList" parameterType="Integer" resultType="MypageOrderdayDto">
 	SELECT date, COUNT(cart_id) as `pQuantity` 
 	  FROM pickme.order o
@@ -125,12 +125,21 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 
 <!-- date로 상품번호 받아와서 그걸로 상품 이름출력 -->
 <select id="MyOrdersListName" parameterType="String" resultType="MypageOrderdayDto">
-	SELECT p.name as `pName`, c.quantity as `quantity`
+	SELECT p.name as `pName`, c.quantity as `quantity`, p.price as `price`
 	  FROM pickme.order o
 	 INNER JOIN cart c ON o.cart_id = c.id
 	 INNER JOIN store_product s ON c.s_product_id = s.id
 	 INNER JOIN product p ON s.product_id = p.id
 	 WHERE date = #{date}
+</select>
+
+<select id="MyOrdersLists" parameterType="Integer" resultType="MypageOrderdayDto">
+	SELECT date, p.name as `pName`, c.quantity as `quantity`, p.price as `price`
+	  FROM pickme.order o
+	 INNER JOIN cart c ON o.cart_id = c.id
+	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN product p ON s.product_id = p.id
+	 WHERE cancel_yn = 0 and c.customer_id = #{id}
 </select>
 
 <!-- 원하는 날짜에 대한 주문 리스트 출력 -->

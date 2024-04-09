@@ -16,4 +16,5 @@ public class MypageOrderdayDto {
 	private int quantity;
 	private int pQuantity;
 	private String pName;
+	private int price;
 }
