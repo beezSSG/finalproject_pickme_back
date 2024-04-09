@@ -51,6 +51,7 @@ public interface MypageDao {
 	/* TODO 주문내역 */
 	// 내 주문 내역 불러오기
 	List<MypageOrderdayDto> MyOrdersList(int id);
+	List<MypageOrderdayDto> MyOrdersListName(String date);
 	
 	// 내 주문 내역 불러오기
 	List<MypageOrderDto> getMyOrderList(MypageOrderDto dto);
