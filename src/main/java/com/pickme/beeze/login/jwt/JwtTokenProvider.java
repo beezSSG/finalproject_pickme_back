@@ -2,18 +2,16 @@ package com.pickme.beeze.login.jwt;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import com.pickme.beeze.login.dto.LoginDto;
 import com.pickme.beeze.login.security.SecurityService;
@@ -26,7 +24,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 
+@Lazy
 @Component
+@PropertySource("classpath:/key.properties")
 public class JwtTokenProvider {
 
     public static String httpHeaderKey = "Authorization";  // 프론트에서 요청보낼때의 key값

@@ -12,7 +12,6 @@ import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
-import com.pickme.beeze.manager.dto.OrderChartDto;
 import com.pickme.beeze.manager.dto.OrderDto;
 
 @Service

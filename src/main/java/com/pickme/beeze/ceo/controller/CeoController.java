@@ -16,12 +16,10 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.service.CeoService;
-import com.pickme.beeze.manager.dto.OrderChartDto;
 import com.pickme.beeze.manager.dto.OrderDto;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
  
 
 
