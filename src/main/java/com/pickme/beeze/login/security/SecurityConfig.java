@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +22,7 @@ import com.pickme.beeze.login.jwt.JwtTokenFilter;
 import com.pickme.beeze.login.jwt.JwtTokenProvider;
 
 //@RequiredArgsConstructor	// @Autowired 사용 안해도됨
+@Lazy
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig{

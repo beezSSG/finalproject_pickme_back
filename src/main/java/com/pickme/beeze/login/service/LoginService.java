@@ -12,18 +12,15 @@ import com.pickme.beeze.login.dto.LoginDto;
 import com.pickme.beeze.login.dto.OcrListDto;
 import com.pickme.beeze.util.MailService;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class LoginService {
     
+	private final LoginDao dao;
 
-	@Autowired
-	private LoginDao dao;
+    public LoginService(LoginDao dao) {
+        this.dao = dao;
+    }
 	
 	// 메일 서비스 연결
 	@Autowired

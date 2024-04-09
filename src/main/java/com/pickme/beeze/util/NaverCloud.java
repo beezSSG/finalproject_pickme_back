@@ -20,9 +20,11 @@ import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource("classpath:key.properties")
 public class NaverCloud {
 
 	@Value("${chatbot.api_url}")

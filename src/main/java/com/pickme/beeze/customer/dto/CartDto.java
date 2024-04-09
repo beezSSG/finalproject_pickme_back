@@ -17,6 +17,7 @@ public class CartDto {
 	private int sProductId;
 	private int orederYn;
 	private int quantity;
+	private String productName;
 	private int productId;
 	private int productPrice;
 	private String productUrl;

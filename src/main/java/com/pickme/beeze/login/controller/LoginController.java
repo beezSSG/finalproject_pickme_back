@@ -30,12 +30,16 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("api/v1/user/*")
 public class LoginController {
 
-	@Autowired
 	private LoginService service;
-
+	
     // JWT 토큰 생성을 위해 필요
-    @Autowired
     private JwtTokenProvider provider;
+	
+    public LoginController(LoginService service, JwtTokenProvider provider) {
+        this.service = service;
+        this.provider = provider;
+    }
+
     
     @Autowired
     private NaverCloud nc;

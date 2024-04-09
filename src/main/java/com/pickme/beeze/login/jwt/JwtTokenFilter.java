@@ -3,6 +3,8 @@ package com.pickme.beeze.login.jwt;
 import java.io.IOException;
 import java.util.Date;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Lazy
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
