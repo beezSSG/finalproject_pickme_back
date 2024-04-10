@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="com.pickme.beeze.manager.dao.EventDao">
+ 
+ <select id="eventlist" parameterType="com.pickme.beeze.manager.dto.EventDto" resultType="com.pickme.beeze.manager.dto.EventDto">
+ 	select id, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
+ 	from promotion_post
+ </select>
+ 
+ <select id="eventdetail" parameterType="com.pickme.beeze.manager.dto.EventDto" resultType="com.pickme.beeze.manager.dto.EventDto">
+ 	select id, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
+ 	from promotion_post
+ 	where id=#{id}
+ </select>
+   
+<insert id="eventcreate" parameterType="com.pickme.beeze.manager.dto.EventDto">
+    insert into promotion_post(banner_photo, detail_photo, start_date, end_date, promotion_yn)
+    values (#{bannerPhoto}, #{detailPhoto}, #{startDate}, #{endDate}, #{promotionYn})
+</insert>
+
+<update id="eventstop" parameterType="Integer">
+     update promotion_post
+     set promotion_yn = 1
+     where id=#{id}
+</update>
+
+ </mapper>

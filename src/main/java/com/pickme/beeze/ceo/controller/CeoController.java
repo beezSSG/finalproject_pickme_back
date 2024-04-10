@@ -20,17 +20,22 @@ import com.pickme.beeze.manager.dto.OrderDto;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
  
 
 
 @RestController
+@RequestMapping("api/v1/ceo/*")
 public class CeoController {
    
    @Autowired
    CeoService service;
    
    // 점주 정보
-   @PostMapping("getCeoInfo")
+   @PostMapping("/getCeoInfo")
    public List<CeoInfoDto> getCeoInfo(CeoInfoDto dto) {
 	   
 	   System.out.println("CeoController getCeoInfo " + new Date());
@@ -41,7 +46,7 @@ public class CeoController {
    
    
    //   발주목록
-   @GetMapping("polist")
+   @GetMapping("/polist")
    public Map<String, Object> polist(CeoParam param) {
       
       System.out.println("CeoController polist " + new Date());
@@ -68,7 +73,7 @@ public class CeoController {
    }
    
    // 발주하기
-   @GetMapping("powrite") 
+   @GetMapping("/powrite") 
    public List<ProductDto> powrite(CeoParam param) {
       
       System.out.println("CeoController powrite " + new Date());
@@ -85,7 +90,7 @@ public class CeoController {
    }
    
    // 발주하기 목록
-   @GetMapping("powriteCn")
+   @GetMapping("/powriteCn")
    public List<ProductDto> powriteCn(ProductDto dto) {
       
       List<ProductDto> lst = service.powriteCn(dto);
@@ -94,7 +99,7 @@ public class CeoController {
    }
    
    // 발주 승인완료 물품 사라지기
-	@PostMapping("deleteProduct")
+	@PostMapping("/deleteProduct")
 	public String deleteProduct(int id) {
 		System.out.println("BbsController deleteProduct " + new Date());
 		boolean isS = service.deleteProduct(id);
@@ -107,7 +112,7 @@ public class CeoController {
 	
 	// 전체 주문 차트 보기
 	
-	@GetMapping("salechart")
+	@GetMapping("/salechart")
 	public List<SaleChartDto> salechart(OrderDto dto) {
 		
 		System.out.println("salechartController salechart " + new Date());

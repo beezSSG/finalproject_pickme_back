@@ -145,15 +145,15 @@
 	<!-- 선물하기 -->
 <!-- 선물보내기 비회원일경우 이메일로 보내기 -->
 <insert id="sendGift" parameterType="ProductGiftDto">
-	INSERT INTO gift(customer_id, send_customer_id, product_id, content, exp_day, use_yn)
-	VALUES (#{customerId}, #{sendCustomerId}, #{productId}, #{content}, #{expDay}, #{useYn})
+	INSERT INTO gift(customer_id, send_customer_id, product_id, exp_day, use_yn)
+	VALUES (#{customerId}, #{sendCustomerId}, #{productId}, #{expDay}, #{useYn})
 </insert>
 
 <!-- 선물할사람 정보 조회 -->
 <select id="findFromUser" parameterType="String" resultType="ProductGiftParam">
 	SELECT id, email, name
 	  FROM customer_info
-	 WHERE phone=#{phone}
+	 WHERE name=#{name}
 </select>
 
 <!-- 내 선물목록보기 -->

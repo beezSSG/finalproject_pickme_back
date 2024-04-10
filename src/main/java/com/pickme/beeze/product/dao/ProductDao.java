@@ -31,7 +31,7 @@ public interface ProductDao {
 	/* 선물하기 */
 	// 선물보내기
 	void sendGift(ProductGiftDto dto);
-	ProductGiftParam findFromUser(String name);
+	ProductGiftParam findFromUser(String phone);
 	// 내선물 보기
 	List<ProductGiftDto> getMyGift(int id);
 	

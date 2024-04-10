@@ -16,6 +16,7 @@ public class ProductGiftDto {
 	private int customerId;
 	private int sendCustomerId;
 	private int productId;
+	private String content;
 	private String expDay;
 	private int useYn;
 	private String giftUserName;

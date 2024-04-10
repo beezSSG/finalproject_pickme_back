@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="com.pickme.beeze.manager.dao.CcbDao">
+ 
+ <select id="ccblist" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbDto">
+	select id,category,customer_id as `customerId`, title, content, create_at as `createAt`, answer_yn as `answerYn`
+	from ccb
+	order by id desc;
+</select>
+
+<!-- 관리자 페이지에서 카테고리 별 글 개수 파악 용도 -->
+<select id="ccbcategorycount" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbParam">
+    select category, count(*) as count
+    from ccb
+    group by category
+    order by count desc;
+</select>
+
+ 
+<select id="ccbdetail" parameterType="Integer" resultType="com.pickme.beeze.manager.dto.CcbDto">
+	select id,category,customer_id as `customerId`, title, content, create_at as `createAt`, answer_yn as `answerYn`
+	from ccb
+	where id=#{id}
+</select>
+
+<delete id="ccbdelete">
+	delete from ccb
+	where id=#{id}
+</delete>
+
+<select id="ccbcommentlist" parameterType="Integer" resultType="com.pickme.beeze.manager.dto.CcbaDto">
+	select id, ccb_id as `ccbId`, manager_id as `managerId`, content, create_at as `createAt`
+	from ccba
+	where ccb_id=#{ccbId} 
+</select>
+
+<insert id="ccbcommentwrite" parameterType="com.pickme.beeze.manager.dto.CcbaDto">
+	insert into ccba(ccb_id, manager_id,content, create_at)
+	values(#{ccbId}, #{managerId}, #{content}, now())
+</insert>
+
+<update id="ccbcommentwriteAf" parameterType="com.pickme.beeze.manager.dto.CcbaDto">
+	update ccb 
+	set answer_yn = 1
+	where id = #{ccbId}
+</update>
+
+<delete id="ccbcommentdelete">
+	delete from ccba
+	where id=#{id}
+</delete>
+
+<update id="ccbcommentdeleteAf" parameterType="com.pickme.beeze.manager.dto.CcbaDto">
+	update ccb 
+	set answer_yn = 0
+	where id = #{ccbId}
+</update>
+
+<select id="notanswercount" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="Integer">
+    select count(*)
+    from ccb
+    where answer_yn = 0;
+</select>
+ </mapper>

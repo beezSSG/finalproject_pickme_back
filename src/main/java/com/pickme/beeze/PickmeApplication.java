@@ -18,7 +18,6 @@ public class PickmeApplication {
 	        +",classpath:/db.properties"
 	        +",classpath:/key.properties"
 	        +",classpath:/mail.properties";
-	        //+",classpath:/mail.yml";
 	        
 	
 //	public static void main(String[] args) {

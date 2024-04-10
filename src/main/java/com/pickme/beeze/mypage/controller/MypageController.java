@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.mypage.dto.MyPickBoxDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -209,6 +209,17 @@ public class MypageController {
 		// 받아온 정보로 dto 생성
 		
 		return service.addReview(dto);
+	}
+	
+	// TODO 픽박스
+	// 픽박스 불러오기
+	@GetMapping("/MyPickBox")
+	public List<MyPickBoxDto> MyPickBox(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("MypageController MyPickBox " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+				
+		return service.MyPickBox(id);
 	}
 	
 }

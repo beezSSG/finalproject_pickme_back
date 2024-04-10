@@ -44,8 +44,8 @@ public class ProductService {
 	public void sendGift(ProductGiftDto dto) {
 		dao.sendGift(dto);
 	}
-	public ProductGiftParam findFromUser(String name) {
-		return dao.findFromUser(name);
+	public ProductGiftParam findFromUser(String phone) {
+		return dao.findFromUser(phone);
 	};
 	
 	// 내선물 보기

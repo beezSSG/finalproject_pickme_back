@@ -31,7 +31,7 @@ public class InfoUtil {
         
         // System.out.println("userId = " + userId);
         return userId;
-    }
+    } 
 
 	// 토큰에서 email[id] 추출
     public static String getUserEmailInfo(Authentication Authentication, HttpServletRequest request) {
