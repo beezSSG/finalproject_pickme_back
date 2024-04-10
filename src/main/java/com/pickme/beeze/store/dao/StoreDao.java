@@ -25,5 +25,8 @@ public interface StoreDao {
 	// 매장 상품 목록
 	List<ProductDto> storeproductlist(StoreProductParam param);
 	int getallstoreproduct(StoreProductParam param);
+	
+	// 지도 영역에 있는 매장 목록
+	List<StoreDto> getstoresinmap(Double swLat, Double nwLat, Double nwLng, Double neLng);
 
 }

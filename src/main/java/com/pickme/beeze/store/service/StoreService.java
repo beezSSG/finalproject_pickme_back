@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.store.dao.StoreDao;
 import com.pickme.beeze.store.dto.StoreDto;
 
@@ -29,6 +30,11 @@ public class StoreService {
 	// 해당 상품이 있는 매장 목록
 	public List<StoreDto> matchedstorelist(int id){
 		return dao.matchedstorelist(id);
+	}
+	
+	// 지도 영역에 있는 매장 목록
+	public List<StoreDto> getstoresinmap(Double swLat, Double nwLat, Double nwLng, Double neLng){
+		return dao.getstoresinmap(swLat, nwLat, nwLng, neLng);
 	}
 
 }
