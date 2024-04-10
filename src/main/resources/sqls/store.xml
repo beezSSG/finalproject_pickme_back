@@ -162,4 +162,14 @@
 	where name like concat('%', #{storeName}, '%')
 </select>
 
+ <!-- 지도 영역안에 있는 매장만 불러오기 -->
+<select id="getstoresinmap" parameterType="java.lang.Double" resultType="com.pickme.beeze.store.dto.StoreDto">
+	select id, name, lon, lat, tel, address,
+	open_ended as `openEnded`, unmanned, delivery, atm, 
+	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
+	smoothieking, apple_acc as `appleAcc`, toto
+	from store
+	where lat between #{swLat} and #{nwLat} and lon between #{nwLng} and #{neLng}
+</select>
+
 </mapper>
