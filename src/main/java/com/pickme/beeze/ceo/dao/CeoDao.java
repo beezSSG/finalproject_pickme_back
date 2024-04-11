@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.ceo.dto.CeoInfoDto;
 import com.pickme.beeze.ceo.dto.CeoParam;
+import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
@@ -29,5 +30,9 @@ public interface CeoDao {
 	
 	// 전체 주문 차트 보기
 	List<SaleChartDto> salechart(OrderDto dto);
+	
+	// 재고 현황 불러오기
+	List<InventoryDto> inventory(InventoryDto dto);
+	
 	
 }
