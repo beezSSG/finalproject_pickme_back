@@ -16,7 +16,7 @@ import com.pickme.beeze.manager.dto.OrderDto;
 @Repository
 public interface CeoDao {
 	
-	List<CeoInfoDto> getCeoInfo(CeoInfoDto dto);
+	CeoInfoDto getCeoInfo(CeoInfoDto dto);
 	
 	List<PurchaseDto> polist(CeoParam param);
 	int getallceo(CeoParam param);
@@ -24,7 +24,8 @@ public interface CeoDao {
 	List<ProductDto> powrite(CeoParam param);
 	List<ProductDto> powriteCn(ProductDto dto);
 	
-	int deleteProduct(int id);
+	// 화면에서 승인이 완료된 물품을 사라지게 하기
+	void deleteProduct(ProductDto dto);
 	
 	// 전체 주문 차트 보기
 	List<SaleChartDto> salechart(OrderDto dto);
