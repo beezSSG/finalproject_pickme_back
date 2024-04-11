@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pickme.beeze.manager.dto.EventDto;
 import com.pickme.beeze.manager.service.EventService;
+import com.pickme.beeze.util.S3Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,6 +27,14 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/v1/manager/*")
 public class EventController {
+	
+    private final S3Service s3Service;
+
+    @Autowired
+    public EventController(S3Service s3Service) {
+        this.s3Service = s3Service;
+    }
+
 	
 	@Autowired
 	EventService service;
@@ -57,70 +66,32 @@ public class EventController {
 	@PostMapping("/eventcreate")
 	public String eventcreate(EventDto dto, 
 	                        @RequestParam(value = "uploadfile1", required = false) MultipartFile uploadfile1,
-	                        @RequestParam(value = "uploadfile2", required = false) MultipartFile uploadfile2,
-	                        HttpServletRequest request) {
+	                        @RequestParam(value = "uploadfile2", required = false) MultipartFile uploadfile2
+	                       ) {
 	
-	    System.out.println("ProductController newproductinsert " + new Date());
+	    System.out.println("EventController eventcreate " + new Date());
 	    
-	    // 파일 업로드 경로를 static 폴더로 변경
-	    String staticPath = "src/main/resources/static/upload";
-	    
-	    // 파일명을 변경하여 파일을 static 폴더에 저장
-	    String filename1 = uploadfile1.getOriginalFilename();
-	    String newfilename1 = getNewFileName(filename1);
-	    String filepath1 = staticPath + "/" + newfilename1;
-	    System.out.println(filepath1);
-	    
-	    String filename2 = uploadfile2.getOriginalFilename();
-	    String newfilename2 = getNewFileName(filename2);
-	    String filepath2 = staticPath + "/" + newfilename2;
-	    System.out.println(filepath2);
-	    
-	    // 파일 저장
-	    try {
-	        BufferedOutputStream os1 = new BufferedOutputStream(new FileOutputStream(filepath1));
-	        os1.write(uploadfile1.getBytes()); // 파일 업로드
-	        os1.close();
-	        
-	        BufferedOutputStream os2 = new BufferedOutputStream(new FileOutputStream(filepath2));
-	        os2.write(uploadfile2.getBytes()); // 파일 업로드
-	        os2.close();
-	    } catch (FileNotFoundException e) {            
-	        e.printStackTrace();
-	    } catch (IOException e) {            
-	        e.printStackTrace();
-	    }
-	    
-	    // 데이터베이스에 전체 URL 저장
-	    String baseUrl = request.getRequestURL().toString().replace(request.getRequestURI(), request.getContextPath());
-	    String fullUrl1 = baseUrl + "/upload/" + newfilename1; // 전체 URL 생성
-	    dto.setBannerPhoto(fullUrl1);
-	    
-	    String fullUrl2 = baseUrl + "/upload/" + newfilename2; // 전체 URL 생성
-	    dto.setDetailPhoto(fullUrl2);
-	    
-	    boolean isS = service.eventcreate(dto);
-	    
-	    if (isS) {
-	        return "YES";
-	    } else {
-	        return "NO";
-	    }
+        try {
+            // Amazon S3를 통해 파일 업로드
+            String s3FileUrl1 = s3Service.uploadFile("mypickmebuket", uploadfile1.getOriginalFilename(), uploadfile1);
+            String s3FileUrl2 = s3Service.uploadFile("mypickmebuket", uploadfile1.getOriginalFilename(), uploadfile2);
+            
+            // 데이터베이스에 Amazon S3 URL 저장
+            dto.setBannerPhoto(s3FileUrl1);
+            dto.setDetailPhoto(s3FileUrl2);
+            boolean isS = service.eventcreate(dto);
+            
+            if (isS) {
+                return "YES";
+            } else {
+                return "NO";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "NO"; // 업로드 실패 시 NO 반환
+        }
 	}
 
-	private static String getNewFileName(String filename) {
-		String newfilename = "";
-		String fpost = "";	// .jpg .txt 등 확장자명을 끄집어냄
-		
-		if(filename.indexOf('.') >= 0) {	// 확장자명이 있음
-			fpost = filename.substring(filename.indexOf('.'));	// .txt
-			newfilename = new Date().getTime() + fpost;	// 43534534.txt
-		}else {
-			newfilename = new Date().getTime() + ".back";
-		}
-		
-		return newfilename;
-	}
     
     // 이벤트 종료
     @GetMapping("/eventstop")
