@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.manager.dto.CcbDto;
+import com.pickme.beeze.mypage.dto.MyPickBoxDto;
 import com.pickme.beeze.mypage.dto.MypageCouponDto;
 import com.pickme.beeze.mypage.dto.MypageCustomerDto;
 import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
@@ -23,8 +24,13 @@ public interface MypageDao {
 	
 	// 나의 정보 불러오기
 	MypageMainInfoDto getMyInfo(MypageMainInfoDto dto);
-	// int getMyInfoTwo(String email);
+	int getMyInfoCart(MypageMainInfoDto dto);
+	int getMyInfoGift(MypageMainInfoDto dto);
+	
 	MypageProductDto getRecentlyProduct(int id);
+	
+	/* TODO 픽박스 불러오기 */
+	List<MyPickBoxDto> MyPickBox(int id);
 	
 	/* TODO 찜 */
 	// 찜목록 불러오기
