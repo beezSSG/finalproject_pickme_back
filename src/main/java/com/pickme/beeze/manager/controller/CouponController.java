@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pickme.beeze.login.dto.CustomerDto;
 import com.pickme.beeze.manager.dto.CouponDto;
 import com.pickme.beeze.manager.service.CouponService;
 
@@ -19,11 +20,13 @@ public class CouponController {
 	
 	// 쿠폰 생성
 	@GetMapping("/couponcreate")
-	public String couponcreate(CouponDto dto) {
+	public String couponcreate(CouponDto dto,CustomerDto cusdto) {
 		
 		System.out.println("CouponController couponcreate " + new Date());
 		
-		boolean isS = service.couponcreate(dto);
+		int count = service.countuser(cusdto);
+		
+		boolean isS = service.couponcreate(dto,count);
 		
 		if(isS) {
 			return "YES";

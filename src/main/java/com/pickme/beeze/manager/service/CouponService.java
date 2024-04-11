@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pickme.beeze.login.dto.CustomerDto;
 import com.pickme.beeze.manager.dao.CouponDao;
 import com.pickme.beeze.manager.dto.CouponDto;
 
@@ -17,14 +18,17 @@ public class CouponService {
 	
 	@Autowired
 	CouponDao dao;
+	public int countuser(CustomerDto dto) {
+		return dao.countuser(dto);
+	}
 	
 	// 쿠폰 생성
-	public boolean couponcreate(CouponDto dto) {
+	public boolean couponcreate(CouponDto dto, int count) {
 		
-		 int count = 0;
-		 for(int i = 1; i < 3; i++) {
+		 int countt = 0;
+		 for(int i = 1; i < count; i++) {
 			 dto.setUserId(i);
-			 count = dao.couponcreate(dto);
+			 countt = dao.couponcreate(dto);
 		 }
 		 
 		return count>0?true:false;

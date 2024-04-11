@@ -4,6 +4,7 @@ public class CouponDto {
 
 	private int id;
 	private int userId;
+	private String title;
 	private String content;
 	private String startDate;
 	private String endDate;
@@ -13,10 +14,12 @@ public class CouponDto {
 		
 	}
 
-	public CouponDto(int id, int userId, String content, String startDate, String endDate, int couponNumber) {
+	public CouponDto(int id, int userId, String title, String content, String startDate, String endDate,
+			int couponNumber) {
 		super();
 		this.id = id;
 		this.userId = userId;
+		this.title = title;
 		this.content = content;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -37,6 +40,14 @@ public class CouponDto {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getContent() {
@@ -73,8 +84,10 @@ public class CouponDto {
 
 	@Override
 	public String toString() {
-		return "CouponDto [id=" + id + ", userId=" + userId + ", content=" + content + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", couponNumber=" + couponNumber + "]";
+		return "CouponDto [id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", couponNumber=" + couponNumber + "]";
 	}
+
+
 	
 }
