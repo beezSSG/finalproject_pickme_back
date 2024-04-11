@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,6 @@ import com.pickme.beeze.ceo.service.CeoService;
 import com.pickme.beeze.manager.dto.OrderDto;
 import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.util.InfoUtil;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,14 +42,12 @@ public class CeoController {
    // 점주 정보
    @GetMapping("/getCeoInfo")
    public CeoInfoDto getCeoInfo(Authentication Authentication, HttpServletRequest request) {
-	   
-	  System.out.println("CeoController getCeoInfo " + new Date());
-	  int id = InfoUtil.getUserIdInfo(Authentication, request);
-	   
-	  CeoInfoDto dto = new CeoInfoDto();
-	  dto.setId(id);
-	  
-       return service.getCeoInfo(dto);
+		  System.out.println("CeoController getCeoInfo " + new Date());
+		  int id = InfoUtil.getUserIdInfo(Authentication, request);
+		  CeoInfoDto dto = new CeoInfoDto();
+		  dto.setId(id);
+		  
+	       return service.getCeoInfo(dto);
    }
    
    
@@ -111,7 +109,6 @@ public class CeoController {
 	public void deleteProduct(ProductDto dto) {
 		System.out.println("BbsController deleteProduct " + new Date());
 		service.deleteProduct(dto);
-
 	}
 	
 	
