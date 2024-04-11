@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.ceo.dto.CeoInfoDto;
 import com.pickme.beeze.ceo.dto.CeoParam;
+import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
@@ -44,10 +45,12 @@ public class CeoController {
    public CeoInfoDto getCeoInfo(Authentication Authentication, HttpServletRequest request) {
 		  System.out.println("CeoController getCeoInfo " + new Date());
 		  int id = InfoUtil.getUserIdInfo(Authentication, request);
-		  CeoInfoDto dto = new CeoInfoDto();
+		  CeoInfoDto dto = new CeoInfoDto();                                            
 		  dto.setId(id);
+
+		  System.out.println(dto);
 		  
-	       return service.getCeoInfo(dto);
+	     return service.getCeoInfo(dto);
    }
    
    
@@ -126,5 +129,20 @@ public class CeoController {
 		
 		return list;
 	}
+	
+	// 재고
+	@GetMapping("/inventory")
+	public List<InventoryDto> inventory(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("invetoryController inventory " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		InventoryDto dto = new InventoryDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.inventory(dto);
+	}
+	
 	
 }
