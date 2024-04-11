@@ -4,9 +4,14 @@
    
 <mapper namespace="com.pickme.beeze.manager.dao.CouponDao">
 
+<select id="countuser" parameterType="com.pickme.beeze.login.dto.CustomerDto" resultType="Integer">
+	select count(*)
+	from customer_info
+</select>
+
 <insert id="couponcreate" parameterType="com.pickme.beeze.manager.dto.CouponDto">
 	insert into coupon(user_id, content, start_date, end_date, coupon_number)
-	values(#{userId}, #{content}, #{startDate}, #{endDate},#{couponNumber})
+	values(#{userId},#{title}, #{content}, #{startDate}, #{endDate},#{couponNumber})
 </insert>
 
 <delete id="coupondelete" parameterType="Integer">
