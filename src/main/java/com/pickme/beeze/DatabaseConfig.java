@@ -1,5 +1,7 @@
 package com.pickme.beeze;
 
+import java.util.Date;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -16,7 +18,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@PropertySource("classpath:/application.properties") // 기본 경로에 있는 application.properties 를 불러들여라
+@PropertySource("classpath:/db.properties") // 기본 경로에 있는 application.properties 를 불러들여라
 public class DatabaseConfig {
 
 	@Bean // 자동 생성해라!
@@ -41,6 +43,11 @@ public class DatabaseConfig {
 		
 		Resource[] arrResource = new PathMatchingResourcePatternResolver().getResources("classpath:sqls/*.xml");
 		sqlSessionFactoryBean.setMapperLocations(arrResource);
+		
+		// @alias 설정시 위치는 여기!
+		// 아래에 alias를 설정할 dto 위치를 , 를 통하여 이어줘야 에러가 나지 않는다.
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.mypage.dto, com.pickme.beeze.login.dto, com.pickme.beeze.customer.dto, com.pickme.beeze.product.dto");	
+//		sqlSessionFactoryBean.setTypeAliasesPackage("com.pickme.beeze.login.dto");	// 이렇게 여러개 설정시 에러가 난다		
 		sqlSessionFactoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
 		
 		return (SqlSessionFactory)sqlSessionFactoryBean.getObject();
@@ -48,6 +55,7 @@ public class DatabaseConfig {
 	
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+		System.out.println("DatabaseConfig sqlSessionTemplate " + new Date());
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 	
