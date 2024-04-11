@@ -9,6 +9,7 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.ceo.dto.CeoInfoDto;
@@ -18,10 +19,8 @@ import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.service.CeoService;
 import com.pickme.beeze.manager.dto.OrderDto;
+import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
 import com.pickme.beeze.util.InfoUtil;
-
-import org.springframework.security.core.Authentication;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +42,6 @@ public class CeoController {
    // 점주 정보
    @GetMapping("/getCeoInfo")
    public CeoInfoDto getCeoInfo(Authentication Authentication, HttpServletRequest request) {
-	   
 		  System.out.println("CeoController getCeoInfo " + new Date());
 		  int id = InfoUtil.getUserIdInfo(Authentication, request);
 		  CeoInfoDto dto = new CeoInfoDto();
