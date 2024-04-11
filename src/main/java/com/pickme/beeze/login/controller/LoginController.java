@@ -25,7 +25,9 @@ import com.pickme.beeze.login.jwt.JwtTokenProvider;
 import com.pickme.beeze.login.service.LoginService;
 import com.pickme.beeze.util.InfoUtil;
 import com.pickme.beeze.util.NaverCloud;
+import com.pickme.beeze.util.S3Service;
 
+import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -33,15 +35,16 @@ import jakarta.servlet.http.HttpServletRequest;
 public class LoginController {
 
 	private LoginService service;
-	
+	private S3Service s3Service;
     // JWT 토큰 생성을 위해 필요
     private JwtTokenProvider provider;
 	
-    public LoginController(LoginService service, JwtTokenProvider provider) {
+    @Autowired
+    public LoginController(LoginService service, JwtTokenProvider provider, S3Service s3Service) {
         this.service = service;
         this.provider = provider;
+        this.s3Service = s3Service;
     }
-
     
     @Autowired
     private NaverCloud nc;
@@ -91,46 +94,28 @@ public class LoginController {
     }
 	
 	// 점주 회원가입시 OCR
-	@PostMapping("/ocr")
-	public String ocr(@RequestParam("uploadfile")MultipartFile uploadfile,
-							HttpServletRequest re) throws Exception {
-		System.out.println("NaverCloudController ocr " + new Date());
-		
-		// 파일 업로드 경로를 static 폴더로 변경
-	    String staticPath = "src/main/resources/static/upload";
-		
-	    // 파일명을 변경하여 파일을 static 폴더에 저장
-	    String filename = uploadfile.getOriginalFilename();
-	    String newfilename = getNewFileName(filename);
-	    String filepath = staticPath + "/" + newfilename;
-	    System.out.println(filepath);
-		
-		BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-		os.write(uploadfile.getBytes());
-		os.close();
-		
-		String baseUrl = re.getRequestURL().toString().replace(re.getRequestURI(), re.getContextPath());
-	    String fullUrl = baseUrl + "/upload/" + newfilename; // 전체 URL 생성
-	    service.ocrurl(fullUrl);
-	    
-		// Naver cloud
-		String response = nc.OcrProc(filepath);
-		return response;
-	}
-	// new 파일이름 얻는 함수
-	private static String getNewFileName(String filename) {
-		String newfilename = "";
-		String fpost = "";	// .jpg .txt 등 확장자명을 끄집어냄
-		
-		if(filename.indexOf('.') >= 0) {	// 확장자명이 있음
-			fpost = filename.substring(filename.indexOf('.'));	// .txt
-			newfilename = new Date().getTime() + fpost;	// 43534534.txt
-		}else {
-			newfilename = new Date().getTime() + ".back";
-		}
-		
-		return newfilename;
-	}
+    @PostMapping("/ocr")
+    public String ocr(@RequestParam("uploadfile") MultipartFile uploadfile,
+                      HttpServletRequest request) throws Exception {
+        System.out.println("NaverCloudController ocr " + new Date());
+
+        try {
+            // Amazon S3를 통해 파일 업로드
+            String s3FileUrl = s3Service.uploadFile("mypickmebuket", uploadfile.getOriginalFilename(), uploadfile);
+
+            // 데이터베이스에 Amazon S3 URL 저장
+            service.ocrurl(s3FileUrl);
+
+         // Naver cloud
+            String response = nc.OcrProc(uploadfile);
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "File upload failed";
+        }
+    }
+
+
 	
 	// 사업자 등록 리스트 불러오기
 	@GetMapping("/selectocrlist")
