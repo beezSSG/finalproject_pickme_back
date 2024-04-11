@@ -4,7 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -180,17 +182,26 @@ public class LoginController {
         // email, pw 통한 사용자 구분
         System.out.println(dto.toString());
     	LoginDto member2 = service.selectCustomerInfo(dto);
-		if (member2 == null || member2.getRdate() == null || member2.getRdate().equals("")) {	// 고객 로그인
+    	
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	
+		if (member2 == null || member2.getRdate() == null || member2.getRdate().equals("")) {	// 점주 로그인
 			member2 = service.selectCeoInfo(dto);
-		} else {	// 점주 로그인
+			map.put("who", "점주");
+			
+		} else {	// 고객 로그인
 			member2 = service.selectCustomerInfo(dto);
+			map.put("who", "고객");
 		}			// 관리자 로그인
 
         // JWT 토큰 생성 및 반환
+		
         String jwt = provider.createToken(member2);
+        map.put("jwt", jwt);
+        
         
         // 생성된 JWT 토큰을 응답 본문에 담아 반환            
-        return ResponseEntity.ok(jwt);
+        return ResponseEntity.ok(map);
     }
     
     // 아이디 찾기

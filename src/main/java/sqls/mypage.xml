@@ -20,13 +20,13 @@
 	  FROM cart
 	 WHERE customer_id = #{id} and order_yn = 0;
 </select>
-
 <select id="getMyInfoGift" parameterType="MyInfoDto" resultType="Integer">
 	SELECT count(id) as `giftQuantity`
 	  FROM gift
 	 WHERE send_customer_id = #{id} and use_yn = 0;
 </select>
 
+<!-- 최근본상품 불러오기 -->
 <select id="getRecentlyProduct" parameterType="Integer" resultType="MypageProductDto">
 	SELECT id, name, price, url, product_rating
 	  FROM product
@@ -101,6 +101,8 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	 WHERE id = #{id}
 </update>
 
+
+
 	<!-- 1:1문의게시판 보기 -->
 <!-- 1:1 문의 게시글 작성하기   -->
 <!-- answer_yn 0: 답변완료 전, 1:답변완료 후 -->
@@ -116,26 +118,21 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	 WHERE customer_id = #{custoemerId}
 </select>
 
-	<!-- 내 주문내역 -->
-<!-- 내 주문내역 불러오기 날짜 및 해당 주문에 대한 수량 날짜 / 상품종류 숫자-->
-<select id="MyOrdersList" parameterType="Integer" resultType="MypageOrderdayDto">
-	SELECT date, COUNT(cart_id) as `pQuantity` 
-	  FROM pickme.order o
-	 INNER JOIN cart c ON o.cart_id = c.id 
-	 WHERE cancel_yn = 0 and c.customer_id = #{id}
-	 GROUP BY date
-</select>
-
-<!-- date로 상품번호 받아와서 그걸로 상품 이름출력 -->
-<select id="MyOrdersListName" parameterType="String" resultType="MypageOrderdayDto">
-	SELECT p.name as `pName`, c.quantity as `quantity`, p.price as `price`
+	<!-- Pick Box -->
+<!-- 픽박스 불러오기 -->
+<select id="MyPickBox" parameterType="Integer" resultType="MyPickBoxDto">
+	SELECT  p.name as `pName`, c.quantity as `quantity`, p.url as `pUrl`, s.exp_date as `expDate`, st.name as `sName`, date
 	  FROM pickme.order o
 	 INNER JOIN cart c ON o.cart_id = c.id
 	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN store st ON s.store_id = st.id
 	 INNER JOIN product p ON s.product_id = p.id
-	 WHERE date = #{date}
+	 WHERE cancel_yn = 0 and c.customer_id = #{id}
 </select>
 
+
+	<!-- 내 주문내역 -->
+<!-- 현재 기획 -->
 <select id="MyOrdersLists" parameterType="Integer" resultType="MypageOrderdayDto">
 	SELECT date, p.name as `pName`, c.quantity as `quantity`, p.price as `price`, st.address as `sAddress`, ce.name as `ceoName`
 	  FROM pickme.order o
@@ -145,6 +142,25 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	 INNER JOIN ceo_info ce ON st.ceo_id = ce.id
 	 INNER JOIN product p ON s.product_id = p.id
 	 WHERE cancel_yn = 0 and c.customer_id = #{id}
+</select>
+
+<!-- 첫기획  -->
+<!-- 내 주문내역 불러오기 날짜 및 해당 주문에 대한 수량 날짜 / 상품종류 숫자-->
+<select id="MyOrdersList" parameterType="Integer" resultType="MypageOrderdayDto">
+	SELECT date, COUNT(cart_id) as `pQuantity` 
+	  FROM pickme.order o
+	 INNER JOIN cart c ON o.cart_id = c.id 
+	 WHERE cancel_yn = 0 and c.customer_id = #{id}
+	 GROUP BY date
+</select>
+<!-- date로 상품번호 받아와서 그걸로 상품 이름출력 -->
+<select id="MyOrdersListName" parameterType="String" resultType="MypageOrderdayDto">
+	SELECT p.name as `pName`, c.quantity as `quantity`, p.price as `price`
+	  FROM pickme.order o
+	 INNER JOIN cart c ON o.cart_id = c.id
+	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN product p ON s.product_id = p.id
+	 WHERE date = #{date}
 </select>
 
 <!-- 원하는 날짜에 대한 주문 리스트 출력 -->
