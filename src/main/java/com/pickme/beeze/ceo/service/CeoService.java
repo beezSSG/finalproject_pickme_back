@@ -21,7 +21,8 @@ public class CeoService {
 	@Autowired
 	CeoDao dao;
 	
-	public List<CeoInfoDto> getCeoInfo(CeoInfoDto dto) {
+	public CeoInfoDto getCeoInfo(CeoInfoDto dto) {
+		
 		return dao.getCeoInfo(dto);
 	}
 	
@@ -41,8 +42,8 @@ public class CeoService {
 		return dao.powriteCn(dto);
 	}
 	
-	public boolean deleteProduct(int id) {
-		return dao.deleteProduct(id)>0?true:false;
+	public void deleteProduct(ProductDto dto) {
+		dao.deleteProduct(dto);
 	}
 	
 	public List<SaleChartDto> salechart(OrderDto dto) {

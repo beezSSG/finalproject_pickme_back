@@ -7,6 +7,7 @@
 		select ci.name as `ceoname`, st.name as `storename`
 		  from pickme.ceo_info ci join
 		pickme.store st on ci.id = st.ceo_id 
+		where ci.id={id}
 	</select>
 
 	<!-- 글의 목록 -->
@@ -79,9 +80,9 @@
 	</select>
 	
 	<!--  화면에서 승인이 완료된 물품을 사라지게 하기 -->
-	<update id="deleteProduct" parameterType="Integer">
+	<update id="deleteProduct" parameterType="com.pickme.beeze.ceo.dto.ProductDto">
 		update pickme.purchase_order
-		set po_yn as `poYn` = 1, quantity = #{quantity}
+			set po_yn as `poYn` = 1, quantity = #{quantity}
 		where id=#{id}
 	</update>
 	
