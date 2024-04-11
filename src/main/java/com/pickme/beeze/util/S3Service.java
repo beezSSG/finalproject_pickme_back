@@ -1,9 +1,16 @@
 package com.pickme.beeze.util;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+
+import jakarta.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,15 +19,36 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Service
+@PropertySource("classpath:key.properties")
 public class S3Service {
 
     private AmazonS3 s3Client;
 
-    public S3Service() {
+    @Value("${cloud.aws.credentials.access-key}")
+    private String accessKeyId;
+
+    @Value("${cloud.aws.credentials.secret-key}")
+    private String secretKey;
+
+    @Value("${cloud.aws.region.static}")
+    private String region;
+    
+    @PostConstruct
+    private void InitAws() {
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKeyId, secretKey);
         this.s3Client = AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.AP_NORTHEAST_2)
+                .withRegion(Regions.fromName(region))
+                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                 .build();
     }
+    
+//    public S3Service() {
+//        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKeyId, secretKey);
+//        this.s3Client = AmazonS3ClientBuilder.standard()
+//                .withRegion(region)
+//                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+//                .build();
+//    }
 
     public String uploadFile(String bucketName, String keyName, MultipartFile file) throws IOException {
         File fileObj = convertMultiPartFileToFile(file);
