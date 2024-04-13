@@ -15,6 +15,7 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.PostDto;
 
 @Service
 @Transactional
@@ -60,8 +61,13 @@ public class CeoService {
 	// 픽업
 	public List<OrderDto> pickup(OrderDto dto) {	
 		List<OrderDto> list = dao.pickup(dto);
-		System.out.println(list.size());
 		return list;	
 	}
 	
+	
+	// 배달
+	public List<PostDto> postcheck(PostDto dto) {	
+		List<PostDto> list = dao.postcheck(dto);
+		return list;	
+	}
 }
