@@ -1,5 +1,6 @@
 package com.pickme.beeze.ceo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -11,7 +12,7 @@ import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
-import com.pickme.beeze.manager.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.OrderDto;
 
 @Mapper
 @Repository
@@ -34,5 +35,10 @@ public interface CeoDao {
 	// 재고 현황 불러오기
 	List<InventoryDto> inventory(InventoryDto dto);
 	
+	// 픽업 기능 구현하기
+	List<OrderDto> pickup(OrderDto dto);
+	
+	
+
 	
 }
