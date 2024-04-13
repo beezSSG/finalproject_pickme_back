@@ -46,5 +46,8 @@ public interface LoginDao {
 	OcrListDto ocrlistdetail(int id);
 	int ocrapproval(int id);
 	int notocrcount(OcrListDto dto);
-
+	
+	/* 회원탈퇴 */
+	void deleteCustomer(int id);
+	
 }
