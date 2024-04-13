@@ -93,7 +93,20 @@
 	 INNER JOIN pickme.store s ON sp.store_id = s.id
 	 INNER JOIN pickme.product p ON sp.product_id = p.id
 	  WHERE s.ceo_id = #{id} 
-</select>
+	</select>
+	
+	<!-- 픽업목록 -->
+	<select id="pickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="com.pickme.beeze.ceo.dto.OrderDto">
+	SELECT p.name as `productName`, p.price as `price`, ci.name as `customerName`, pick_del as `pickDel`
+	  FROM pickme.order o
+	 INNER JOIN pickme.customer_info ci ON o.cart_id = ci.id
+	 INNER JOIN cart c ON o.cart_id = c.id
+	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN store st ON s.store_id = st.id
+	 INNER JOIN product p ON s.product_id = p.id
+      WHERE cancel_yn = 0 and st.ceo_id = #{id}
+	</select>	
+	
 	
 	<!-- 월별 매출 차트를 위한 전체 order 목록  -->
 	<select id="salechart" parameterType="com.pickme.beeze.ceo.dto.OrderDto" 

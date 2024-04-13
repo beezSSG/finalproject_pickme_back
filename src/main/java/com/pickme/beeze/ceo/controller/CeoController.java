@@ -19,8 +19,7 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.service.CeoService;
-import com.pickme.beeze.manager.dto.OrderDto;
-import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
+import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.util.InfoUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -142,6 +141,20 @@ public class CeoController {
 		  System.out.println(dto);
 		  
 	     return service.inventory(dto);
+	}
+	
+	// 픽업
+	@GetMapping("/pickup")
+	public List<OrderDto> pickup(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("pickupController pickup " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		OrderDto dto = new OrderDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.pickup(dto);
 	}
 	
 	
