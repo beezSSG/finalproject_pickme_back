@@ -19,8 +19,8 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.service.CeoService;
-import com.pickme.beeze.manager.dto.OrderDto;
-import com.pickme.beeze.mypage.dto.MypageMainInfoDto;
+import com.pickme.beeze.ceo.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.PostDto;
 import com.pickme.beeze.util.InfoUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -143,6 +143,36 @@ public class CeoController {
 		  
 	     return service.inventory(dto);
 	}
+	
+	// 픽업
+	@GetMapping("/pickup")
+	public List<OrderDto> pickup(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("pickupController pickup " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		OrderDto dto = new OrderDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.pickup(dto);
+	}
+	
+	// 배달
+	@GetMapping("/postcheck")
+	public List<PostDto> postcheck(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("postcheckController postcheck " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		PostDto dto = new PostDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.postcheck(dto);
+	}
+	
+	
 	
 	
 }
