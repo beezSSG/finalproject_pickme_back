@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CeoInfoDto {
+	private String ceoName;	// 점주 이름
+	private String storeName;	// 점주 이름
+
 	private int id;
 	private String name;	// 점주 이름
 
