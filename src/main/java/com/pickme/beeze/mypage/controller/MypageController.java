@@ -107,8 +107,11 @@ public class MypageController {
 	
 	// 개인정보 수정
 	@PostMapping("/user/updateUserInfo")
-	public void updateUserInfo(MypageCustomerDto dto) {
+	public void updateUserInfo(MypageCustomerDto dto, Authentication Authentication, HttpServletRequest request) {
 		System.out.println("MypageController updateUserInfo " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		dto.setId(id);
 		
 		service.updateUserInfo(dto);
 	}

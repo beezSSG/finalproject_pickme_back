@@ -73,7 +73,7 @@ jobs:
           cd Devops
           mkdir -p ${{ env.EKS_PATH}}
           touch ${{ env.EKS_PATH }}/values.yaml
-          sed -i "s#image:.*#image: \"${ECR_REGISTRY}/${ECR_REPOSITORY}:${env.IMAGE_TAG}\"#g" ${{ env.EKS_PATH }}/values.yaml
+          sed -i "s#image:.*#image: \"${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}\"#g" ${{ env.EKS_PATH }}/values.yaml
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
