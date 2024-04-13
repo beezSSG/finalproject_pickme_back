@@ -66,7 +66,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	<!-- 개인정보 관리  -->
 <!-- 개인정보 보기-->
 <select id="getUserInfo" parameterType="Integer" resultType="com.pickme.beeze.mypage.dto.MypageCustomerDto">
-	select email, name, address, phone, point, grade, LEFT(rdate, 10) as `rdate`
+	select pw, email, name, address, phone, point, grade, LEFT(rdate, 10) as `rdate`
 	  from customer_info
 	 where id = #{id}
 	 <!-- id = customer_id -->
@@ -91,16 +91,14 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 <select id="getCoupon" parameterType="Integer" resultType="com.pickme.beeze.mypage.dto.MypageCouponDto">
 	select id, content, start_date as `startDate`, end_date as `endDate`
 	  from coupon
-	 where user_id = #{id} and use_yn = 0
+	 where user_id = #{id}
 </select>
 
 <!-- 쿠폰 사용시 -->
-<update id="">
-	UPDATE coupon
-	   SET use_yn = 1
-	 WHERE id = #{id}
-</update>
-
+<delete id="deleteCoupon" parameterType="Integer">
+	DELETE FROM coupon
+	 WHERE id=#{id}
+</delete>
 
 
 	<!-- 1:1문의게시판 보기 -->

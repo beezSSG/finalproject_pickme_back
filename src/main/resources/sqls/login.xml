@@ -100,34 +100,38 @@
 	 WHERE id=#{id}
 </select>
 
+<!-- 회원탈퇴 -->
+<delete id="deleteCustomer" parameterType="Integer">
+	DELETE FROM customer_info
+	 WHERE id=#{id}
+</delete>
+
+<!--  -->
 <select id="findByEmail" parameterType="String" resultType="CustomerDto">
 	SELECT *
 	FROM customer_info
 	where email=#{email}
 </select>
 
+<!-- OCR -->
 <insert id="ocrurl" parameterType="String">
 	insert into ocr_list(url,ocr_yn)
 	values(#{fullUrl},0)
 </insert>
-
 <select id="selectocrlist" parameterType="com.pickme.beeze.login.dto.OcrListDto" resultType="com.pickme.beeze.login.dto.OcrListDto">
 	select id,url,ocr_yn as `ocrYn`
 	from ocr_list
 </select>
-
 <select id="ocrlistdetail" parameterType="Integer" resultType="com.pickme.beeze.login.dto.OcrListDto">
 	select id,url,ocr_yn as `ocrYn`
 	from ocr_list
 	where id=#{id}
 </select>
-
 <update id="ocrapproval" parameterType="Integer">
 	update ocr_list
 	set ocr_yn = 1
 	where id=#{id}
 </update>
-
 <select id="notocrcount" parameterType="com.pickme.beeze.login.dto.OcrListDto" resultType="Integer">
 	select count(*)
 	from ocr_list
