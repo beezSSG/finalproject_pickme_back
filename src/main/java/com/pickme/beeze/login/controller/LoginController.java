@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -209,10 +210,27 @@ public class LoginController {
     // 생성자를 통해 토큰을 초기화
     // 이메일 확인후 비밀번호 변경시
     @PostMapping("/changePw")
-    public ResponseEntity<?> changePw(LoginDto dto) {
+    public ResponseEntity<?> changePw(LoginDto dto, Authentication Authentication, HttpServletRequest request) {
     	System.out.println("LoginController changePw " + new Date());
     	
+    	if (dto.getEmail() == null || dto == null) {
+    		String email = InfoUtil.getUserEmailInfo(Authentication, request);
+        	System.out.println("email = " + email);
+        	dto.setEmail(email);
+		}
+    	
         return ResponseEntity.ok(service.changePw(dto));
+    }
+    
+    // 회원탈퇴
+    @DeleteMapping("deleteCustomer")
+    public void deleteCustomer(Authentication Authentication, HttpServletRequest request) {
+    	System.out.println("LoginController deleteCustomer " + new Date());
+    	
+    	int id = InfoUtil.getUserIdInfo(Authentication, request);
+    	System.out.println("id = " + id);
+    	
+    	service.deleteCustomer(id);        
     }
     
 }

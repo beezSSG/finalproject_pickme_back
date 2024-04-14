@@ -1,5 +1,6 @@
 package com.pickme.beeze.ceo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,8 @@ import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
-import com.pickme.beeze.manager.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.PostDto;
 
 @Service
 @Transactional
@@ -54,5 +56,18 @@ public class CeoService {
 	// 재고
 	public List<InventoryDto> inventory(InventoryDto dto) {	
 		return dao.inventory(dto);	
+	}
+	
+	// 픽업
+	public List<OrderDto> pickup(OrderDto dto) {	
+		List<OrderDto> list = dao.pickup(dto);
+		return list;	
+	}
+	
+	
+	// 배달
+	public List<PostDto> postcheck(PostDto dto) {	
+		List<PostDto> list = dao.postcheck(dto);
+		return list;	
 	}
 }
