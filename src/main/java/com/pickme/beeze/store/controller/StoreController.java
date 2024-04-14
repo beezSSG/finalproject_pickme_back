@@ -27,11 +27,13 @@ public class StoreController {
 	
 	// 매장 검색
 	@GetMapping("/searchstore")
-	public List<StoreDto> searchstore(String storeName) {
+	public List<StoreDto> searchstore(String stateName, String districtName, String storeName) {
 		System.out.println("StoreController searchstore() " + new Date());
 		
+		System.out.println("stateName : " + stateName);
+		System.out.println("districtName : " + districtName);
 		System.out.println("storeName : " + storeName);
-		return service.searchstore(storeName);
+		return service.searchstore(stateName, districtName, storeName);
 	}
 
 	// 해당 상품이 있는 매장 목록
@@ -44,7 +46,7 @@ public class StoreController {
 	// 지도 영역에 있는 매장 목록
 	@GetMapping("/getstoresinmap")
 	public List<StoreDto> getstoresinmap(Double swLat, Double nwLat, Double nwLng, Double neLng){
-		System.out.println("StoreController getlistinmap " + new Date());
+		System.out.println("StoreController getstoresinmap " + new Date());
 		return service.getstoresinmap(swLat, nwLat, nwLng, neLng);
 	}
 	

@@ -40,12 +40,13 @@ public class SecurityService implements UserDetailsService {
 		// 고객일 경우 세팅
 		LoginDto member = dao.whoCustomer(email);
 //		System.out.println(member.toString());
-		member.setRole("customer");
 		
 		// 점주일 경우 세팅
-		if (member.getRdate() == null || member.getRdate().equals("")) {
+		if (member == null || member.getRdate() == null || member.getRdate().equals("")) {
 			member = dao.whoCeo(email);
 			member.setRole("ceo");
+		} else {
+			member.setRole("customer");
 		}
 		
 		// 관리자일 경우 세팅

@@ -26,6 +26,7 @@ import com.pickme.beeze.product.dto.ProductGiftParam;
 import com.pickme.beeze.product.dto.ProductParam;
 import com.pickme.beeze.product.service.ProductService;
 import com.pickme.beeze.util.InfoUtil;
+import com.pickme.beeze.util.S3Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -33,6 +34,14 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/v1/product/*")
 public class ProductController {
+	
+    private final S3Service s3Service;
+
+    @Autowired
+    public ProductController(S3Service s3Service) {
+        this.s3Service = s3Service;
+    }
+
 	
 	@Autowired
 	ProductService service;
@@ -72,60 +81,32 @@ public class ProductController {
 	}
 	
 	
-	// 신제품 등록
-	@PostMapping("/newproductinsert")
-	public String newproductinsert(ProductDto dto, 
-	                        @RequestParam(value = "uploadfile", required = false) MultipartFile uploadfile,
-	                        HttpServletRequest request) {
+    @PostMapping("/newproductinsert")
+    public String newproductinsert(ProductDto dto, 
+                        @RequestParam(value = "uploadfile", required = false) MultipartFile uploadfile) {
 
-	    System.out.println("ProductController newproductinsert " + new Date());
-	    
-	    // 파일 업로드 경로를 static 폴더로 변경
-	    String staticPath = "src/main/resources/static/upload";
-	    
-	    // 파일명을 변경하여 파일을 static 폴더에 저장
-	    String filename = uploadfile.getOriginalFilename();
-	    String newfilename = getNewFileName(filename);
-	    String filepath = staticPath + "/" + newfilename;
-	    System.out.println(filepath);
-	    
-	    // 파일 저장
-	    try {
-	        BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(filepath));
-	        os.write(uploadfile.getBytes()); // 파일 업로드
-	        os.close();
-	    } catch (FileNotFoundException e) {            
-	        e.printStackTrace();
-	    } catch (IOException e) {            
-	        e.printStackTrace();
-	    }
-	    
-	    // 데이터베이스에 전체 URL 저장
-	    String baseUrl = request.getRequestURL().toString().replace(request.getRequestURI(), request.getContextPath());
-	    String fullUrl = baseUrl + "/upload/" + newfilename; // 전체 URL 생성
-	    dto.setUrl(fullUrl);
-	    boolean isS = service.newproductinsert(dto);
-	    
-	    if (isS) {
-	        return "YES";
-	    } else {
-	        return "NO";
-	    }
-	}
+        System.out.println("ProductController newproductinsert " + new Date());
+        
+        try {
+            // Amazon S3를 통해 파일 업로드
+            String s3FileUrl = s3Service.uploadFile("mypickmebuket", uploadfile.getOriginalFilename(), uploadfile);
+            
+            // 데이터베이스에 Amazon S3 URL 저장
+            dto.setUrl(s3FileUrl);
+            boolean isS = service.newproductinsert(dto);
+            
+            if (isS) {
+                return "YES";
+            } else {
+                return "NO";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "NO"; // 업로드 실패 시 NO 반환
+        }
+    }
 
-	private static String getNewFileName(String filename) {
-		String newfilename = "";
-		String fpost = "";	// .jpg .txt 등 확장자명을 끄집어냄
-		
-		if(filename.indexOf('.') >= 0) {	// 확장자명이 있음
-			fpost = filename.substring(filename.indexOf('.'));	// .txt
-			newfilename = new Date().getTime() + fpost;	// 43534534.txt
-		}else {
-			newfilename = new Date().getTime() + ".back";
-		}
-		
-		return newfilename;
-	}
+
 	
 	/* 선물함기능 */
 	// 선물 보내기

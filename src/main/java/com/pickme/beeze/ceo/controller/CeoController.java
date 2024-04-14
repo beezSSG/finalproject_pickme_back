@@ -7,16 +7,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.ceo.dto.CeoInfoDto;
 import com.pickme.beeze.ceo.dto.CeoParam;
+import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.service.CeoService;
-import com.pickme.beeze.manager.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.PostDto;
+import com.pickme.beeze.util.InfoUtil;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,13 +41,16 @@ public class CeoController {
    CeoService service;
    
    // 점주 정보
-   @PostMapping("/getCeoInfo")
-   public List<CeoInfoDto> getCeoInfo(CeoInfoDto dto) {
-	   
-	   System.out.println("CeoController getCeoInfo " + new Date());
-	   
-	   List<CeoInfoDto> list = service.getCeoInfo(dto);
-       return list;
+   @GetMapping("/getCeoInfo")
+   public CeoInfoDto getCeoInfo(Authentication Authentication, HttpServletRequest request) {
+		  System.out.println("CeoController getCeoInfo " + new Date());
+		  int id = InfoUtil.getUserIdInfo(Authentication, request);
+		  CeoInfoDto dto = new CeoInfoDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.getCeoInfo(dto);
    }
    
    
@@ -100,13 +109,9 @@ public class CeoController {
    
    // 발주 승인완료 물품 사라지기
 	@PostMapping("/deleteProduct")
-	public String deleteProduct(int id) {
+	public void deleteProduct(ProductDto dto) {
 		System.out.println("BbsController deleteProduct " + new Date());
-		boolean isS = service.deleteProduct(id);
-		if(isS) {
-			return "YES";
-		}
-		return "NO";
+		service.deleteProduct(dto);
 	}
 	
 	
@@ -124,5 +129,50 @@ public class CeoController {
 		
 		return list;
 	}
+	
+	// 재고
+	@GetMapping("/inventory")
+	public List<InventoryDto> inventory(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("invetoryController inventory " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		InventoryDto dto = new InventoryDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.inventory(dto);
+	}
+	
+	// 픽업
+	@GetMapping("/pickup")
+	public List<OrderDto> pickup(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("pickupController pickup " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		OrderDto dto = new OrderDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.pickup(dto);
+	}
+	
+	// 배달
+	@GetMapping("/postcheck")
+	public List<PostDto> postcheck(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("postcheckController postcheck " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		PostDto dto = new PostDto();                                            
+		  dto.setId(id);
+
+		  System.out.println(dto);
+		  
+	     return service.postcheck(dto);
+	}
+	
+	
+	
 	
 }

@@ -1,5 +1,6 @@
 package com.pickme.beeze.ceo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pickme.beeze.ceo.dao.CeoDao;
 import com.pickme.beeze.ceo.dto.CeoInfoDto;
 import com.pickme.beeze.ceo.dto.CeoParam;
+import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
-import com.pickme.beeze.manager.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.OrderDto;
+import com.pickme.beeze.ceo.dto.PostDto;
 
 @Service
 @Transactional
@@ -21,7 +24,8 @@ public class CeoService {
 	@Autowired
 	CeoDao dao;
 	
-	public List<CeoInfoDto> getCeoInfo(CeoInfoDto dto) {
+	public CeoInfoDto getCeoInfo(CeoInfoDto dto) {
+		
 		return dao.getCeoInfo(dto);
 	}
 	
@@ -41,11 +45,29 @@ public class CeoService {
 		return dao.powriteCn(dto);
 	}
 	
-	public boolean deleteProduct(int id) {
-		return dao.deleteProduct(id)>0?true:false;
+	public void deleteProduct(ProductDto dto) {
+		dao.deleteProduct(dto);
 	}
 	
 	public List<SaleChartDto> salechart(OrderDto dto) {
 		return dao.salechart(dto);
+	}
+	
+	// 재고
+	public List<InventoryDto> inventory(InventoryDto dto) {	
+		return dao.inventory(dto);	
+	}
+	
+	// 픽업
+	public List<OrderDto> pickup(OrderDto dto) {	
+		List<OrderDto> list = dao.pickup(dto);
+		return list;	
+	}
+	
+	
+	// 배달
+	public List<PostDto> postcheck(PostDto dto) {	
+		List<PostDto> list = dao.postcheck(dto);
+		return list;	
 	}
 }

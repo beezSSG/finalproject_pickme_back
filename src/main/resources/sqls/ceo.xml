@@ -7,6 +7,7 @@
 		select ci.name as `ceoname`, st.name as `storename`
 		  from pickme.ceo_info ci join
 		pickme.store st on ci.id = st.ceo_id 
+		where ci.id=#{id}
 	</select>
 
 	<!-- 글의 목록 -->
@@ -79,11 +80,47 @@
 	</select>
 	
 	<!--  화면에서 승인이 완료된 물품을 사라지게 하기 -->
-	<update id="deleteProduct" parameterType="Integer">
+	<update id="deleteProduct" parameterType="com.pickme.beeze.ceo.dto.ProductDto">
 		update pickme.purchase_order
-		set po_yn as `poYn` = 1, quantity = #{quantity}
+			set po_yn as `poYn` = 1, quantity = #{quantity}
 		where id=#{id}
 	</update>
+	
+	<!-- 재고현황 id 상품번호 /storeName 점포이름 / productName 상품이름 / price 가격 / quantity 수량 / exp_date --> 
+	<select id="inventory" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="com.pickme.beeze.ceo.dto.InventoryDto">
+	SELECT sp.id, s.name as `storeName`, p.name as `productName`, p.price as `price`, quantity, exp_date as `expDate`
+	  FROM pickme.store_product sp 
+	 INNER JOIN pickme.store s ON sp.store_id = s.id
+	 INNER JOIN pickme.product p ON sp.product_id = p.id
+	  WHERE s.ceo_id = #{id} 
+	</select>
+	
+	<!-- 픽업목록 -->
+	<select id="pickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="com.pickme.beeze.ceo.dto.OrderDto">
+	SELECT p.name as `productName`, p.price as `price`, ci.name as `customerName`, pick_del as `pickDel`
+	  FROM pickme.order o
+	 INNER JOIN pickme.customer_info ci ON o.cart_id = ci.id
+	 INNER JOIN cart c ON o.cart_id = c.id
+	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN store st ON s.store_id = st.id
+	 INNER JOIN product p ON s.product_id = p.id
+      WHERE cancel_yn = 0 and st.ceo_id = #{id}
+	</select>
+	
+	
+	<!-- 배달 목록 -->
+	<select id="postcheck" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="com.pickme.beeze.ceo.dto.PostDto">
+     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  po.date, po.post_yn as `postYn`
+	  FROM pickme.post po
+	 INNER JOIN customer_info ci ON po.customer_id = ci.id
+	 INNER JOIN cart c ON po.customer_id = c.customer_id
+	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN store st ON s.store_id = st.id
+	 INNER JOIN product p ON s.product_id = p.id
+     WHERE post_yn = 0 and st.ceo_id = #{id}
+
+	</select>	
+	
 	
 	<!-- 월별 매출 차트를 위한 전체 order 목록  -->
 	<select id="salechart" parameterType="com.pickme.beeze.ceo.dto.OrderDto" 
