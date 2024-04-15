@@ -43,6 +43,13 @@ public class StoreController {
 		return service.matchedstorelist(id);
 	}
 	
+	// 매장 정보 불러오기
+	@GetMapping("/storeinfo")
+	public StoreDto storeinfo(int id){
+		System.out.println("StoreController storeinfo " + new Date());
+		return service.storeinfo(id);
+	}
+		
 	// 지도 영역에 있는 매장 목록
 	@GetMapping("/getstoresinmap")
 	public List<StoreDto> getstoresinmap(Double swLat, Double nwLat, Double nwLng, Double neLng){
