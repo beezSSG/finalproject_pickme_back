@@ -159,7 +159,8 @@
 	select id, name, lon, lat, tel, address,
 	open_ended as `openEnded`, unmanned, delivery, atm, 
 	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
-	smoothieking, apple_acc as `appleAcc`, toto
+	smoothieking, apple_acc as `appleAcc`, toto,
+	start_hour as `startHour`, end_hour as `endHour`
 	from store
 </select>
 
