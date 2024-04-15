@@ -91,7 +91,7 @@
 		</if>
 	</if>
 	
-	limit ${(pageNumber * 9)}, 9
+	limit ${(pageNumber * 16)}, 16
 </select>
 
  

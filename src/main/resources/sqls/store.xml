@@ -153,13 +153,14 @@
 </select>
 
  <!-- 매장 검색 -->
-<select id="searchstore" parameterType="java.lang.String" resultType="com.pickme.beeze.store.dto.StoreDto">
+ <select id="searchstore" parameterType="java.lang.String" resultType="com.pickme.beeze.store.dto.StoreDto">
 	select id, name, lon, lat, tel, address,
 	open_ended as `openEnded`, unmanned, delivery, atm, 
 	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
 	smoothieking, apple_acc as `appleAcc`, toto
 	from store
-	where name like concat('%', #{storeName}, '%')
+	where address like concat('%', #{stateName}, '%', #{districtName}, '%')
+		and name like concat('%', #{storeName}, '%')
 </select>
 
  <!-- 지도 영역안에 있는 매장만 불러오기 -->

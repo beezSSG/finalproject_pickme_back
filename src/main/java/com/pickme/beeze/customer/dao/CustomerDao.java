@@ -41,17 +41,18 @@ public interface CustomerDao {
 	// 상품 찜 추가
 	int insertZZIM(int productId, int customerId);
 	// 상품 찜 삭제
-
-	int deleteZZIM(int productId, String customerEmail);
+	int deleteZZIM(int productId, int customerId);
 	
 	// 택배 예약 신청
 	int postreservation(PostDto dto);
 
-
-	int deleteZZIM(int productId, int customerId);
-	
 	// 상품 예약의 상품목록 불러오기
 	List<ProductDto> reservationproductlist(ProductParam param);
+	
+	// 매장 번호 가져오기
+	int storeselect(String storename);
+	// 매장 이름 가져오기
+	String selectstorename(int id);
 	
 }
 	
