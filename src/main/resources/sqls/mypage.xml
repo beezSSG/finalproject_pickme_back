@@ -89,7 +89,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 
 <!-- 내 쿠폰 보기 -->
 <select id="getCoupon" parameterType="Integer" resultType="com.pickme.beeze.mypage.dto.MypageCouponDto">
-	select id, content, start_date as `startDate`, end_date as `endDate`
+	select id,title, content, start_date as `startDate`, end_date as `endDate`
 	  from coupon
 	 where user_id = #{id}
 </select>
