@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class MypageCouponDto {
 
 	private int id;
+	private String title;
 	private String content;
 	private String startDate;
 	private String endDate;
