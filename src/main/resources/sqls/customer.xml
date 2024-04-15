@@ -118,7 +118,18 @@
     LIMIT #{start}, #{perPage}
 </select>
 
-
+<!--  매장 번호 가져오기 -->
+<select id="storeselect" parameterType="String" resultType="Integer">
+	select id
+	from store
+	where name=#{storename}
+</select>
+<!-- 매장 이름 가져오기 -->
+<select id="selectstorename" parameterType="Integer" resultType="String">
+	select name
+	from store
+	where id=#{id}
+</select>
 
 
 

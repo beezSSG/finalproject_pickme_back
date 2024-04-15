@@ -49,5 +49,10 @@ public interface CustomerDao {
 	// 상품 예약의 상품목록 불러오기
 	List<ProductDto> reservationproductlist(ProductParam param);
 	
+	// 매장 번호 가져오기
+	int storeselect(String storename);
+	// 매장 이름 가져오기
+	String selectstorename(int id);
+	
 }
 	
