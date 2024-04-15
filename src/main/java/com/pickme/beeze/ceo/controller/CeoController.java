@@ -108,7 +108,7 @@ public class CeoController {
    }
    
    // 발주 승인완료 물품 사라지기
-	@PostMapping("/deleteProduct")
+   @PostMapping("/deleteProduct")
 	public void deleteProduct(ProductDto dto) {
 		System.out.println("BbsController deleteProduct " + new Date());
 		service.deleteProduct(dto);

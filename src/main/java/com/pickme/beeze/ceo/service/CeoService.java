@@ -45,6 +45,7 @@ public class CeoService {
 		return dao.powriteCn(dto);
 	}
 	
+	// 화면에서 승인이 완료된 물품을 사라지게 하기 
 	public void deleteProduct(ProductDto dto) {
 		dao.deleteProduct(dto);
 	}

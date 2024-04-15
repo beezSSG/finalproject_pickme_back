@@ -14,6 +14,7 @@ public class OrderDto {
 	
 	private int id;
 	private int cartId;
+	private int price;
 	private String storeName;
 	private String productName;
 	private String customerName;
