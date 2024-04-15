@@ -45,18 +45,19 @@ public class CustomerController {
 		System.out.println("#1. id찾기도달");
 		// product_id 를 이용해서 sProductId를 가져오기 
 		int sProductId = service.getsProductId(productId, storeId);
-		System.out.println("#20. sproduct찾기도달");
+		System.out.println("#2. sproduct찾기도달");
 		// cart DB 에 저장
 		CartDto dto = new CartDto();
 		dto.setSProductId(sProductId);
 		dto.setQuantity(quantity);
 		dto.setCustomerId(id);
 		System.out.println("#3. 제대로도달");
-		boolean isS = service.cartInsert(dto);		
+		boolean isS = service.haveMyCart(dto);		
 		if(isS) {
 			return "YES";
 		}
 		else {
+			service.cartInsert(dto);
 			return "NO";
 		}
 	} 
@@ -119,6 +120,7 @@ public class CustomerController {
 		System.out.println("CustomerController checkZZIM " + new Date());
 
 		int customerId = InfoUtil.getUserIdInfo(Authentication, request);
+		System.out.println(productId + ":" + customerId);
 		
 		boolean isS = service.checkZZIM(productId, customerId);		
 		if(isS) {
