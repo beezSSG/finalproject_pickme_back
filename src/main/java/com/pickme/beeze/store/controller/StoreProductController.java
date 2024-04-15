@@ -36,8 +36,8 @@ public class StoreProductController {
 		
 		// 글의 총 갯수 
 		int count = service.getallstoreproduct(param);
-		int pageBbs = count / 10;
-		if((count % 10) > 0) {
+		int pageBbs = count / 8;
+		if((count % 8) > 0) {
 			pageBbs = pageBbs + 1;
 		}
 		
