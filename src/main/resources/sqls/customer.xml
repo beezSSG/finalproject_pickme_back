@@ -12,6 +12,11 @@
 	inner join product on store_product.product_id = product.id
 	where product.id = #{productId} and store_product.store_id = #{storeId};
 </select>
+<select id="haveMyCart" parameterType="CartDto" resultType="Integer"> <!-- 1일때 더이상 집어 넣을 수 없게 하기 -->
+	SELECT count(*)
+	  FROM cart
+	 WHERE customer_id = #{customerId} and s_product_id = #{sProductId}
+</select>
 <insert id="cartInsert" parameterType="CartDto">
 	insert into cart(customer_id,s_product_id,quantity,order_yn)
 	values(#{customerId},#{sProductId},#{quantity},0)

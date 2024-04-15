@@ -21,6 +21,10 @@ public class CustomerService {
 	
 	/* TODO 장바구니 */
 	// 장바구니 담기
+	public boolean haveMyCart(CartDto dto) {
+		int count = dao.haveMyCart(dto);
+		return count>0?true:false;
+	}
 	public int getsProductId(int productId, int storeId) {
 		return dao.getsProductId(productId,storeId);
 	}

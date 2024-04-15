@@ -66,6 +66,15 @@ public class MypageService {
 	public List<MypageCouponDto> getCoupon(int id) {
 		return dao.getCoupon(id);
 	}
+	public void deleteCoupon(int id, int point, MypageCouponDto dto) {
+		dto.setUserId(id);
+		System.out.println(dto.toString());
+		dao.deleteCoupon(dto);
+		MypageCustomerDto dto2 = new MypageCustomerDto();
+		dto2.setId(id);
+		dto2.setPoint(point);
+		dao.updatePoint(dto2);
+	}
 	
 	/* TODO 1:1 문의 게시판 */
 	// 내 문의 작성하기
@@ -80,6 +89,7 @@ public class MypageService {
 	/* TODO 주문내역 */
 	// 내 주문 내역 불러오기
 	public 	List<MypageOrderdayDto> MyOrdersList(int id) {
+		return dao.MyOrdersLists(id);
 //		List<MypageOrderdayDto> list = new ArrayList<MypageOrderdayDto>(); 
 //		List<MypageOrderdayDto> list2 = new ArrayList<MypageOrderdayDto>();
 //		list2 = dao.MyOrdersList(id);
@@ -96,9 +106,7 @@ public class MypageService {
 //			dto.setQuantity(number);
 //			list.add(dto);
 //		}
-//		return list;
-		
-		return dao.MyOrdersLists(id);
+//		return list;		
 	}
 	
 	// 내 주문 내역 불러오기
@@ -121,23 +129,6 @@ public class MypageService {
 	/* TODO 픽박스 불러오기 */
 	public List<MyPickBoxDto> MyPickBox(int id) {
 		return dao.MyPickBox(id);
-	}
-	
-	
-	
-	// 여기서 부터 변경
-	/* TODO 리뷰 */
-	// 리뷰목록 불러오기
-	public List<MypageReviewDto> getMyReview(int id) {
-		return dao.getMyReview(id);
-	}
-	// 리뷰삭제
-	public int delReview(MypageReviewDto dto) {
-		return dao.delReview(dto);
-	}
-	// 리뷰작성
-	public int addReview(MypageReviewDto dto) {
-		return dao.addReview(dto);
 	}
 	
 }

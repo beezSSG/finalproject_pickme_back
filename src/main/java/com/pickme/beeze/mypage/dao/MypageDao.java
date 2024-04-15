@@ -46,6 +46,8 @@ public interface MypageDao {
 	void updatePoint(MypageCustomerDto dto);
 	// 내 쿠폰 보기 (쿠폰은 한개 이상일 수 있으니까)
 	List<MypageCouponDto> getCoupon(int id);
+	//쿠폰사용
+	void deleteCoupon(MypageCouponDto dto);
 	
 	/* TODO 1:1 문의 게시판 */
 	// 내 문의 작성하기
@@ -66,15 +68,5 @@ public interface MypageDao {
 	// 내 주문 내역 취소
 	void cancelMyOrder(MypageOrderDto dto);
 	
-	
-
-	// 여기서 부터 변경
-	/* TODO 리뷰 */
-	// 리뷰목록 불러오기
-	List<MypageReviewDto> getMyReview(int id);
-	// 리뷰삭제
-	int delReview(MypageReviewDto dto);
-	// 리뷰작성
-	int addReview(MypageReviewDto dto);
 	
 }
