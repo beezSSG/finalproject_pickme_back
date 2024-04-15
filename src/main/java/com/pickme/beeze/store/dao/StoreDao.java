@@ -22,6 +22,9 @@ public interface StoreDao {
 	// 해당 상품이 있는 매장 목록
 	List<StoreDto> matchedstorelist(int id);
 	
+	// 매장 정보 불러오기
+	StoreDto storeinfo(int id);
+	
 	// 매장 상품 목록
 	List<ProductDto> storeproductlist(StoreProductParam param);
 	int getallstoreproduct(StoreProductParam param);
