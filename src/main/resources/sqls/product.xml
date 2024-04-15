@@ -7,11 +7,10 @@
 
  <!-- 전체 상품 목록 -->
  <select id="productlist" parameterType="com.pickme.beeze.product.dto.ProductParam"
-				resultType="com.pickme.beeze.product.dto.ProductDto">
-	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
- 	from product p
-	
+				resultType="com.pickme.beeze.product.dto.ProductDto">	
 	<if test="category == 0">
+		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
+	 	from product p
 		<if test="choice == 'date'">				
 			<if test="search != null and search != '' ">	
 				where name like concat('%', #{search}, '%')
@@ -48,9 +47,11 @@
 		</if>
 	</if>
 	
-	<if test="category != 0">
-		, product_category pc
+	<if test="category != 0">		
+		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.promotion_type as `promotionType`
+	 	from product p, product_category pc
 		where p.id = pc.product_id
+		
 		
 		<if test="choice == 'date'">				
 			<if test="search != null and search != '' ">	
@@ -91,7 +92,7 @@
 		</if>
 	</if>
 	
-	limit ${(pageNumber * 16)}, 16
+	limit ${(pageNumber * 8)}, 8
 </select>
 
  
@@ -118,7 +119,7 @@
  
  <!-- 상품 상세보기 -->
  <select id = "productdetail" parameterType="java.lang.Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
- 	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.category_id as `categoryId`
+ 	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.category_id as `categoryId`, pc.promotion_type as `promotionType`
  	from product p, product_category pc
  	where p.id=#{id} and p.id = pc.product_id
  </select>
@@ -151,9 +152,9 @@
 
 <!-- 선물할사람 정보 조회 -->
 <select id="findFromUser" parameterType="String" resultType="ProductGiftParam">
-	SELECT id, email, name
+	SELECT id, email, name, phone
 	  FROM customer_info
-	 WHERE name=#{name}
+	 WHERE phone=#{phone}
 </select>
 
 <!-- 내 선물목록보기 -->
