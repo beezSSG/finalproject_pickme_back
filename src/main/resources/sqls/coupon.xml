@@ -10,8 +10,8 @@
 </select>
 
 <insert id="couponcreate" parameterType="com.pickme.beeze.manager.dto.CouponDto">
-	insert into coupon(user_id,title, content, start_date, end_date, coupon_number)
-	values(#{userId},#{title}, #{content}, #{startDate}, #{endDate},#{couponNumber})
+	insert into coupon(user_id, title, content, start_date, end_date, coupon_number)
+	values(#{userId}, #{title}, #{content}, #{startDate}, #{endDate},#{couponNumber})
 </insert>
 
 <delete id="coupondelete" parameterType="Integer">
