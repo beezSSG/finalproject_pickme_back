@@ -32,6 +32,11 @@ public class StoreService {
 		return dao.matchedstorelist(id);
 	}
 	
+	// 매장 정보 불러오기
+	public StoreDto storeinfo(int id) {
+		return dao.storeinfo(id);
+	}
+		
 	// 지도 영역에 있는 매장 목록
 	public List<StoreDto> getstoresinmap(Double swLat, Double nwLat, Double nwLng, Double neLng){
 		return dao.getstoresinmap(swLat, nwLat, nwLng, neLng);
