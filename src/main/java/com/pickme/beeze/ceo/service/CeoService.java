@@ -50,6 +50,11 @@ public class CeoService {
 		dao.deleteProduct(dto);
 	}
 	
+	// 재고 넣어주기
+	public int addProduct(InventoryDto dto) {
+		return dao.addProduct(dto);
+	}
+	
 	public List<SaleChartDto> salechart(OrderDto dto) {
 		return dao.salechart(dto);
 	}

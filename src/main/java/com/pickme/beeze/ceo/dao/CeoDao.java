@@ -30,6 +30,9 @@ public interface CeoDao {
 	// 화면에서 승인이 완료된 물품을 사라지게 하기
 	void deleteProduct(ProductDto dto);
 	
+	// 재고 넣어주기
+	int addProduct(InventoryDto dto);
+	
 	// 전체 주문 차트 보기
 	List<SaleChartDto> salechart(OrderDto dto);
 	

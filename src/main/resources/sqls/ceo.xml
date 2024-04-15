@@ -80,11 +80,17 @@
 	</select>
 	
 	<!--  화면에서 승인이 완료된 물품을 사라지게 하기 -->
+	<!-- 여기가 점주 화면에서 사라지게 하는역할 -->
 	<update id="deleteProduct" parameterType="com.pickme.beeze.ceo.dto.ProductDto">
 		update pickme.purchase_order
-			set po_yn as `poYn` = 1, quantity = #{quantity}
-		where id=#{id}
+		   set po_yn = 2, quantity = #{quantity}
+		 where id=#{id}
 	</update>
+	<!-- 점주가 확인한 수량 물품 소비기한 을 토대로 store_product에 넣어주는 작업  -->
+	<insert id="addProduct" parameterType="com.pickme.beeze.ceo.dto.InventoryDto">
+		INSERT INTO store_product(store_id, product_id, quantity, exp_date)
+		VALUES (#{storeId},#{productId},#{quantity},#{expDate})
+	</insert>
 	
 	<!-- 재고현황 id 상품번호 /storeName 점포이름 / productName 상품이름 / price 가격 / quantity 수량 / exp_date --> 
 	<select id="inventory" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="com.pickme.beeze.ceo.dto.InventoryDto">

@@ -109,11 +109,20 @@ public class CeoController {
    
    // 발주 승인완료 물품 사라지기
    @PostMapping("/deleteProduct")
-	public void deleteProduct(ProductDto dto) {
+	public int deleteProduct(ProductDto dto) {
 		System.out.println("BbsController deleteProduct " + new Date());
+		
+		// purchase_order
 		service.deleteProduct(dto);
-	}
-	
+		
+		// store_product 
+		InventoryDto dto2 = new InventoryDto();
+		// dto에 대한 정의 다시하기
+		dto2.setProductId(dto.getProductId());
+		return service.addProduct(dto2);
+		
+
+   }
 	
 	// 전체 주문 차트 보기
 	
