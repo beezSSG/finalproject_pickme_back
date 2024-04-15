@@ -81,5 +81,15 @@ public class CustomerService {
 	public List<ProductDto> reservationproductlist(ProductParam param) {
 		return dao.reservationproductlist(param);
 	}
+	
+	// 매장 번호 가져오기
+	public int storeselect(String storename) {
+		return dao.storeselect(storename);
+	}
+	
+	// 매장 이름 가져오기
+	public String selectstorename(int id) {
+		return dao.selectstorename(id);
+	}
 
 }

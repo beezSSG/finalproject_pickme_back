@@ -88,11 +88,13 @@
 	
 	<!-- 재고현황 id 상품번호 /storeName 점포이름 / productName 상품이름 / price 가격 / quantity 수량 / exp_date --> 
 	<select id="inventory" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="com.pickme.beeze.ceo.dto.InventoryDto">
-	SELECT sp.id, s.name as `storeName`, p.name as `productName`, p.price as `price`, quantity, exp_date as `expDate`
+	SELECT sp.id, s.name as `storeName`, p.name as `productName`, p.price as `price`, quantity, date_format(exp_date, '%Y-%m-%d')  as `expDate`
 	  FROM pickme.store_product sp 
 	 INNER JOIN pickme.store s ON sp.store_id = s.id
 	 INNER JOIN pickme.product p ON sp.product_id = p.id
-	  WHERE s.ceo_id = #{id} 
+	  WHERE s.ceo_id =#{id} 
+ 	order by exp_date 
+	  
 	</select>
 	
 	<!-- 픽업목록 -->
@@ -110,7 +112,7 @@
 	
 	<!-- 배달 목록 -->
 	<select id="postcheck" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="com.pickme.beeze.ceo.dto.PostDto">
-     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  po.date, po.post_yn as `postYn`
+     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  date_format(po.date, '%Y-%m-%d')  as `date`, po.post_yn as `postYn`
 	  FROM pickme.post po
 	 INNER JOIN customer_info ci ON po.customer_id = ci.id
 	 INNER JOIN cart c ON po.customer_id = c.customer_id

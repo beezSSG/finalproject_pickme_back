@@ -206,6 +206,26 @@ public class CustomerController {
 	    param.setStart(start);
 	    return service.reservationproductlist(param);
 	}
+	
+	
+	// 매장 번호 가져오기(상품 예약)
+	@GetMapping("storeselect")
+	public int storeselect(String storename) {
+		
+		System.out.println("storeselect");
+		
+		return service.storeselect(storename);
+	}
+	
+	// 매장 번호 가져오기(상품 예약)
+	@GetMapping("selectstorename")
+	public String storeselect(int id) {
+		
+		System.out.println("selectstorename");
+		
+		return service.selectstorename(id);
+	}
+
 
 	
 }
