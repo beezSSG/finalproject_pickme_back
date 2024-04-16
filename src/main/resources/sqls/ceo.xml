@@ -10,18 +10,24 @@
 		where ci.id=#{id}
 	</select>
 
-	<!-- 글의 목록 -->
+	<!-- 글의 목록 --> 
+	<!-- 여기가 polist를 불러오는곳이라고 치면 조건문에 무조건 2가 아니다라는걸 포함해야해요 이건 예시를 하나보여드릴게요 --> 
+	<!--  -->
 	<select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
 		resultType="com.pickme.beeze.ceo.dto.PurchaseDto"> 
-		select o.id, p.url, p.name, o.quantity, o.po_yn as `poYn`, substr(o.wdate, 1,10) as `wdate`
-		from pickme.purchase_order o join
-		pickme.product p on p.id = o.product_id
+		select po.id, s.id as `storeId` , p.url, p.name, po.quantity, po.po_yn as `poYn`, substr(po.wdate, 1,10) as `wdate`, sp.exp_date as `expDate`
+		from pickme.purchase_order po
+        INNER JOIN pickme.ceo_info ci on ci.id = po.ceo_id
+        INNER JOIN pickme.store s on s.ceo_id = ci.id
+       INNER JOIN pickme.product p on p.id = po.product_id
+       INNER JOIN pickme.store_product sp on s.id = sp.store_id
+       where not po.po_yn = 2
 		<if	test="choice != null and choice != '' and search != null and search != ''">
 			<if test="choice == 'name'">
-				where p.name like concat('%', #{search}, '%')
+				and p.name like concat('%', #{search}, '%')
 			</if>
 	      	<if test="choice == 'wdate'">
-         		where o.wdate like concat('%', #{search}, '%')
+         		and po.wdate like concat('%', #{search}, '%')
       		</if>
 		</if>
 		order by wdate 
@@ -80,11 +86,17 @@
 	</select>
 	
 	<!--  화면에서 승인이 완료된 물품을 사라지게 하기 -->
-	<update id="deleteProduct" parameterType="com.pickme.beeze.ceo.dto.ProductDto">
+	<!-- 여기가 점주 화면에서 사라지게 하는역할 -->
+	<update id="deleteProduct" parameterType="com.pickme.beeze.ceo.dto.PurchaseDto">
 		update pickme.purchase_order
-			set po_yn as `poYn` = 1, quantity = #{quantity}
-		where id=#{id}
+		   set po_yn = 2, quantity = #{quantity}
+		 where id=#{id}
 	</update>
+	<!-- 점주가 확인한 수량 물품 소비기한 을 토대로 store_product에 넣어주는 작업  -->
+	<insert id="addProduct" parameterType="com.pickme.beeze.ceo.dto.InventoryDto">
+		INSERT INTO store_product(store_id, product_id, quantity, exp_date)
+		VALUES (#{storeId}, #{productId}, #{quantity}, #{expDate})
+	</insert>
 	
 	<!-- 재고현황 id 상품번호 /storeName 점포이름 / productName 상품이름 / price 가격 / quantity 수량 / exp_date --> 
 	<select id="inventory" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="com.pickme.beeze.ceo.dto.InventoryDto">

@@ -17,12 +17,14 @@ public class PurchaseDto {
 
 	private int id;
 	private int ceoId;		// 점주 id
+	private int storeId;	// 점포 id
 	private int productId;	// 상품 id
 	private String url;		// 대표이미지
 	private String name;	// 상품 네임
 	private int quantity;	// 수량
 	private int poYn;
 	private String wdate;
+	private String expDate;
 	private int del;
 
 }

@@ -109,11 +109,22 @@ public class CeoController {
    
    // 발주 승인완료 물품 사라지기
    @PostMapping("/deleteProduct")
-	public void deleteProduct(ProductDto dto) {
+	public int deleteProduct(PurchaseDto dto) { // 여기를 productDto가 아니라 purchaseDto로 바꿨어요! // 왜냐면 Polist 자체가 PurchaseDto를 result로 가져오기 때문이에요
 		System.out.println("BbsController deleteProduct " + new Date());
+		
+		// purchase_order
 		service.deleteProduct(dto);
-	}
+		
+		// store_product 
+		InventoryDto dto2 = new InventoryDto();
+
+		dto2.setProductId(dto.getProductId());
+		dto2.setStoreId(dto.getStoreId());
+		dto2.setQuantity(dto.getQuantity());
+		dto2.setExpDate(dto.getExpDate());
+		return service.addProduct(dto2);
 	
+   }
 	
 	// 전체 주문 차트 보기
 	

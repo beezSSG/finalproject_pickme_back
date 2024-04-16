@@ -161,7 +161,8 @@
 	open_ended as `openEnded`, unmanned, delivery, atm, 
 	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
 	smoothieking, apple_acc as `appleAcc`, toto,
-	start_hour as `startHour`, end_hour as `endHour`
+    CONCAT(LPAD(SUBSTRING(start_hour, 1, 2), 2, '0'), '시 ', LPAD(SUBSTRING(start_hour, 3, 2), 2, '0'), '분') AS `startHour`,
+    CONCAT(LPAD(SUBSTRING(end_hour, 1, 2), 2, '0'), '시 ', LPAD(SUBSTRING(end_hour, 3, 2), 2, '0'), '분') AS `endHour`
 	from store
 </select>
 
