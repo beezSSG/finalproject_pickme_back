@@ -200,7 +200,8 @@ public class MypageController {
 	}
 	
 	// 리뷰 생성
-	@PostMapping("/review/addReview")
+	@PostMapping("/review/"
+			+ "")
 	public int addReview(MypageReviewDto dto) {	// 유저 토큰이 들어와야함
 		System.out.println("MypageController addReview " + new Date());
 		

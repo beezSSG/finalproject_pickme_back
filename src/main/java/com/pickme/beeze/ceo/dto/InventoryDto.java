@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 	@Data
 	@NoArgsConstructor
-	@AllArgsConstructor
+	@AllArgsConstructor  
 	@Alias("InventoryDto")
 	public class InventoryDto {
 		
