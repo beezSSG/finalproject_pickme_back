@@ -89,17 +89,16 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 
 <!-- 내 쿠폰 보기 -->
 <select id="getCoupon" parameterType="Integer" resultType="com.pickme.beeze.mypage.dto.MypageCouponDto">
-	select id,title, content, start_date as `startDate`, end_date as `endDate`
+	select id,title, content, start_date as `startDate`, end_date as `endDate`, coupon_number as `couponNumber`
 	  from coupon
 	 where user_id = #{id}
 </select>
 
 <!-- 쿠폰 사용시 -->
-<delete id="deleteCoupon" parameterType="Integer">
+<delete id="deleteCoupon" parameterType="com.pickme.beeze.mypage.dto.MypageCouponDto">
 	DELETE FROM coupon
-	 WHERE id=#{id}
+	 WHERE user_id=#{userId} and coupon_number = #{couponNumber}
 </delete>
-
 
 	<!-- 1:1문의게시판 보기 -->
 <!-- 1:1 문의 게시글 작성하기   -->
@@ -126,8 +125,8 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	 INNER JOIN store st ON s.store_id = st.id
 	 INNER JOIN product p ON s.product_id = p.id
 	 WHERE cancel_yn = 0 and c.customer_id = #{id}
+	 ORDER BY s.exp_date
 </select>
-
 
 	<!-- 내 주문내역 -->
 <!-- 현재 기획 -->
