@@ -58,8 +58,8 @@ public class ProductController {
 		
 		// 글의 총갯수
 		int count = service.getallproduct(param);
-		int pageBbs = count / 16;
-		if((count % 16) > 0) {
+		int pageBbs = count / 8;
+		if((count % 8) > 0) {
 			pageBbs = pageBbs + 1;
 		}
 		
@@ -124,7 +124,6 @@ public class ProductController {
 	@GetMapping("/findFromUser")
 	public ProductGiftParam findFromUser(String phone) {
 		System.out.println("ProductController findFromUser" + new Date());
-		
 		return service.findFromUser(phone);
 	}	
 
