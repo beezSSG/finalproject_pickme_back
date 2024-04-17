@@ -12,7 +12,7 @@
 
 <!-- 글의 목록 --> 
 <select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam" resultType="com.pickme.beeze.ceo.dto.PurchaseDto"> 
-	SELECT po.id, p.url, p.name, po.quantity, po.po_yn as `poYn`, substr(po.wdate, 1,10) as `wdate`
+	SELECT po.id, p.id as `productId`, s.id as `storeId`, p.url, p.name, po.quantity, po.po_yn as `poYn`, substr(po.wdate, 1,10) as `wdate`
 	  FROM purchase_order po
 	 INNER JOIN ceo_info ci ON po.ceo_id = ci.id
 	 INNER JOIN store s ON po.ceo_id = s.ceo_id
