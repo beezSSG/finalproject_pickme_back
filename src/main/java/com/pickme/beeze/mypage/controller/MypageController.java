@@ -177,16 +177,7 @@ public class MypageController {
 		
 		service.cancelMyOrder(dto);
 	}
-	
-	// 내 후기 보기
-	@GetMapping("/review/getReview")
-	public List<MypageReviewDto> getReview(Authentication Authentication, HttpServletRequest request) {
-		System.out.println("MypageController getReview " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		return service.getMyReview(id);
-	}
-	
+
 	// TODO 픽박스
 	// 픽박스 불러오기
 	@GetMapping("/MyPickBox")
