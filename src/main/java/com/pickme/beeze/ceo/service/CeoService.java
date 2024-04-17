@@ -32,6 +32,19 @@ public class CeoService {
 	public List<PurchaseDto> poList(CeoParam param) {
 		return dao.polist(param);	
 	}
+	
+	public boolean powritefinal(List<PurchaseProductDto> list) {
+	    for (PurchaseProductDto dto : list) {
+	        int count = dao.powritefinal(dto);
+	        if (count <= 0) {
+	            // 쓰기 작업 실패 시 즉시 false 반환
+	            return false;
+	        }
+	    }
+	    // 모든 쓰기 작업이 성공한 경우 true 반환
+	    return true;
+	}
+
 
 	public int getallceo(CeoParam param) {
 		return dao.getallceo(param);

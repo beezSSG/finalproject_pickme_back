@@ -17,7 +17,9 @@ import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
+
 import com.pickme.beeze.ceo.dto.SalesChartDto;
+
 import com.pickme.beeze.ceo.service.CeoService;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
@@ -26,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -96,6 +98,26 @@ public class CeoController {
       System.out.println(list);
          
       return list;
+   }
+   
+   // 발주하기(최종)
+   @PostMapping("/powritefinal")
+   public String powritefinal(@RequestBody List<PurchaseProductDto> list, Authentication Authentication, HttpServletRequest request) {
+	   System.out.println("powritefinal " + new Date());
+	   
+	   int id = InfoUtil.getUserIdInfo(Authentication, request);
+	   for(PurchaseProductDto dto : list) {
+	        dto.setId(id);
+	    }
+	   
+	   System.out.println(list.toString());
+	   boolean isS = service.powritefinal(list);
+	   
+	   if(isS) {
+		   return "YES";
+	   }else {
+		   return "NO";
+	   }	   
    }
    
    // 발주하기 목록

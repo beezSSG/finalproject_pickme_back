@@ -135,16 +135,6 @@ public class MypageController {
 		return service.getCoupon(id);
 	}
 	
-	@PostMapping("/user/deleteCoupon")
-	public void deleteCoupon(int point, MypageCouponDto dto, Authentication Authentication, HttpServletRequest request) {
-		System.out.println("MypageController deleteCoupon " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		
-		service.deleteCoupon(id, point, dto);
-	}
-	
-	
 	// TODO 1:1 문의 게시판
 	// 내 문의 작성하기
 	@PostMapping("/addCcbList")
@@ -187,7 +177,7 @@ public class MypageController {
 		
 		service.cancelMyOrder(dto);
 	}
-	
+
 	// TODO 픽박스
 	// 픽박스 불러오기
 	@GetMapping("/MyPickBox")
