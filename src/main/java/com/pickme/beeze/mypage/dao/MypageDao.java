@@ -68,5 +68,8 @@ public interface MypageDao {
 	// 내 주문 내역 취소
 	void cancelMyOrder(MypageOrderDto dto);
 	
+	// 리뷰목록 불러오기
+	List<MypageReviewDto> getMyReview(int id);
+	
 	
 }
