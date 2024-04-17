@@ -45,8 +45,14 @@ public class CeoService {
 		return dao.powriteCn(dto);
 	}
 	
-	public void deleteProduct(ProductDto dto) {
+	// 화면에서 승인이 완료된 물품을 사라지게 하기 
+	public void deleteProduct(PurchaseDto dto) {
 		dao.deleteProduct(dto);
+	}
+	
+	// 재고 넣어주기
+	public int addProduct(InventoryDto dto) {
+		return dao.addProduct(dto);
 	}
 	
 	public List<SaleChartDto> salechart(OrderDto dto) {

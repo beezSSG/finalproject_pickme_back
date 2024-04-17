@@ -10,19 +10,29 @@
  								resultType="com.pickme.beeze.store.dto.StoreDto">
  	select s.id, s.ceo_id as `ceoId`, s.br_filename as `brFilename`, s.name, s.lon, s.lat, s.tel,
  			s.open_ended as `openEnded`, s.unmanned, s.delivery, s.atm, s.sell_wine as `sellWine`,
- 			s.sell_coffee as `sellCoffee`, s.smoothieking, s.apple_acc as `appleAcc`, s.toto, s.address
+ 			s.sell_coffee as `sellCoffee`, s.smoothieking, s.apple_acc as `appleAcc`, s.toto, s.address,
+ 			s.start_hour as `startHour`, s.end_hour as `endHour`
  	from product p, store_product sp, store s
  	where p.id = sp.product_id and sp.store_id = s.id and p.id = #{id} 								
  </select>
  
+ <!-- 매장 정보 불러오기 -->
+ <select id="storeinfo" parameterType="java.lang.Integer"
+ 								resultType="com.pickme.beeze.store.dto.StoreDto">
+ 	select s.id, s.ceo_id as `ceoId`, s.br_filename as `brFilename`, s.name, s.lon, s.lat, s.tel,
+ 			s.open_ended as `openEnded`, s.unmanned, s.delivery, s.atm, s.sell_wine as `sellWine`,
+ 			s.sell_coffee as `sellCoffee`, s.smoothieking, s.apple_acc as `appleAcc`, s.toto, s.address,
+ 			s.start_hour as `startHour`, s.end_hour as `endHour`
+ 	from store s
+ 	where s.id = #{id}
+ </select>
  
  <!-- 매장 상품 목록 -->
  <select id="storeproductlist" parameterType="com.pickme.beeze.store.dto.StoreProductParam"
-				resultType="com.pickme.beeze.product.dto.ProductDto">
-	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
- 	from store_product sp, product p 	
-	
+				resultType="com.pickme.beeze.product.dto.ProductDto">	
 	<if test="category == 0">
+		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
+	 	from store_product sp, product p 	
 		where p.id = sp.product_id
 		<if test="choice == 'date'">				
 			<if test="search != null and search != '' ">	
@@ -66,8 +76,10 @@
 	</if>
 	
 	<if test="category != 0">
-		, product_category pc
+		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.promotion_type as `promotionType`
+	 	from store_product sp, product p, product_category pc
 		where p.id = sp.product_id and p.id = pc.product_id
+		
 		<if test="choice == 'date'">				
 			<if test="search != null and search != '' ">	
 				and p.name like concat('%', #{search}, '%') and sp.store_id=#{store_id} and pc.category_id = #{category}
@@ -116,7 +128,7 @@
 		</if>
 	</if>
 	
-	limit ${(pageNumber * 10)}, 10
+	limit ${(pageNumber * 8)}, 8
 </select>
 
  
@@ -148,7 +160,9 @@
 	select id, name, lon, lat, tel, address,
 	open_ended as `openEnded`, unmanned, delivery, atm, 
 	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
-	smoothieking, apple_acc as `appleAcc`, toto
+	smoothieking, apple_acc as `appleAcc`, toto,
+    CONCAT(LPAD(SUBSTRING(start_hour, 1, 2), 2, '0'), '시 ', LPAD(SUBSTRING(start_hour, 3, 2), 2, '0'), '분') AS `startHour`,
+    CONCAT(LPAD(SUBSTRING(end_hour, 1, 2), 2, '0'), '시 ', LPAD(SUBSTRING(end_hour, 3, 2), 2, '0'), '분') AS `endHour`
 	from store
 </select>
 
@@ -157,7 +171,7 @@
 	select id, name, lon, lat, tel, address,
 	open_ended as `openEnded`, unmanned, delivery, atm, 
 	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
-	smoothieking, apple_acc as `appleAcc`, toto
+	smoothieking, apple_acc as `appleAcc`, toto, start_hour as `startHour`, end_hour as `endHour`
 	from store
 	where address like concat('%', #{stateName}, '%', #{districtName}, '%')
 		and name like concat('%', #{storeName}, '%')
@@ -168,7 +182,7 @@
 	select id, name, lon, lat, tel, address,
 	open_ended as `openEnded`, unmanned, delivery, atm, 
 	sell_wine as `sellWine`, sell_coffee as `sellCoffee`, 
-	smoothieking, apple_acc as `appleAcc`, toto
+	smoothieking, apple_acc as `appleAcc`, toto, start_hour as `startHour`, end_hour as `endHour`
 	from store
 	where lat between #{swLat} and #{nwLat} and lon between #{nwLng} and #{neLng}
 </select>

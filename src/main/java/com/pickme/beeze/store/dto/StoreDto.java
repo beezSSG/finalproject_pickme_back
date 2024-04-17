@@ -26,6 +26,8 @@ public class StoreDto {
 	private int appleAcc;
 	private int toto;
 	private String address;
+	private String startHour;
+	private String endHour;
 	
 	
 }
