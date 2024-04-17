@@ -9,11 +9,12 @@
  <select id="productlist" parameterType="com.pickme.beeze.product.dto.ProductParam"
 				resultType="com.pickme.beeze.product.dto.ProductDto">	
 	<if test="category == 0">
-		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`
-	 	from product p
+		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.promotion_type as `promotionType`
+	 	from product p, product_category pc
+		where p.id = pc.product_id
 		<if test="choice == 'date'">				
 			<if test="search != null and search != '' ">	
-				where name like concat('%', #{search}, '%')
+				and name like concat('%', #{search}, '%')
 			</if>
 			<if test="switching == true">
 	 			order by id desc
@@ -25,7 +26,7 @@
 		
 		<if test="choice == 'rate'">				
 			<if test="search != null and search != '' ">	
-				where name like concat('%', #{search}, '%')
+				and name like concat('%', #{search}, '%')
 			</if>
 			<if test="switching == true">
 	 			order by productRating desc
@@ -37,7 +38,7 @@
 		
 		<if test="choice == 'select'">
 			<if test="search != null and search != '' ">
-				where name like concat('%', #{search}, '%')
+				and name like concat('%', #{search}, '%')
 			</if>
 			order by name asc
 		</if>
