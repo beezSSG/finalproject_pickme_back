@@ -12,6 +12,19 @@
 		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.promotion_type as `promotionType`
 	 	from product p, product_category pc
 		where p.id = pc.product_id
+		<if test="choice == 'bogo'">			
+			and (pc.promotion_type = 1 or pc.promotion_type = 2)
+			<if test="search != null and search != '' ">	
+				and name like concat('%', #{search}, '%')
+			</if>
+			<if test="switching == true">
+	 			order by id desc
+			</if>
+			<if test="switching == false">
+	 			order by id asc
+			</if>
+		</if>
+		
 		<if test="choice == 'date'">				
 			<if test="search != null and search != '' ">	
 				and name like concat('%', #{search}, '%')
@@ -101,16 +114,21 @@
 <select id="getallproduct" parameterType="com.pickme.beeze.product.dto.ProductDto"
 				resultType="java.lang.Integer">
 	select count(*) 
-	from product p
+	from product p, product_category pc
+	where p.id = pc.product_id
 	<if test="category == 0">
+		<if test="choice == 'bogo'">
+			and pc.promotion_type = 1
+			<if test="search != null and search != '' ">
+			and name like concat('%', #{search}, '%')
+			</if>
+		</if>
 		<if test="search != null and search != '' ">
-			where name like concat('%', #{search}, '%')
+			and name like concat('%', #{search}, '%')
 		</if>
 	</if>
 	
 	<if test="category != 0">
-		, product_category pc
-		where p.id = pc.product_id
 		<if test="search != null and search != '' ">
 			and name like concat('%', #{search}, '%')
 		</if>
