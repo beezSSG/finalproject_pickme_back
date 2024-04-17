@@ -108,6 +108,8 @@ public class CeoController {
 	   for(PurchaseProductDto dto : list) {
 	        dto.setId(id);
 	    }
+	   
+	   System.out.println(list.toString());
 	   boolean isS = service.powritefinal(list);
 	   
 	   if(isS) {
