@@ -18,4 +18,9 @@ import lombok.NoArgsConstructor;
 		private int productId;
 		private int quantity;
 		private String expDate;
+		private int price;
+		private String storeName;
+		private String productName;
+		private String search;
+		private int pageNumber; // 페이지
 }
