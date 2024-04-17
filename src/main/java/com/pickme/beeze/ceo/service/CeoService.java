@@ -13,7 +13,7 @@ import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
-import com.pickme.beeze.ceo.dto.SaleChartDto;
+import com.pickme.beeze.ceo.dto.SalesChartDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 
@@ -55,8 +55,8 @@ public class CeoService {
 		return dao.addProduct(dto);
 	}
 	
-	public List<SaleChartDto> salechart(OrderDto dto) {
-		return dao.salechart(dto);
+	public List<SalesChartDto> saleschart(OrderDto dto) {
+		return dao.saleschart(dto);
 	}
 	
 	// 재고

@@ -17,7 +17,7 @@ import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
-import com.pickme.beeze.ceo.dto.SaleChartDto;
+import com.pickme.beeze.ceo.dto.SalesChartDto;
 import com.pickme.beeze.ceo.service.CeoService;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
@@ -128,14 +128,14 @@ public class CeoController {
 	
 	// 전체 주문 차트 보기
 	
-	@GetMapping("/salechart")
-	public List<SaleChartDto> salechart(OrderDto dto) {
+	@GetMapping("/saleschart")
+	public List<SalesChartDto> saleschart(OrderDto dto) {
 		
 		System.out.println("salechartController salechart " + new Date());
 		
 		System.out.println("salechart :" + dto.toString());
 		
-		List<SaleChartDto> list = service.salechart(dto);
+		List<SalesChartDto> list = service.saleschart(dto);
 		System.out.println("SaleChartDto :" + list.toString());
 		
 		return list;
