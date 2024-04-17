@@ -10,46 +10,33 @@
 		where ci.id=#{id}
 	</select>
 
-	<!-- 글의 목록 --> 
-	<!-- 여기가 polist를 불러오는곳이라고 치면 조건문에 무조건 2가 아니다라는걸 포함해야해요 이건 예시를 하나보여드릴게요 --> 
-	<!--  -->
-	<select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
-		resultType="com.pickme.beeze.ceo.dto.PurchaseDto"> 
-		select po.id, s.id as `storeId` , p.url, p.name, po.quantity, po.po_yn as `poYn`, substr(po.wdate, 1,10) as `wdate`, sp.exp_date as `expDate`
-		from pickme.purchase_order po
-        INNER JOIN pickme.ceo_info ci on ci.id = po.ceo_id
-        INNER JOIN pickme.store s on s.ceo_id = ci.id
-       INNER JOIN pickme.product p on p.id = po.product_id
-       INNER JOIN pickme.store_product sp on s.id = sp.store_id
-       where not po.po_yn = 2
-		<if	test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'name'">
-				and p.name like concat('%', #{search}, '%')
-			</if>
-	      	<if test="choice == 'wdate'">
-         		and po.wdate like concat('%', #{search}, '%')
-      		</if>
-		</if>
-		order by wdate 
-		limit ${(pageNumber * 10)}, 10<!-- 페이지 당 글 개수  -->
-	</select>
+<!-- 글의 목록 --> 
+<select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam" resultType="com.pickme.beeze.ceo.dto.PurchaseDto"> 
+	SELECT po.id, p.url, p.name, po.quantity, po.po_yn as `poYn`, substr(po.wdate, 1,10) as `wdate`
+	  FROM purchase_order po
+	 INNER JOIN ceo_info ci ON po.ceo_id = ci.id
+	 INNER JOIN store s ON po.ceo_id = s.ceo_id
+	 INNER JOIN product p ON po.product_id = p.id
+	 WHERE NOT po.po_yn = 2 and ci.id = #{id}
+	 ORDER BY po.wdate desc
+	 LIMIT ${(pageNumber * 10)}, 10
+</select>
 
-	<!-- 글의 총수 -->
-
-	<select id="getallceo" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
-		resultType="java.lang.Integer"> 
-		select count(*)
-		from pickme.purchase_order o join
-		pickme.product p on p.id = o.product_id 
-		<if	test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'name'">
-				where name like concat('%', #{search}, '%')
-			</if>
-	      	<if test="choice == 'wdate'">
-         		where wdate like concat('%', #{search}, '%') 
-      		</if>
+<!-- 글의 총수 -->
+<select id="getallceo" parameterType="com.pickme.beeze.ceo.dto.CeoParam" resultType="java.lang.Integer"> 
+	select count(*)
+	from pickme.purchase_order o join
+	pickme.product p on p.id = o.product_id 
+	where o.ceo_id=#{id} and not o.po_yn = 2
+	<if	test="choice != null and choice != '' and search != null and search != ''">
+		<if test="choice == 'name'">
+			and name like concat('%', #{search}, '%')
 		</if>
-	</select>
+      	<if test="choice == 'wdate'">
+       		and wdate like concat('%', #{search}, '%') 
+   		</if>
+	</if>
+</select>
 
 	<!-- 발주하기(신청가능품목) -->
 

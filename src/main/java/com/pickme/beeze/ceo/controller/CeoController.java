@@ -58,24 +58,23 @@ public class CeoController {
    
    //   발주목록
    @GetMapping("/polist")
-   public Map<String, Object> polist(CeoParam param) {
-      
+   public Map<String, Object> polist(CeoParam param, Authentication Authentication, HttpServletRequest request) {
       System.out.println("CeoController polist " + new Date());
+      
+      int id = InfoUtil.getUserIdInfo(Authentication, request);
+      param.setId(id);
       System.out.println(param.toString());
       
       //발주 물품 목록
       List<PurchaseDto> list = service.poList(param);  
       
       // 발주 물품 총 수
-
-      
       int count = service.getallceo(param);
       int pageBbs = count / 10;
       if( (count % 10) > 0) {
          pageBbs = pageBbs + 1;
       }
      
-      
       Map<String, Object> map = new HashMap<String, Object>();
       map.put("polist", list);
       map.put("pageBbs", pageBbs);
