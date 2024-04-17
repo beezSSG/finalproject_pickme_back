@@ -37,21 +37,18 @@ public class CustomerController {
 	// 장바구니 담기
 	// react에서 점포 상품수량 초과하지 않도록 제어 [ 상품아이디 / 가게아이디 / 상품수량 ]
 	@PostMapping("/cart/insert")
-	public String cartInsert(Authentication Authentication, HttpServletRequest request, int productId, int storeId, int quantity) {	
+	public String cartInsert(Authentication Authentication, HttpServletRequest request, int sProductId, int quantity) {	
 		System.out.println("CustomerController cartInsert " + new Date());
 		
 		// 고객 id 얻기
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
 		System.out.println("#1. id찾기도달");
-		// product_id 를 이용해서 sProductId를 가져오기 
-		int sProductId = service.getsProductId(productId, storeId);
-		System.out.println("#2. sproduct찾기도달");
 		// cart DB 에 저장
 		CartDto dto = new CartDto();
 		dto.setSProductId(sProductId);
 		dto.setQuantity(quantity);
 		dto.setCustomerId(id);
-		System.out.println("#3. 제대로도달");
+		System.out.println("#2. 제대로도달");
 		boolean isS = service.haveMyCart(dto);		
 		if(isS) {
 			return "YES";
