@@ -18,6 +18,9 @@
 	 INNER JOIN store s ON po.ceo_id = s.ceo_id
 	 INNER JOIN product p ON po.product_id = p.id
 	 WHERE NOT po.po_yn = 2 and ci.id = #{id}
+	 <if test="search != null and search != ''">
+		and p.name like concat('%', #{search}, '%')
+	</if>
 	 ORDER BY po.wdate desc
 	 LIMIT ${(pageNumber * 10)}, 10
 </select>
@@ -28,14 +31,11 @@
 	from pickme.purchase_order o join
 	pickme.product p on p.id = o.product_id 
 	where o.ceo_id=#{id} and not o.po_yn = 2
-	<if	test="choice != null and choice != '' and search != null and search != ''">
-		<if test="choice == 'name'">
-			and name like concat('%', #{search}, '%')
-		</if>
-      	<if test="choice == 'wdate'">
-       		and wdate like concat('%', #{search}, '%') 
-   		</if>
+	<if	test="search != null and search != ''">
+		and name like concat('%', #{search}, '%')
 	</if>
+
+
 </select>
 
 	<!-- 발주하기(신청가능품목) -->
@@ -95,12 +95,25 @@
 	<select id="inventory" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="com.pickme.beeze.ceo.dto.InventoryDto">
 	SELECT sp.id, s.name as `storeName`, p.name as `productName`, p.price as `price`, quantity, date_format(exp_date, '%Y-%m-%d')  as `expDate`
 	  FROM pickme.store_product sp 
-	 INNER JOIN pickme.store s ON sp.store_id = s.id
-	 INNER JOIN pickme.product p ON sp.product_id = p.id
+	  INNER JOIN pickme.store s ON sp.store_id = s.id
+	  INNER JOIN pickme.product p ON sp.product_id = p.id
 	  WHERE s.ceo_id =#{id} 
- 	order by exp_date 
-	  
+	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	  
 	</select>
+	
+	<select id="getallinven" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="Integer">
+	    select count(*)	
+	    from store_product sp
+	    inner join product p on sp.product_id = p.id
+	    where sp.store_id = (select id from store where ceo_id=#{id}) 
+	    <if test="search != null and search != '' ">	
+	        and p.name like concat('%', #{search}, '%') 
+	    </if> 
+	</select>
+
 	
 	<!-- 픽업목록 -->
 	<select id="pickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="com.pickme.beeze.ceo.dto.OrderDto">
