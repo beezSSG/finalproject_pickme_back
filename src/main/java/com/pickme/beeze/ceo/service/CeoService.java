@@ -13,6 +13,7 @@ import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
+import com.pickme.beeze.ceo.dto.PurchaseProductDto;
 import com.pickme.beeze.ceo.dto.SaleChartDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
@@ -32,6 +33,15 @@ public class CeoService {
 	public List<PurchaseDto> poList(CeoParam param) {
 		return dao.polist(param);	
 	}
+	
+	public boolean powritefinal(List<PurchaseProductDto> list) {
+		int count = 0;
+	    for(PurchaseProductDto dto : list) {
+	        count = dao.powritefinal(dto);
+	    }
+	    return count>0?true:false;
+	}
+
 
 	public int getallceo(CeoParam param) {
 		return dao.getallceo(param);

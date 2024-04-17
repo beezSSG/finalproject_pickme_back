@@ -84,6 +84,12 @@
             from product p, category c, product_category pc
             where pc.category_id = c.id and pc.product_id = p.id
 	</select>
+	<!-- 발주발주 진짜 됨 -->
+	<insert id="powritefinal" parameterType="com.pickme.beeze.ceo.dto.PurchaseProductDto">
+	    insert into purchase_order(ceo_id, product_id, quantity, po_yn, wdate)
+	    values (#{id}, (select id from product where name=#{name}), #{quantity}, 0, now())
+	</insert>
+
 	
 	<!--  화면에서 승인이 완료된 물품을 사라지게 하기 -->
 	<!-- 여기가 점주 화면에서 사라지게 하는역할 -->
