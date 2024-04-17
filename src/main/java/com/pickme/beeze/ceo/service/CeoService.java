@@ -35,11 +35,15 @@ public class CeoService {
 	}
 	
 	public boolean powritefinal(List<PurchaseProductDto> list) {
-		int count = 0;
-	    for(PurchaseProductDto dto : list) {
-	        count = dao.powritefinal(dto);
+	    for (PurchaseProductDto dto : list) {
+	        int count = dao.powritefinal(dto);
+	        if (count <= 0) {
+	            // 쓰기 작업 실패 시 즉시 false 반환
+	            return false;
+	        }
 	    }
-	    return count>0?true:false;
+	    // 모든 쓰기 작업이 성공한 경우 true 반환
+	    return true;
 	}
 
 

@@ -23,7 +23,8 @@
     <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
         and (purchase_order.wdate between #{startDate} and #{endDate})
     </if>
-    limit ${(pageNumber * 10)}, 10
+    order by wdate desc
+    limit ${(pageNumber * 10)}, 10    
 </select>
 
 <select id="getPurchaseOrderCount" parameterType="com.pickme.beeze.manager.dto.ManagerPurchaseDto" resultType="Integer">
