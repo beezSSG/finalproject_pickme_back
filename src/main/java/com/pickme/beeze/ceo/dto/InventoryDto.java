@@ -15,10 +15,7 @@ import lombok.NoArgsConstructor;
 		
 		private int id;
 		private int storeId;
-		private String storeName;
 		private int productId;
-		private String productName;
-		private int price;
 		private int quantity;
 		private String expDate;
 }
