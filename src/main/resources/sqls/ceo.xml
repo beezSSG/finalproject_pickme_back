@@ -117,15 +117,35 @@
 	
 	<!-- 픽업목록 -->
 	<select id="pickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="com.pickme.beeze.ceo.dto.OrderDto">
-	SELECT p.name as `productName`, p.price as `price`, ci.name as `customerName`, pick_del as `pickDel`
+     	SELECT distinct p.name as `productName`, p.price as `price`, ci.name as `customerName`, date_format(date, '%Y-%m-%d') as `date`, pick_del as `pickDel`
 	  FROM pickme.order o
-	 INNER JOIN pickme.customer_info ci ON o.cart_id = ci.id
-	 INNER JOIN cart c ON o.cart_id = c.id
-	 INNER JOIN store_product s ON c.s_product_id = s.id
-	 INNER JOIN store st ON s.store_id = st.id
-	 INNER JOIN product p ON s.product_id = p.id
-      WHERE cancel_yn = 0 and st.ceo_id = #{id}
+      INNER JOIN cart c ON o.cart_id = c.id
+      INNER JOIN customer_info ci ON c.customer_id = ci.id
+      INNER JOIN store_product sp ON sp.product_id = c.s_product_id
+	  INNER JOIN product p ON sp.product_id = p.id
+      INNER JOIN store st ON sp.store_id = st.id
+      WHERE st.ceo_id = 1
+      	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	 
 	</select>
+	
+		<select id="getallpickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="Integer">
+	    select count(*)	
+	    from pickme.order o
+      INNER JOIN cart c ON o.cart_id = c.id
+      INNER JOIN customer_info ci ON c.customer_id = ci.id
+      INNER JOIN store_product sp ON sp.product_id = c.s_product_id
+	  INNER JOIN product p ON sp.product_id = p.id
+      INNER JOIN store st ON sp.store_id = st.id
+	    where sp.store_id = (select id from store where ceo_id=#{id}) 
+	    <if test="search != null and search != '' ">	
+	        and p.name like concat('%', #{search}, '%') 
+	    </if> 
+	</select>
+
+	
 	
 	
 	<!-- 배달 목록 -->
@@ -137,7 +157,11 @@
 	 INNER JOIN store_product s ON c.s_product_id = s.id
 	 INNER JOIN store st ON s.store_id = st.id
 	 INNER JOIN product p ON s.product_id = p.id
-     WHERE post_yn = 0 and st.ceo_id = #{id}
+     WHERE st.ceo_id = #{id}
+     	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	 
 
 	</select>	
 	
