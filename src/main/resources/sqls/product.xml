@@ -192,5 +192,13 @@
 	 WHERE id = #{id}
 </update>
 
+<!-- 메인홈 1+1, 2+1, 신제품 목록 -->
+<select id="promotedproductlist" parameterType="Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
+	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.promotion_type as `promotionType`
+	from product p, product_category pc
+	where p.id = pc.product_id and pc.promotion_type = #{tag}
+	limit 0, 15
+</select>
+
 </mapper>
  
