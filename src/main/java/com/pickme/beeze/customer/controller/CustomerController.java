@@ -230,6 +230,7 @@ public class CustomerController {
 	    return service.reservationproductlist(param);
 	}
 	
+	// 상품 예약 결제 후 db 저장
 	
 	// 매장 번호 가져오기(상품 예약)
 	@GetMapping("storeselect")
