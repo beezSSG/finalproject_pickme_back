@@ -224,6 +224,16 @@ public class CustomerController {
 		
 		return service.selectstorename(id);
 	}
+	
+	// 아이디 얻기
+	@GetMapping("getid")
+	public String getid(Authentication Authentication, HttpServletRequest request ) {
+		
+		System.out.println("customercontroller getid");
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		return service.getid(id);
+	}
 
 
 	

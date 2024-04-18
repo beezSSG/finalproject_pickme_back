@@ -194,16 +194,32 @@ public class CeoController {
 	
 	// 픽업
 	@GetMapping("/pickup")
-	public List<OrderDto> pickup(Authentication Authentication, HttpServletRequest request) {
+	public Map<String, Object> pickup(Authentication Authentication, HttpServletRequest request,OrderDto dto) {
 		System.out.println("pickupController pickup " + new Date());
 		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		OrderDto dto = new OrderDto();                                            
+		int id = InfoUtil.getUserIdInfo(Authentication, request);                                            
 		  dto.setId(id);
 
 		  System.out.println(dto);
 		  
-	     return service.pickup(dto);
+	    List<OrderDto> list = service.pickup(dto);
+	    
+	    // 발주 물품 총 수
+        int count = service.getallpickup(dto);
+        int pageBbs = count / 10;
+        if( (count % 10) > 0) {
+           pageBbs = pageBbs + 1;
+        }
+        
+        System.out.println(count);
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("pickuplist", list);
+        map.put("pageBbs", pageBbs);
+        map.put("cnt", count);
+		  	  
+	    return map;
+	    
 	}
 	
 	// 배달
