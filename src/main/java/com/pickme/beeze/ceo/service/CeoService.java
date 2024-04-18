@@ -99,10 +99,18 @@ public class CeoService {
 	}
 	
 	
-	// 배달
+	// 택배
 	public List<PostDto> postcheck(PostDto dto) {	
 		List<PostDto> list = dao.postcheck(dto);
 		return list;	
+	}
+	// 택배 총 수
+	public int getallpost(PostDto param) {
+		return dao.getallpost(param);
+	}
+	// 화면에서 택배가 완료된 물품을 사라지게 하기
+	public void deletepost(PostDto dto) {
+		dao.deletepost(dto);
 	}
 	
 	// 상품 예약 목록 불러오기

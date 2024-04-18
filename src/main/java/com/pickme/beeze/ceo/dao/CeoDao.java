@@ -54,9 +54,12 @@ public interface CeoDao {
 	
 	int getallpickup(OrderDto dto);
 	
-	// 배달 기능 구현하기
-	
+	// 택배 기능 구현하기
 	List<PostDto> postcheck(PostDto dto);
+	int getallpost(PostDto dto);
+	
+	// 화면에서 택배가 완료된 물품을 사라지게 하기
+	void deletepost(PostDto dto);
 	
 	// 상품 예약 목록 가져오기
 	List<ProductReservationDto> getrplist(ProductReservationDto dto);
