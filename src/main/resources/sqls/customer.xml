@@ -123,6 +123,18 @@
     LIMIT #{start}, #{perPage}
 </select>
 
+<!-- 상품 예약 후 db에 저장 -->
+<insert id="productreservationAf" parameterType="com.pickme.beeze.customer.dto.ProductReservationDto">
+  insert into product_reservation (product_id, customer_id, store_id, quantity, pick_yn)
+  values (
+    (select id from product where name = #{productName}), 
+    #{customerId}, 
+    #{storeId}, 
+    #{quantity}, 
+    0
+  )
+</insert>
+
 <!--  매장 번호 가져오기 -->
 <select id="storeselect" parameterType="String" resultType="Integer">
 	select id
