@@ -237,45 +237,45 @@ public class CeoController {
 	     return service.postcheck(dto);
 	}
 	
-	// 상품 예약 리스트 불러오기
-	@GetMapping("/getrplist")
-	public Map<String, Object>  getrplist(ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
-		
-		System.out.println("CeoController getrplist" + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		dto.setCeoId(id);
-		
-		
-		List<ProductReservationDto> list = service.getrplist(dto);
-		// 상품 예약 목록 총 수
-        int count = service.getallrp(dto);
-        int pageBbs = count / 5;
-        if( (count % 5) > 0) {
-           pageBbs = pageBbs + 1;
-        }
-        
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rplist", list);
-        map.put("pageBbs", pageBbs);
-        map.put("cnt", count);
-		
-		return map;
-	}
-	
-	// 예약 승인
-	@GetMapping("/checkrp")
-	public List<ProductReservationDto> checkrp(int id,ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
-		
-		System.out.println("CeoController checkrp" + new Date());
-		
-		int idd = InfoUtil.getUserIdInfo(Authentication, request);
-		dto.setCeoId(idd);
-		service.checkrp(id);
-		
-		
-		return service.getrplist(dto);
-	}
+	   // 상품 예약 리스트 불러오기
+	   @GetMapping("/getrplist")
+	   public Map<String, Object>  getrplist(ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
+	      
+	      System.out.println("CeoController getrplist" + new Date());
+	      
+	      int id = InfoUtil.getUserIdInfo(Authentication, request);
+	      dto.setCeoId(id);
+	      
+	      
+	      List<ProductReservationDto> list = service.getrplist(dto);
+	      // 상품 예약 목록 총 수
+	        int count = service.getallrp(dto);
+	        int pageBbs = count / 5;
+	        if( (count % 5) > 0) {
+	           pageBbs = pageBbs + 1;
+	        }
+	        
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("rplist", list);
+	        map.put("pageBbs", pageBbs);
+	        map.put("cnt", count);
+	      
+	      return map;
+	   }
+	   
+	   // 예약 승인
+	   @GetMapping("/checkrp")
+	   public List<ProductReservationDto> checkrp(int id,ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
+	      
+	      System.out.println("CeoController checkrp" + new Date());
+	      
+	      int idd = InfoUtil.getUserIdInfo(Authentication, request);
+	      dto.setCeoId(idd);
+	      service.checkrp(id);
+	      
+	      
+	      return service.getrplist(dto);
+	   }
 	
 	
 	
