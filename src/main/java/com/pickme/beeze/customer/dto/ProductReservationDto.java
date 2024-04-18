@@ -8,12 +8,14 @@ public class ProductReservationDto {
 	private int storeId;
 	private int quantity;
 	private int pickYn;
+	private String productName;
 	
 	public ProductReservationDto() {
 		
 	}
 
-	public ProductReservationDto(int id, int productId, int customerId, int storeId, int quantity, int pickYn) {
+	public ProductReservationDto(int id, int productId, int customerId, int storeId, int quantity, int pickYn,
+			String productName) {
 		super();
 		this.id = id;
 		this.productId = productId;
@@ -21,6 +23,7 @@ public class ProductReservationDto {
 		this.storeId = storeId;
 		this.quantity = quantity;
 		this.pickYn = pickYn;
+		this.productName = productName;
 	}
 
 	public int getId() {
@@ -71,9 +74,19 @@ public class ProductReservationDto {
 		this.pickYn = pickYn;
 	}
 
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductReservationDto [id=" + id + ", productId=" + productId + ", customerId=" + customerId
-				+ ", storeId=" + storeId + ", quantity=" + quantity + ", pickYn=" + pickYn + "]";
+				+ ", storeId=" + storeId + ", quantity=" + quantity + ", pickYn=" + pickYn + ", productName="
+				+ productName + "]";
 	}
+
 }
