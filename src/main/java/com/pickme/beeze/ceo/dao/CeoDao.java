@@ -49,6 +49,9 @@ public interface CeoDao {
 	// 픽업 기능 구현하기
 	List<OrderDto> pickup(OrderDto dto);
 	
+	// 화면에서 픽업이 완료된 물품을 사라지게 하기
+	void deletepickup(OrderDto dto);
+	
 	int getallpickup(OrderDto dto);
 	
 	// 배달 기능 구현하기
