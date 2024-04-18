@@ -178,7 +178,7 @@
 
 <!-- 내 선물목록보기 -->
 <select id="getMyGift" parameterType="Integer" resultType="ProductGiftDto">
-	SELECT c.name as `giftUserName`, p.name as `productName`, p.url as `productUrl`, g.exp_day, g.id, g.use_yn as `useYn`
+	SELECT c.name as `giftUserName`, p.name as `productName`, p.url as `productUrl`, g.exp_day as `expDay`, g.id, g.use_yn as `useYn`, g.content as `content`
 	  FROM gift g
 	 INNER JOIN customer_info c ON g.customer_id = c.id
 	 INNER JOIN product p ON g.product_id = p.id
