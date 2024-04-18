@@ -161,8 +161,10 @@ public class CustomerController {
 
 	// 주문하기
 	@PostMapping("/order")
-	public String order(@RequestBody List<Integer> checkItems, int pickDel) { // 장바구니 id 목록
+	public String order(@RequestBody RequestData requestData) { // 장바구니 id 목록
 	    System.out.println("CustomerController order " + new Date());
+	    List<Integer> checkItems = requestData.getCheckItems();
+	    int pickDel = requestData.getPickDel();
 	    
 	    CartDto dto = new CartDto();
 	    dto.setPickDel(pickDel);
@@ -175,6 +177,28 @@ public class CustomerController {
 	    }
 	    return "제대로 작업이 완료되었습니다";
 	}
+	
+	// 프론트에서 개떡같이 보냈을때 스태틱 클래스를 통해 받아야할 값을 정확하게 지정해주고 가져올 수 있다.
+	static class RequestData {
+        private List<Integer> checkItems;
+        private int pickDel;
+
+        public List<Integer> getCheckItems() {
+            return checkItems;
+        }
+
+        public void setCheckItems(List<Integer> checkItems) {
+            this.checkItems = checkItems;
+        }
+
+        public int getPickDel() {
+            return pickDel;
+        }
+
+        public void setPickDel(int pickDel) {
+            this.pickDel = pickDel;
+        }
+    }
 	
 	// 택배 신청하기
 	@PostMapping("postreservation") 
