@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 		
 		   private int id;
 		   private int customerId;
+		   private int ceoId;
 		   private String customerName;
 		   private String toUser;
 		   private String toPhone;
