@@ -4,11 +4,13 @@
    
  <mapper namespace="com.pickme.beeze.manager.dao.CcbDao">
  
- <select id="ccblist" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbDto">
-	select id,category,customer_id as `customerId`, title, content, create_at as `createAt`, answer_yn as `answerYn`
-	from ccb
-	order by id desc;
+<select id="ccblist" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbDto">
+	SELECT ccb.id as `id`, ccb.category as `category`,ccb.customer_id as `customerId`, ccb.title as `title`, customer_info.name as `customerName`, ccb.content as `content`, ccb.create_at as `createAT`, ccb.answer_yn as `answerYn` 
+	FROM ccb
+	JOIN customer_info ON ccb.customer_id = customer_info.email
+	ORDER BY ccb.id DESC;
 </select>
+
 
 <!-- 관리자 페이지에서 카테고리 별 글 개수 파악 용도 -->
 <select id="ccbcategorycount" parameterType="com.pickme.beeze.manager.dto.CcbDto" resultType="com.pickme.beeze.manager.dto.CcbParam">

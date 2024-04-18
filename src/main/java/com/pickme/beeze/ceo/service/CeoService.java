@@ -13,7 +13,8 @@ import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
-import com.pickme.beeze.ceo.dto.SaleChartDto;
+import com.pickme.beeze.ceo.dto.PurchaseProductDto;
+import com.pickme.beeze.ceo.dto.SalesChartDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 
@@ -32,6 +33,19 @@ public class CeoService {
 	public List<PurchaseDto> poList(CeoParam param) {
 		return dao.polist(param);	
 	}
+	
+	public boolean powritefinal(List<PurchaseProductDto> list) {
+	    for (PurchaseProductDto dto : list) {
+	        int count = dao.powritefinal(dto);
+	        if (count <= 0) {
+	            // 쓰기 작업 실패 시 즉시 false 반환
+	            return false;
+	        }
+	    }
+	    // 모든 쓰기 작업이 성공한 경우 true 반환
+	    return true;
+	}
+
 
 	public int getallceo(CeoParam param) {
 		return dao.getallceo(param);
@@ -55,13 +69,17 @@ public class CeoService {
 		return dao.addProduct(dto);
 	}
 	
-	public List<SaleChartDto> salechart(OrderDto dto) {
-		return dao.salechart(dto);
+	public List<SalesChartDto> saleschart(OrderDto dto) {
+		return dao.saleschart(dto);
 	}
 	
 	// 재고
 	public List<InventoryDto> inventory(InventoryDto dto) {	
 		return dao.inventory(dto);	
+	}
+	// 재고 총 수
+	public int getallinven(InventoryDto param) {
+		return dao.getallinven(param);
 	}
 	
 	// 픽업
@@ -69,6 +87,11 @@ public class CeoService {
 		List<OrderDto> list = dao.pickup(dto);
 		return list;	
 	}
+	// 픽업 총 수
+	public int getallpickup(OrderDto param) {
+		return dao.getallpickup(param);
+	}
+	
 	
 	
 	// 배달

@@ -131,4 +131,9 @@ public class MypageService {
 		return dao.MyPickBox(id);
 	}
 	
+	// 리뷰목록 불러오기
+	public List<MypageReviewDto> getMyReview(int id) {
+		return dao.getMyReview(id);
+	}
+	
 }

@@ -11,7 +11,8 @@ import com.pickme.beeze.ceo.dto.CeoParam;
 import com.pickme.beeze.ceo.dto.InventoryDto;
 import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
-import com.pickme.beeze.ceo.dto.SaleChartDto;
+import com.pickme.beeze.ceo.dto.PurchaseProductDto;
+import com.pickme.beeze.ceo.dto.SalesChartDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 
@@ -27,6 +28,9 @@ public interface CeoDao {
 	List<ProductDto> powrite(CeoParam param);
 	List<ProductDto> powriteCn(ProductDto dto);
 	
+	// 발주발주발주
+	int powritefinal(PurchaseProductDto dto);
+	
 	// 화면에서 승인이 완료된 물품을 사라지게 하기
 	void deleteProduct(PurchaseDto dto);
 	
@@ -34,13 +38,17 @@ public interface CeoDao {
 	int addProduct(InventoryDto dto);
 	
 	// 전체 주문 차트 보기
-	List<SaleChartDto> salechart(OrderDto dto);
+	List<SalesChartDto> saleschart(OrderDto dto);
 	
 	// 재고 현황 불러오기
-	List<InventoryDto> inventory(InventoryDto dto);
+	List<InventoryDto> inventory(InventoryDto param);
+	// 재고 현황 총 수
+	int getallinven(InventoryDto dto);
 	
 	// 픽업 기능 구현하기
 	List<OrderDto> pickup(OrderDto dto);
+	
+	int getallpickup(OrderDto dto);
 	
 	// 배달 기능 구현하기
 	

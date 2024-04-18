@@ -37,21 +37,18 @@ public class CustomerController {
 	// 장바구니 담기
 	// react에서 점포 상품수량 초과하지 않도록 제어 [ 상품아이디 / 가게아이디 / 상품수량 ]
 	@PostMapping("/cart/insert")
-	public String cartInsert(Authentication Authentication, HttpServletRequest request, int productId, int storeId, int quantity) {	
+	public String cartInsert(Authentication Authentication, HttpServletRequest request, int sProductId, int quantity) {	
 		System.out.println("CustomerController cartInsert " + new Date());
 		
 		// 고객 id 얻기
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
 		System.out.println("#1. id찾기도달");
-		// product_id 를 이용해서 sProductId를 가져오기 
-		int sProductId = service.getsProductId(productId, storeId);
-		System.out.println("#2. sproduct찾기도달");
 		// cart DB 에 저장
 		CartDto dto = new CartDto();
 		dto.setSProductId(sProductId);
 		dto.setQuantity(quantity);
 		dto.setCustomerId(id);
-		System.out.println("#3. 제대로도달");
+		System.out.println("#2. 제대로도달");
 		boolean isS = service.haveMyCart(dto);		
 		if(isS) {
 			return "YES";
@@ -161,8 +158,10 @@ public class CustomerController {
 
 	// 주문하기
 	@PostMapping("/order")
-	public String order(@RequestBody List<Integer> checkItems, int pickDel) { // 장바구니 id 목록
+	public String order(@RequestBody RequestData requestData) { // 장바구니 id 목록
 	    System.out.println("CustomerController order " + new Date());
+	    List<Integer> checkItems = requestData.getCheckItems();
+	    int pickDel = requestData.getPickDel();
 	    
 	    CartDto dto = new CartDto();
 	    dto.setPickDel(pickDel);
@@ -175,6 +174,28 @@ public class CustomerController {
 	    }
 	    return "제대로 작업이 완료되었습니다";
 	}
+	
+	// 프론트에서 개떡같이 보냈을때 스태틱 클래스를 통해 받아야할 값을 정확하게 지정해주고 가져올 수 있다.
+	static class RequestData {
+        private List<Integer> checkItems;
+        private int pickDel;
+
+        public List<Integer> getCheckItems() {
+            return checkItems;
+        }
+
+        public void setCheckItems(List<Integer> checkItems) {
+            this.checkItems = checkItems;
+        }
+
+        public int getPickDel() {
+            return pickDel;
+        }
+
+        public void setPickDel(int pickDel) {
+            this.pickDel = pickDel;
+        }
+    }
 	
 	// 택배 신청하기
 	@PostMapping("postreservation") 
@@ -226,6 +247,16 @@ public class CustomerController {
 		System.out.println("selectstorename");
 		
 		return service.selectstorename(id);
+	}
+	
+	// 아이디 얻기
+	@GetMapping("getid")
+	public String getid(Authentication Authentication, HttpServletRequest request ) {
+		
+		System.out.println("customercontroller getid");
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		return service.getid(id);
 	}
 
 

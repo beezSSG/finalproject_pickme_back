@@ -136,6 +136,12 @@
 	where id=#{id}
 </select>
 
+<!--  아이디 가져오기 -->
+<select id="getid" parameterType="Integer" resultType="String">
+	select email
+	from customer_info
+	where id=#{id}
+</select>
 
 
 </mapper>

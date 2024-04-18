@@ -118,10 +118,12 @@ public class MypageController {
 	
 	// TODO 포인트 및 쿠폰
 	// 내 포인트 적립/차감 하기
-	@GetMapping("/user/updatePoint")
-	public void updatePoint(MypageCustomerDto dto) {
+	@PostMapping("/user/updatePoint")
+	public void updatePoint(MypageCustomerDto dto, Authentication Authentication, HttpServletRequest request) {
 		System.out.println("MypageController updatePoint " + new Date());
 		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		dto.setId(id);
 		service.updatePoint(dto);
 	}
 
@@ -133,6 +135,14 @@ public class MypageController {
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
 		
 		return service.getCoupon(id);
+	}
+	@PostMapping("/user/deleteCoupon")
+	public void deleteCoupon(int point, MypageCouponDto dto, Authentication Authentication, HttpServletRequest request) {
+		System.out.println("MypageController deleteCoupon " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		service.deleteCoupon(id, point, dto);
 	}
 	
 	// TODO 1:1 문의 게시판
@@ -171,49 +181,16 @@ public class MypageController {
 	}
 	
 	// 내 주문 취소
-	@PutMapping("/cancelMyOrder")
-	public void cancelMyOrder(MypageOrderDto dto) {
+	@PostMapping("/cancelMyOrder")
+	public void cancelMyOrder(MypageOrderDto dto, Authentication Authentication, HttpServletRequest request) {
 		System.out.println("MypageController cancelMyOrder " + new Date());
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		dto.setCustomerID(id);
 		
 		service.cancelMyOrder(dto);
 	}
-	
-	
-//	
-//	/* 여기서 부터는 합칠것 */
-//	// TODO 리뷰
-//	// 리뷰 목록 불러오기
-//	@GetMapping("/review/getReview")
-//	public List<MypageReviewDto> getReview(Authentication Authentication, HttpServletRequest request) {
-//		System.out.println("MypageController getReview " + new Date());
-//		
-//		int id = InfoUtil.getUserIdInfo(Authentication, request);
-//		return service.getMyReview(id);
-//	}
-//	
-//	// 리뷰 삭제
-//	@DeleteMapping("/review/delReview")
-//	public int delReview(MypageReviewDto dto) {
-//		System.out.println("MypageController delReview " + new Date());
-//		
-//	    return service.delReview(dto);
-//	}
-//	
-//	// 리뷰 생성
-//	@PostMapping("/review/addReview")
-//	public int addReview(MypageReviewDto dto) {	// 유저 토큰이 들어와야함
-//		System.out.println("MypageController addReview " + new Date());
-//		
-//		System.out.println(dto.toString());
-//		// 유저정보 받아오기
-//		
-//		// 제품정보 받아오기
-//		
-//		// 받아온 정보로 dto 생성
-//		
-//		return service.addReview(dto);
-//	}
-	
+
 	// TODO 픽박스
 	// 픽박스 불러오기
 	@GetMapping("/MyPickBox")
@@ -221,8 +198,18 @@ public class MypageController {
 		System.out.println("MypageController MyPickBox " + new Date());
 		
 		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		System.out.println(id);
 				
 		return service.MyPickBox(id);
+	}
+	
+	// 리뷰 목록 불러오기
+	@GetMapping("/review/getReview")
+	public List<MypageReviewDto> getReview(Authentication Authentication, HttpServletRequest request) {
+		System.out.println("MypageController getReview " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		return service.getMyReview(id);
 	}
 	
 }

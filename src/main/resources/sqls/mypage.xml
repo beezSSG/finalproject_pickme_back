@@ -124,7 +124,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	 INNER JOIN store_product s ON c.s_product_id = s.id
 	 INNER JOIN store st ON s.store_id = st.id
 	 INNER JOIN product p ON s.product_id = p.id
-	 WHERE cancel_yn = 0 and c.customer_id = #{id}
+	 WHERE cancel_yn = 0 and c.customer_id = #{id} and s.exp_date >= DATE_SUB(NOW(), INTERVAL 1 DAY)
 	 ORDER BY s.exp_date
 </select>
 
@@ -195,7 +195,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 <update id="cancelMyOrder" parameterType="MypageOrderDto">
 	UPDATE order 
 	   SET cancel_yn = 1
-	 WHERE customer_id = #{customerId}
+	 WHERE customer_id = #{customerId} and date = #{date}
 </update>
 
 </mapper>

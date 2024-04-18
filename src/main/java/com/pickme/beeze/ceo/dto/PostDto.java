@@ -28,4 +28,6 @@ import lombok.NoArgsConstructor;
 		   private int totalPrice;
 		   private String date;
 		   private int postYn;
+			private String search;
+			private int pageNumber; // 페이지
 }

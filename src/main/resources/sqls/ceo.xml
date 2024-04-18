@@ -4,52 +4,39 @@
 <mapper namespace="com.pickme.beeze.ceo.dao.CeoDao">
 	<!-- 점주 메인화면 정보 확인[점주 이름, 점포 이름]-->
 	<select id="getCeoInfo" parameterType="com.pickme.beeze.ceo.dto.CeoInfoDto" resultType="com.pickme.beeze.ceo.dto.CeoInfoDto">
-		select ci.name as `ceoname`, st.name as `storename`
+		select ci.name as `ceoname`, st.name as `storename`, st.id as `id`
 		  from pickme.ceo_info ci join
 		pickme.store st on ci.id = st.ceo_id 
 		where ci.id=#{id}
 	</select>
 
-	<!-- 글의 목록 --> 
-	<!-- 여기가 polist를 불러오는곳이라고 치면 조건문에 무조건 2가 아니다라는걸 포함해야해요 이건 예시를 하나보여드릴게요 --> 
-	<!--  -->
-	<select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
-		resultType="com.pickme.beeze.ceo.dto.PurchaseDto"> 
-		select po.id, s.id as `storeId` , p.url, p.name, po.quantity, po.po_yn as `poYn`, substr(po.wdate, 1,10) as `wdate`, sp.exp_date as `expDate`
-		from pickme.purchase_order po
-        INNER JOIN pickme.ceo_info ci on ci.id = po.ceo_id
-        INNER JOIN pickme.store s on s.ceo_id = ci.id
-       INNER JOIN pickme.product p on p.id = po.product_id
-       INNER JOIN pickme.store_product sp on s.id = sp.store_id
-       where not po.po_yn = 2
-		<if	test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'name'">
-				and p.name like concat('%', #{search}, '%')
-			</if>
-	      	<if test="choice == 'wdate'">
-         		and po.wdate like concat('%', #{search}, '%')
-      		</if>
-		</if>
-		order by wdate 
-		limit ${(pageNumber * 10)}, 10<!-- 페이지 당 글 개수  -->
-	</select>
+<!-- 글의 목록 --> 
+<select id="polist" parameterType="com.pickme.beeze.ceo.dto.CeoParam" resultType="com.pickme.beeze.ceo.dto.PurchaseDto"> 
+	SELECT po.id, p.id as `productId`, s.id as `storeId`, p.url, p.name, po.quantity, po.po_yn as `poYn`, substr(po.wdate, 1,10) as `wdate`
+	  FROM purchase_order po
+	 INNER JOIN ceo_info ci ON po.ceo_id = ci.id
+	 INNER JOIN store s ON po.ceo_id = s.ceo_id
+	 INNER JOIN product p ON po.product_id = p.id
+	 WHERE NOT po.po_yn = 2 and ci.id = #{id}
+	 <if test="search != null and search != ''">
+		and p.name like concat('%', #{search}, '%')
+	</if>
+	 ORDER BY po.wdate desc
+	 LIMIT ${(pageNumber * 10)}, 10
+</select>
 
-	<!-- 글의 총수 -->
+<!-- 글의 총수 -->
+<select id="getallceo" parameterType="com.pickme.beeze.ceo.dto.CeoParam" resultType="java.lang.Integer"> 
+	select count(*)
+	from pickme.purchase_order o join
+	pickme.product p on p.id = o.product_id 
+	where o.ceo_id=#{id} and not o.po_yn = 2
+	<if	test="search != null and search != ''">
+		and name like concat('%', #{search}, '%')
+	</if>
 
-	<select id="getallceo" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
-		resultType="java.lang.Integer"> 
-		select count(*)
-		from pickme.purchase_order o join
-		pickme.product p on p.id = o.product_id 
-		<if	test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'name'">
-				where name like concat('%', #{search}, '%')
-			</if>
-	      	<if test="choice == 'wdate'">
-         		where wdate like concat('%', #{search}, '%') 
-      		</if>
-		</if>
-	</select>
+
+</select>
 
 	<!-- 발주하기(신청가능품목) -->
 
@@ -84,6 +71,12 @@
             from product p, category c, product_category pc
             where pc.category_id = c.id and pc.product_id = p.id
 	</select>
+	<!-- 발주발주 진짜 됨 -->
+	<insert id="powritefinal" parameterType="com.pickme.beeze.ceo.dto.PurchaseProductDto">
+	    insert into purchase_order(ceo_id, product_id, quantity, po_yn, wdate)
+	    values (#{id}, (select id from product where name=#{name}), #{quantity}, 0, now())
+	</insert>
+
 	
 	<!--  화면에서 승인이 완료된 물품을 사라지게 하기 -->
 	<!-- 여기가 점주 화면에서 사라지게 하는역할 -->
@@ -102,24 +95,57 @@
 	<select id="inventory" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="com.pickme.beeze.ceo.dto.InventoryDto">
 	SELECT sp.id, s.name as `storeName`, p.name as `productName`, p.price as `price`, quantity, date_format(exp_date, '%Y-%m-%d')  as `expDate`
 	  FROM pickme.store_product sp 
-	 INNER JOIN pickme.store s ON sp.store_id = s.id
-	 INNER JOIN pickme.product p ON sp.product_id = p.id
+	  INNER JOIN pickme.store s ON sp.store_id = s.id
+	  INNER JOIN pickme.product p ON sp.product_id = p.id
 	  WHERE s.ceo_id =#{id} 
- 	order by exp_date 
-	  
+	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	  
 	</select>
+	
+	<select id="getallinven" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="Integer">
+	    select count(*)	
+	    from store_product sp
+	    inner join product p on sp.product_id = p.id
+	    where sp.store_id = (select id from store where ceo_id=#{id}) 
+	    <if test="search != null and search != '' ">	
+	        and p.name like concat('%', #{search}, '%') 
+	    </if> 
+	</select>
+
 	
 	<!-- 픽업목록 -->
 	<select id="pickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="com.pickme.beeze.ceo.dto.OrderDto">
-	SELECT p.name as `productName`, p.price as `price`, ci.name as `customerName`, pick_del as `pickDel`
+     	SELECT distinct p.name as `productName`, p.price as `price`, ci.name as `customerName`, date_format(date, '%Y-%m-%d') as `date`, pick_del as `pickDel`
 	  FROM pickme.order o
-	 INNER JOIN pickme.customer_info ci ON o.cart_id = ci.id
-	 INNER JOIN cart c ON o.cart_id = c.id
-	 INNER JOIN store_product s ON c.s_product_id = s.id
-	 INNER JOIN store st ON s.store_id = st.id
-	 INNER JOIN product p ON s.product_id = p.id
-      WHERE cancel_yn = 0 and st.ceo_id = #{id}
+      INNER JOIN cart c ON o.cart_id = c.id
+      INNER JOIN customer_info ci ON c.customer_id = ci.id
+      INNER JOIN store_product sp ON sp.product_id = c.s_product_id
+	  INNER JOIN product p ON sp.product_id = p.id
+      INNER JOIN store st ON sp.store_id = st.id
+      WHERE st.ceo_id = 1
+      	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	 
 	</select>
+	
+		<select id="getallpickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="Integer">
+	    select count(*)	
+	    from pickme.order o
+      INNER JOIN cart c ON o.cart_id = c.id
+      INNER JOIN customer_info ci ON c.customer_id = ci.id
+      INNER JOIN store_product sp ON sp.product_id = c.s_product_id
+	  INNER JOIN product p ON sp.product_id = p.id
+      INNER JOIN store st ON sp.store_id = st.id
+	    where sp.store_id = (select id from store where ceo_id=#{id}) 
+	    <if test="search != null and search != '' ">	
+	        and p.name like concat('%', #{search}, '%') 
+	    </if> 
+	</select>
+
+	
 	
 	
 	<!-- 배달 목록 -->
@@ -131,40 +157,52 @@
 	 INNER JOIN store_product s ON c.s_product_id = s.id
 	 INNER JOIN store st ON s.store_id = st.id
 	 INNER JOIN product p ON s.product_id = p.id
-     WHERE post_yn = 0 and st.ceo_id = #{id}
+     WHERE st.ceo_id = #{id}
+     	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	 
 
 	</select>	
 	
 	
 	<!-- 월별 매출 차트를 위한 전체 order 목록  -->
-	<select id="salechart" parameterType="com.pickme.beeze.ceo.dto.OrderDto" 
-		resultType="com.pickme.beeze.ceo.dto.SaleChartDto">
-	select 
-	    o.id as orderId,
-	    o.cart_id as cartId,
-	    c.customer_id as customerId,
-	    p.name as productName,
-	    sp.exp_date as expDate,
-	    p.price as unitPrice,
-	    c.quantity as orderQuantity,
-	    (p.price * c.quantity) as totalPrice,
-	    s.name as storeName
-	from 
-	    `order` o
-	inner join 
-	    cart c ON o.cart_id = c.id
-	inner join
-	    store_product sp on c.s_product_id = sp.id
-	inner join
-	    product p on sp.product_id = p.id
-	inner join 
-	    store s on sp.store_id = s.id
-	where 
-	    o.cancel_yn = 0 
-	    and c.order_yn = 1
-	    and date_format(o.date, '%Y-%m-%d') = #{date}
-	    and s.address like concat(#{address}, '%')	 
-	    
-	    
+	<select id="saleschart" parameterType="com.pickme.beeze.ceo.dto.OrderDto" 
+		resultType="com.pickme.beeze.ceo.dto.SalesChartDto">
+		SELECT 
+		    YEAR(orderDate) AS orderYear,
+		    MONTH(orderDate) AS orderMonth,
+		    SUM(totalPrice) AS totalMonthlySales
+		FROM (
+		    SELECT 
+		        o.id AS orderId,
+		        o.cart_id AS cartId,
+		        c.customer_id AS customerId,
+		        p.name AS productName,
+		        o.date AS orderDate,
+		        p.price AS unitPrice,
+		        c.quantity AS orderQuantity,
+		        (p.price * c.quantity) AS totalPrice,
+		        s.name AS storeName
+		    FROM 
+		        `order` o
+		    INNER JOIN 
+		        cart c ON o.cart_id = c.id
+		    INNER JOIN
+		        store_product sp ON c.s_product_id = sp.id
+		    INNER JOIN
+		        product p ON sp.product_id = p.id
+		    INNER JOIN 
+		        store s ON sp.store_id = s.id
+		    WHERE 
+		        o.cancel_yn = 0 
+		        AND c.order_yn = 1
+		        AND s.id = #{id}
+		        AND YEAR(o.date) = #{date}
+		) AS subquery
+		GROUP BY 
+		    orderYear, orderMonth;
+		
+				    
 	</select>
 </mapper>
