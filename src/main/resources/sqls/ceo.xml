@@ -155,27 +155,31 @@
 		
 	<!-- 택배 목록 -->
 	<select id="postcheck" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="com.pickme.beeze.ceo.dto.PostDto">
-     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  date_format(po.date, '%Y-%m-%d')  as `date`, po.post_yn as `postYn`,po.id,po.check_yn as `checkYn`, store_id as `storeId`
-	  FROM pickme.post po
-	 INNER JOIN customer_info ci ON po.customer_id = ci.id
-	 INNER JOIN cart c ON po.customer_id = c.customer_id
-	 INNER JOIN store_product s ON c.s_product_id = s.id
-	 INNER JOIN store st ON s.store_id = st.id
-	 INNER JOIN product p ON s.product_id = p.id
-     WHERE st.ceo_id = #{id}
- 	  limit ${(pageNumber * 10)}, 10	 
+		SELECT 
+		    customer_info.name as `customerName`,
+		    post.item_category as `itemCategory`,
+		    post.item_weight as `itemWeight`,
+		    post.total_price as `totalPrice`,
+		    post.date as `date`,
+		    post.post_yn as `postYn`,
+		    post.check_yn as `checkYn`
+		FROM 
+		    customer_info
+		INNER JOIN 
+		    post ON customer_info.id = post.customer_id
+		INNER JOIN 
+		    store ON post.store_id = store.id
+		WHERE 
+		    store.ceo_id = #{ceoId}
+		limit ${(pageNumber * 10)}, 10	
 	</select>	
 	
 	<!-- 택배 페이지네이션 -->
 	<select id="getallpost" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="Integer">
-	    select count(*)	
-	  FROM pickme.post po
-	 INNER JOIN customer_info ci ON po.customer_id = ci.id
-	 INNER JOIN cart c ON po.customer_id = c.customer_id
-	 INNER JOIN store_product s ON c.s_product_id = s.id
-	 INNER JOIN store st ON s.store_id = st.id
-	 INNER JOIN product p ON s.product_id = p.id
-	    where s.store_id = (select id from store where ceo_id=#{id}) 
+		SELECT COUNT(*)
+		FROM post
+		INNER JOIN store ON post.store_id = store.id
+		WHERE store.ceo_id = #{ceoId} and check_yn = 0
 	</select>
 	
 	<!-- 택배 리스트에서 사라지게 하기  -->

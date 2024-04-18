@@ -236,8 +236,8 @@ public class CeoController {
    public Map<String, Object> postcheck(Authentication Authentication, HttpServletRequest request, PostDto dto) {
 	   System.out.println("postcheckController postcheck " + new Date());
 	   
-	   int id = InfoUtil.getUserIdInfo(Authentication, request);                                          
-	   dto.setId(id);
+	   int id = InfoUtil.getUserIdInfo(Authentication, request); 
+	   dto.setCeoId(id);
 
 	   System.out.println(dto);
 	   List<PostDto> list = service.postcheck(dto);
