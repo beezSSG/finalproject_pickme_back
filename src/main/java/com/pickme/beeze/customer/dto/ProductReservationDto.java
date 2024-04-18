@@ -9,13 +9,17 @@ public class ProductReservationDto {
 	private int quantity;
 	private int pickYn;
 	private String productName;
+	private int ceoId;
+	private String storeName;
+	private String customerName;
+	private int pageNumber;
 	
 	public ProductReservationDto() {
 		
 	}
 
 	public ProductReservationDto(int id, int productId, int customerId, int storeId, int quantity, int pickYn,
-			String productName) {
+			String productName, int ceoId, String storeName, String customerName, int pageNumber) {
 		super();
 		this.id = id;
 		this.productId = productId;
@@ -24,6 +28,10 @@ public class ProductReservationDto {
 		this.quantity = quantity;
 		this.pickYn = pickYn;
 		this.productName = productName;
+		this.ceoId = ceoId;
+		this.storeName = storeName;
+		this.customerName = customerName;
+		this.pageNumber = pageNumber;
 	}
 
 	public int getId() {
@@ -82,11 +90,44 @@ public class ProductReservationDto {
 		this.productName = productName;
 	}
 
+	public int getCeoId() {
+		return ceoId;
+	}
+
+	public void setCeoId(int ceoId) {
+		this.ceoId = ceoId;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public int getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductReservationDto [id=" + id + ", productId=" + productId + ", customerId=" + customerId
 				+ ", storeId=" + storeId + ", quantity=" + quantity + ", pickYn=" + pickYn + ", productName="
-				+ productName + "]";
+				+ productName + ", ceoId=" + ceoId + ", storeName=" + storeName + ", customerName=" + customerName
+				+ ", pageNumber=" + pageNumber + "]";
 	}
 
 }

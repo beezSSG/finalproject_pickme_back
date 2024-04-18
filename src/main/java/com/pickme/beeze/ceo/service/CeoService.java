@@ -15,6 +15,7 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.PurchaseProductDto;
 import com.pickme.beeze.ceo.dto.SalesChartDto;
+import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 
@@ -98,5 +99,18 @@ public class CeoService {
 	public List<PostDto> postcheck(PostDto dto) {	
 		List<PostDto> list = dao.postcheck(dto);
 		return list;	
+	}
+	
+	// 상품 예약 목록 불러오기
+	public List<ProductReservationDto> getrplist(ProductReservationDto dto) {
+		return dao.getrplist(dto);
+	}
+	// 총 수
+	public int getallrp(ProductReservationDto dto) {
+		return dao.getallrp(dto);
+	}
+	// 예약 승인
+	public void checkrp(int id) {
+		dao.checkrp(id);
 	}
 }
