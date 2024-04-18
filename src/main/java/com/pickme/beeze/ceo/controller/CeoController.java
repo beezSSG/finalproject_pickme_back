@@ -21,6 +21,7 @@ import com.pickme.beeze.ceo.dto.PurchaseProductDto;
 import com.pickme.beeze.ceo.dto.SalesChartDto;
 
 import com.pickme.beeze.ceo.service.CeoService;
+import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 import com.pickme.beeze.util.InfoUtil;
@@ -208,18 +209,42 @@ public class CeoController {
    
    // 배달
    @GetMapping("/postcheck")
-   public List<PostDto> postcheck(Authentication Authentication, HttpServletRequest request) {
-      System.out.println("postcheckController postcheck " + new Date());
-      
-      int id = InfoUtil.getUserIdInfo(Authentication, request);
-      PostDto dto = new PostDto();                                            
-        dto.setId(id);
+   public Map<String, Object> postcheck(Authentication Authentication, HttpServletRequest request, PostDto dto) {
+	   System.out.println("postcheckController postcheck " + new Date());
+	   
+	   int id = InfoUtil.getUserIdInfo(Authentication, request);                                          
+	   dto.setId(id);
 
-        System.out.println(dto);
-        
-        return service.postcheck(dto);
+	   System.out.println(dto);
+	   List<PostDto> list = service.postcheck(dto);
+		    
+	// 택배 총 수
+	   int count = service.getallpost(dto);
+	   int pageBbs = count / 10;
+	   if( (count % 10) > 0) {
+	      pageBbs = pageBbs + 1;
+	    }
+	        
+	   System.out.println(count);
+	        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("postlist", list);
+        map.put("pageBbs", pageBbs);
+        map.put("cnt", count);
+			  	  
+		    return map;
    }
-  
+   // 택배 승인완료 물품 사라지기
+   @PostMapping("/deletepost")
+	public void deletepost(PostDto dto) { 
+		System.out.println("BbsController deletepost " + new Date());
+		
+		System.out.println(dto.toString());
+
+		service.deletepost(dto);
+   }
+
+
      // 상품 예약 리스트 불러오기
    @GetMapping("/getrplist")
    public Map<String, Object>  getrplist(ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
