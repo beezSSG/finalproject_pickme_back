@@ -146,4 +146,10 @@ public class ProductController {
 	    service.useGift(id);
 	}
 
+	@GetMapping("/promotedproductlist")
+	public List<ProductDto> promotedproductlist(int tag) {
+		System.out.println("ProductController promotedproductlist " + new Date());
+		
+		return service.promotedproductlist(tag);
+	}
 }
