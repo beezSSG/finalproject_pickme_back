@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pickme.beeze.customer.dto.CartDto;
 import com.pickme.beeze.customer.dto.PostDto;
+import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.customer.service.CustomerService;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
@@ -231,6 +232,25 @@ public class CustomerController {
 	}
 	
 	// 상품 예약 결제 후 db 저장
+	@PostMapping("productreservationAf")
+	public String productreservationAf(@RequestBody List<ProductReservationDto> list,Authentication Authentication, HttpServletRequest request) {
+		
+		System.out.println("CustomerController productreservationAf " + new Date());
+		
+		int id = InfoUtil.getUserIdInfo(Authentication, request);
+		
+		for (ProductReservationDto dto : list) {
+			dto.setCustomerId(id);
+		}
+		
+		boolean isS = service.productreservationAf(list);
+		if(isS) {
+			return "YES";
+		}else {
+			return "NO";
+		}
+		
+	}
 	
 	// 매장 번호 가져오기(상품 예약)
 	@GetMapping("storeselect")
