@@ -19,5 +19,7 @@ public class ProductDto {
 	private int productRating;
 	private int categoryId;
 	private int promotionType;
+	private String expDate;
+	private int sProductId;
 
 }
