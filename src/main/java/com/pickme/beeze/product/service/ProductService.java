@@ -57,6 +57,9 @@ public class ProductService {
 		dao.useGift(id);
 	}
 	
-	
+	// 메인홈 1+1, 2+1, 신제품 목록
+	public List<ProductDto> promotedproductlist(int tag) {
+		return dao.promotedproductlist(tag);
+	}
 
 }

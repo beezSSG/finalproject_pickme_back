@@ -21,7 +21,6 @@ import com.pickme.beeze.ceo.dto.PurchaseProductDto;
 import com.pickme.beeze.ceo.dto.SalesChartDto;
 
 import com.pickme.beeze.ceo.service.CeoService;
-import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 import com.pickme.beeze.util.InfoUtil;
@@ -46,14 +45,14 @@ public class CeoController {
    // 점주 정보
    @GetMapping("/getCeoInfo")
    public CeoInfoDto getCeoInfo(Authentication Authentication, HttpServletRequest request) {
-		  System.out.println("CeoController getCeoInfo " + new Date());
-		  int id = InfoUtil.getUserIdInfo(Authentication, request);
-		  CeoInfoDto dto = new CeoInfoDto();                                            
-		  dto.setId(id);
+        System.out.println("CeoController getCeoInfo " + new Date());
+        int id = InfoUtil.getUserIdInfo(Authentication, request);
+        CeoInfoDto dto = new CeoInfoDto();                                            
+        dto.setId(id);
 
-		  System.out.println(dto);
-		  
-	     return service.getCeoInfo(dto);
+        System.out.println(dto);
+        
+        return service.getCeoInfo(dto);
    }
    
    
@@ -103,21 +102,21 @@ public class CeoController {
    // 발주하기(최종)
    @PostMapping("/powritefinal")
    public String powritefinal(@RequestBody List<PurchaseProductDto> list, Authentication Authentication, HttpServletRequest request) {
-	   System.out.println("powritefinal " + new Date());
-	   
-	   int id = InfoUtil.getUserIdInfo(Authentication, request);
-	   for(PurchaseProductDto dto : list) {
-	        dto.setId(id);
-	    }
-	   
-	   System.out.println(list.toString());
-	   boolean isS = service.powritefinal(list);
-	   
-	   if(isS) {
-		   return "YES";
-	   }else {
-		   return "NO";
-	   }	   
+      System.out.println("powritefinal " + new Date());
+      
+      int id = InfoUtil.getUserIdInfo(Authentication, request);
+      for(PurchaseProductDto dto : list) {
+           dto.setId(id);
+       }
+      
+      System.out.println(list.toString());
+      boolean isS = service.powritefinal(list);
+      
+      if(isS) {
+         return "YES";
+      }else {
+         return "NO";
+      }      
    }
    
    // 발주하기 목록
@@ -131,52 +130,52 @@ public class CeoController {
    
    // 발주 승인완료 물품 사라지기
    @PostMapping("/deleteProduct")
-	public int deleteProduct(PurchaseDto dto) { // 여기를 productDto가 아니라 purchaseDto로 바꿨어요! // 왜냐면 Polist 자체가 PurchaseDto를 result로 가져오기 때문이에요
-		System.out.println("BbsController deleteProduct " + new Date());
-		
-		// purchase_order
-		service.deleteProduct(dto);
-		
-		// store_product 
-		InventoryDto dto2 = new InventoryDto();
-		
+   public int deleteProduct(PurchaseDto dto) { // 여기를 productDto가 아니라 purchaseDto로 바꿨어요! // 왜냐면 Polist 자체가 PurchaseDto를 result로 가져오기 때문이에요
+      System.out.println("BbsController deleteProduct " + new Date());
+      
+      // purchase_order
+      service.deleteProduct(dto);
+      
+      // store_product 
+      InventoryDto dto2 = new InventoryDto();
+      
 
 
-		dto2.setProductId(dto.getProductId());
-		dto2.setStoreId(dto.getStoreId());
-		dto2.setQuantity(dto.getQuantity());
-		dto2.setExpDate(dto.getExpDate());
-		return service.addProduct(dto2);
-	
+      dto2.setProductId(dto.getProductId());
+      dto2.setStoreId(dto.getStoreId());
+      dto2.setQuantity(dto.getQuantity());
+      dto2.setExpDate(dto.getExpDate());
+      return service.addProduct(dto2);
+   
    }
-	
-	// 전체 주문 차트 보기
-	
-	@GetMapping("/saleschart")
-	public List<SalesChartDto> saleschart(OrderDto dto) {
-		
-		System.out.println("salechartController salechart " + new Date());
-		
-		System.out.println("salechart :" + dto.toString());
-		
-		List<SalesChartDto> list = service.saleschart(dto);
-		System.out.println("SaleChartDto :" + list.toString());
-		
-		return list;
-	}
-	
-	// 재고
-	@GetMapping("/inventory")
-	public Map<String, Object> inventory(InventoryDto dto,Authentication Authentication, HttpServletRequest request) {
-		System.out.println("invetoryController inventory " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);                                        
-		dto.setId(id);
-		System.out.println(dto.toString());
-		
-		List<InventoryDto> list = service.inventory(dto); 
-		
-	    // 발주 물품 총 수
+   
+   // 전체 주문 차트 보기
+   
+   @GetMapping("/saleschart")
+   public List<SalesChartDto> saleschart(OrderDto dto) {
+      
+      System.out.println("salechartController salechart " + new Date());
+      
+      System.out.println("salechart :" + dto.toString());
+      
+      List<SalesChartDto> list = service.saleschart(dto);
+      System.out.println("SaleChartDto :" + list.toString());
+      
+      return list;
+   }
+   
+   // 재고
+   @GetMapping("/inventory")
+   public Map<String, Object> inventory(InventoryDto dto,Authentication Authentication, HttpServletRequest request) {
+      System.out.println("invetoryController inventory " + new Date());
+      
+      int id = InfoUtil.getUserIdInfo(Authentication, request);                                        
+      dto.setId(id);
+      System.out.println(dto.toString());
+      
+      List<InventoryDto> list = service.inventory(dto); 
+      
+       // 발주 물품 총 수
         int count = service.getallinven(dto);
         int pageBbs = count / 10;
         if( (count % 10) > 0) {
@@ -189,95 +188,79 @@ public class CeoController {
         map.put("invenlist", list);
         map.put("pageBbs", pageBbs);
         map.put("cnt", count);
-		  	  
-	    return map;
-	}
-	
-	// 픽업
-	@GetMapping("/pickup")
-	public Map<String, Object> pickup(Authentication Authentication, HttpServletRequest request,OrderDto dto) {
-		System.out.println("pickupController pickup " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);                                            
-		  dto.setId(id);
+             
+       return map;
+   }
+   
+   // 픽업
+   @GetMapping("/pickup")
+   public List<OrderDto> pickup(Authentication Authentication, HttpServletRequest request) {
+      System.out.println("pickupController pickup " + new Date());
+      
+      int id = InfoUtil.getUserIdInfo(Authentication, request);
+      OrderDto dto = new OrderDto();                                            
+        dto.setId(id);
 
-		  System.out.println(dto);
-		  
-	    List<OrderDto> list = service.pickup(dto);
-	    
-	    // 발주 물품 총 수
-        int count = service.getallpickup(dto);
-        int pageBbs = count / 10;
-        if( (count % 10) > 0) {
+        System.out.println(dto);
+        
+        return service.pickup(dto);
+   }
+   
+   // 배달
+   @GetMapping("/postcheck")
+   public List<PostDto> postcheck(Authentication Authentication, HttpServletRequest request) {
+      System.out.println("postcheckController postcheck " + new Date());
+      
+      int id = InfoUtil.getUserIdInfo(Authentication, request);
+      PostDto dto = new PostDto();                                            
+        dto.setId(id);
+
+        System.out.println(dto);
+        
+        return service.postcheck(dto);
+   }
+  
+     // 상품 예약 리스트 불러오기
+   @GetMapping("/getrplist")
+   public Map<String, Object>  getrplist(ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
+      
+      System.out.println("CeoController getrplist" + new Date());
+      
+      int id = InfoUtil.getUserIdInfo(Authentication, request);
+      dto.setCeoId(id);
+      
+      
+      List<ProductReservationDto> list = service.getrplist(dto);
+      // 상품 예약 목록 총 수
+        int count = service.getallrp(dto);
+        int pageBbs = count / 5;
+        if( (count % 5) > 0) {
            pageBbs = pageBbs + 1;
         }
         
-        System.out.println(count);
-        
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("pickuplist", list);
+        map.put("rplist", list);
         map.put("pageBbs", pageBbs);
         map.put("cnt", count);
-		  	  
-	    return map;
-	    
-	}
-	
-	// 배달
-	@GetMapping("/postcheck")
-	public List<PostDto> postcheck(Authentication Authentication, HttpServletRequest request) {
-		System.out.println("postcheckController postcheck " + new Date());
-		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		PostDto dto = new PostDto();                                            
-		  dto.setId(id);
-
-		  System.out.println(dto);
-		  
-	     return service.postcheck(dto);
-	}
-	
-	   // 상품 예약 리스트 불러오기
-	   @GetMapping("/getrplist")
-	   public Map<String, Object>  getrplist(ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
-	      
-	      System.out.println("CeoController getrplist" + new Date());
-	      
-	      int id = InfoUtil.getUserIdInfo(Authentication, request);
-	      dto.setCeoId(id);
-	      
-	      
-	      List<ProductReservationDto> list = service.getrplist(dto);
-	      // 상품 예약 목록 총 수
-	        int count = service.getallrp(dto);
-	        int pageBbs = count / 5;
-	        if( (count % 5) > 0) {
-	           pageBbs = pageBbs + 1;
-	        }
-	        
-	        Map<String, Object> map = new HashMap<String, Object>();
-	        map.put("rplist", list);
-	        map.put("pageBbs", pageBbs);
-	        map.put("cnt", count);
-	      
-	      return map;
-	   }
-	   
-	   // 예약 승인
-	   @GetMapping("/checkrp")
-	   public List<ProductReservationDto> checkrp(int id,ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
-	      
-	      System.out.println("CeoController checkrp" + new Date());
-	      
-	      int idd = InfoUtil.getUserIdInfo(Authentication, request);
-	      dto.setCeoId(idd);
-	      service.checkrp(id);
-	      
-	      
-	      return service.getrplist(dto);
-	   }
-	
-	
-	
-	
+      
+      return map;
+   }
+   
+   // 예약 승인
+   @GetMapping("/checkrp")
+   public List<ProductReservationDto> checkrp(int id,ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
+      
+      System.out.println("CeoController checkrp" + new Date());
+      
+      int idd = InfoUtil.getUserIdInfo(Authentication, request);
+      dto.setCeoId(idd);
+      service.checkrp(id);
+      
+      
+      return service.getrplist(dto);
+   }
+   
+   
+   
+   
 }
