@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pickme.beeze.customer.dto.CartDto;
 import com.pickme.beeze.customer.dto.PostDto;
+import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
 
@@ -49,6 +50,8 @@ public interface CustomerDao {
 
 	// 상품 예약의 상품목록 불러오기
 	List<ProductDto> reservationproductlist(ProductParam param);
+	// 상품 예약 후 db에 저장
+	int productreservationAf(ProductReservationDto dto);
 	
 	// 매장 번호 가져오기
 	int storeselect(String storename);

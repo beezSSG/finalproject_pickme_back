@@ -116,22 +116,23 @@
 
 	
 	<!-- 픽업목록 -->
+	<!-- SELECT distinct o.id, p.name as `productName`, p.price as `price`, ci.name as `customerName`, date_format(date, '%Y-%m-%d') as `date`, pick_del as `pickDel`, ci.id as `customerId` -->
 	<select id="pickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="com.pickme.beeze.ceo.dto.OrderDto">
-     	SELECT distinct p.name as `productName`, p.price as `price`, ci.name as `customerName`, date_format(date, '%Y-%m-%d') as `date`, pick_del as `pickDel`
+     	SELECT distinct o.id, p.name as `productName`, p.price as `price`, ci.name as `customerName`, date, pick_del as `pickDel`, ci.id as `customerId`
 	  FROM pickme.order o
       INNER JOIN cart c ON o.cart_id = c.id
       INNER JOIN customer_info ci ON c.customer_id = ci.id
       INNER JOIN store_product sp ON sp.product_id = c.s_product_id
 	  INNER JOIN product p ON sp.product_id = p.id
       INNER JOIN store st ON sp.store_id = st.id
-      WHERE st.ceo_id = 1
+      WHERE st.ceo_id = #{id} and o.check_yn = 0
       	  <if test="search != null and search != '' ">	
 			and p.name like concat('%', #{search}, '%') 
 	  </if>  
  	  limit ${(pageNumber * 10)}, 10	 
 	</select>
 	
-		<select id="getallpickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="Integer">
+	<select id="getallpickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="Integer">
 	    select count(*)	
 	    from pickme.order o
       INNER JOIN cart c ON o.cart_id = c.id
@@ -144,13 +145,17 @@
 	        and p.name like concat('%', #{search}, '%') 
 	    </if> 
 	</select>
-
 	
-	
-	
-	<!-- 배달 목록 -->
+	<!-- 픽업/배달 리스트에서 사라지게 하기  -->
+	<update id="deletepickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto">
+		update pickme.order
+		   set check_yn = 1
+		 where date = #{date}
+	</update>
+		
+	<!-- 택배 목록 -->
 	<select id="postcheck" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="com.pickme.beeze.ceo.dto.PostDto">
-     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  date_format(po.date, '%Y-%m-%d')  as `date`, po.post_yn as `postYn`
+     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  date_format(po.date, '%Y-%m-%d')  as `date`, po.post_yn as `postYn`,po.id,po.check_yn as `checkYn`
 	  FROM pickme.post po
 	 INNER JOIN customer_info ci ON po.customer_id = ci.id
 	 INNER JOIN cart c ON po.customer_id = c.customer_id
@@ -158,13 +163,27 @@
 	 INNER JOIN store st ON s.store_id = st.id
 	 INNER JOIN product p ON s.product_id = p.id
      WHERE st.ceo_id = #{id}
-     	  <if test="search != null and search != '' ">	
-			and p.name like concat('%', #{search}, '%') 
-	  </if>  
  	  limit ${(pageNumber * 10)}, 10	 
-
 	</select>	
 	
+	<!-- 택배 페이지네이션 -->
+	<select id="getallpost" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="Integer">
+	    select count(*)	
+	  FROM pickme.post po
+	 INNER JOIN customer_info ci ON po.customer_id = ci.id
+	 INNER JOIN cart c ON po.customer_id = c.customer_id
+	 INNER JOIN store_product s ON c.s_product_id = s.id
+	 INNER JOIN store st ON s.store_id = st.id
+	 INNER JOIN product p ON s.product_id = p.id
+	    where s.store_id = (select id from store where ceo_id=#{id}) 
+	</select>
+	
+	<!-- 택배 리스트에서 사라지게 하기  -->
+	<update id="deletepost" parameterType="com.pickme.beeze.ceo.dto.PostDto">
+		update pickme.post
+		   set check_yn = 1
+		 where id = #{id}
+	</update>
 	
 	<!-- 월별 매출 차트를 위한 전체 order 목록  -->
 	<select id="saleschart" parameterType="com.pickme.beeze.ceo.dto.OrderDto" 
@@ -201,8 +220,42 @@
 		        AND YEAR(o.date) = #{date}
 		) AS subquery
 		GROUP BY 
-		    orderYear, orderMonth;
-		
-				    
+		    orderYear, orderMonth;		    
 	</select>
+	
+	<!-- 상품 예약 목록 불러오기 -->
+	<select id="getrplist" parameterType="com.pickme.beeze.customer.dto.ProductReservationDto" resultType="com.pickme.beeze.customer.dto.ProductReservationDto">
+		SELECT p.name AS `productName`,
+		       ci.name AS `customerName`,
+		       s.name AS `storeName`,
+		       pr.quantity as `quantity`,
+		       pr.pick_yn as `pickYn`,
+		       pr.id as `id`
+		FROM product_reservation pr
+		JOIN product p ON pr.product_id = p.id
+		JOIN store s ON pr.store_id = s.id
+		JOIN customer_info ci ON pr.customer_id = ci.id
+		WHERE s.ceo_id = #{ceoId} and pr.pick_yn = 0
+		limit ${(pageNumber * 5)}, 5
+	</select>
+	
+	<!-- 상품 예약 목록 총 수 -->
+	<select id="getallrp" parameterType="com.pickme.beeze.customer.dto.ProductReservationDto" resultType="Integer">
+		  select count(*)
+		  from product_reservation
+		  where store_id in (
+		      select id
+		      from store
+		      where ceo_id = #{ceoId}
+		  )
+	</select>
+	
+	<!-- 예약 승인 -->
+	<update id="checkrp" parameterType="Integer">
+		update product_reservation
+		set pick_yn = 1
+		where id=#{id}
+	</update>
+
+
 </mapper>

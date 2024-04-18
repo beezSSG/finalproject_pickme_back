@@ -38,5 +38,6 @@ public interface ProductDao {
 	// 선물 사용
 	void useGift(int id);
 	
-
+	// 메인홈 1+1, 2+1, 신제품 목록
+	List<ProductDto> promotedproductlist(int tagChoice);
 }

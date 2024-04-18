@@ -1,9 +1,5 @@
 package com.pickme.beeze.product.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pickme.beeze.manager.service.CcbService;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductGiftDto;
 import com.pickme.beeze.product.dto.ProductGiftParam;
@@ -146,4 +141,10 @@ public class ProductController {
 	    service.useGift(id);
 	}
 
+	@GetMapping("/promotedproductlist")
+	public List<ProductDto> promotedproductlist(int tag) {
+		System.out.println("ProductController promotedproductlist " + new Date());
+		
+		return service.promotedproductlist(tag);
+	}
 }
