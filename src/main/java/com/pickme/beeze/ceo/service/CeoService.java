@@ -77,6 +77,10 @@ public class CeoService {
 	public List<InventoryDto> inventory(InventoryDto dto) {	
 		return dao.inventory(dto);	
 	}
+	// 재고 총 수
+	public int getallinven(InventoryDto param) {
+		return dao.getallinven(param);
+	}
 	
 	// 픽업
 	public List<OrderDto> pickup(OrderDto dto) {	

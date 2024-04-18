@@ -41,7 +41,9 @@ public interface CeoDao {
 	List<SalesChartDto> saleschart(OrderDto dto);
 	
 	// 재고 현황 불러오기
-	List<InventoryDto> inventory(InventoryDto dto);
+	List<InventoryDto> inventory(InventoryDto param);
+	// 재고 현황 총 수
+	int getallinven(InventoryDto dto);
 	
 	// 픽업 기능 구현하기
 	List<OrderDto> pickup(OrderDto dto);

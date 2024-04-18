@@ -138,6 +138,8 @@ public class CeoController {
 		
 		// store_product 
 		InventoryDto dto2 = new InventoryDto();
+		
+
 
 		dto2.setProductId(dto.getProductId());
 		dto2.setStoreId(dto.getStoreId());
@@ -164,16 +166,30 @@ public class CeoController {
 	
 	// 재고
 	@GetMapping("/inventory")
-	public List<InventoryDto> inventory(Authentication Authentication, HttpServletRequest request) {
+	public Map<String, Object> inventory(InventoryDto dto,Authentication Authentication, HttpServletRequest request) {
 		System.out.println("invetoryController inventory " + new Date());
 		
-		int id = InfoUtil.getUserIdInfo(Authentication, request);
-		InventoryDto dto = new InventoryDto();                                            
-		  dto.setId(id);
-
-		  System.out.println(dto);
-		  
-	     return service.inventory(dto);
+		int id = InfoUtil.getUserIdInfo(Authentication, request);                                        
+		dto.setId(id);
+		System.out.println(dto.toString());
+		
+		List<InventoryDto> list = service.inventory(dto); 
+		
+	    // 발주 물품 총 수
+        int count = service.getallinven(dto);
+        int pageBbs = count / 10;
+        if( (count % 10) > 0) {
+           pageBbs = pageBbs + 1;
+        }
+        
+        System.out.println(count);
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("invenlist", list);
+        map.put("pageBbs", pageBbs);
+        map.put("cnt", count);
+		  	  
+	    return map;
 	}
 	
 	// 픽업
