@@ -116,15 +116,16 @@
 
 	
 	<!-- 픽업목록 -->
+	<!-- SELECT distinct o.id, p.name as `productName`, p.price as `price`, ci.name as `customerName`, date_format(date, '%Y-%m-%d') as `date`, pick_del as `pickDel`, ci.id as `customerId` -->
 	<select id="pickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="com.pickme.beeze.ceo.dto.OrderDto">
-     	SELECT distinct p.name as `productName`, p.price as `price`, ci.name as `customerName`, date_format(date, '%Y-%m-%d') as `date`, pick_del as `pickDel`
+     	SELECT distinct o.id, p.name as `productName`, p.price as `price`, ci.name as `customerName`, date, pick_del as `pickDel`, ci.id as `customerId`
 	  FROM pickme.order o
       INNER JOIN cart c ON o.cart_id = c.id
       INNER JOIN customer_info ci ON c.customer_id = ci.id
       INNER JOIN store_product sp ON sp.product_id = c.s_product_id
 	  INNER JOIN product p ON sp.product_id = p.id
       INNER JOIN store st ON sp.store_id = st.id
-      WHERE st.ceo_id = 1
+      WHERE st.ceo_id = #{id} and o.check_yn = 0
       	  <if test="search != null and search != '' ">	
 			and p.name like concat('%', #{search}, '%') 
 	  </if>  
@@ -144,10 +145,14 @@
 	        and p.name like concat('%', #{search}, '%') 
 	    </if> 
 	</select>
-
 	
-	
-	
+	<!--   -->
+	<update id="deletepickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto">
+		update pickme.order
+		   set check_yn = 1
+		 where date = #{date}
+	</update>
+		
 	<!-- 배달 목록 -->
 	<select id="postcheck" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="com.pickme.beeze.ceo.dto.PostDto">
      SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  date_format(po.date, '%Y-%m-%d')  as `date`, po.post_yn as `postYn`

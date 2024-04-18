@@ -93,6 +93,10 @@ public class CeoService {
 		return dao.getallpickup(param);
 	}
 	
+	// 화면에서 픽업이 완료된 물품을 사라지게 하기
+	public void deletepickup(OrderDto dto) {
+		dao.deletepickup(dto);
+	}
 	
 	
 	// 배달
