@@ -22,6 +22,8 @@ public class OrderDto {
 	private String address;
 	private int cancelYn;
 	private int pickDel;
+	private String search;
+	private int pageNumber; // 페이지
 
 }
 

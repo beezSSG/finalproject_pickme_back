@@ -48,6 +48,8 @@ public interface CeoDao {
 	// 픽업 기능 구현하기
 	List<OrderDto> pickup(OrderDto dto);
 	
+	int getallpickup(OrderDto dto);
+	
 	// 배달 기능 구현하기
 	
 	List<PostDto> postcheck(PostDto dto);

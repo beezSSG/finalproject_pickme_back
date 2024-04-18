@@ -87,6 +87,11 @@ public class CeoService {
 		List<OrderDto> list = dao.pickup(dto);
 		return list;	
 	}
+	// 픽업 총 수
+	public int getallpickup(OrderDto param) {
+		return dao.getallpickup(param);
+	}
+	
 	
 	
 	// 배달

@@ -125,8 +125,25 @@
 	  INNER JOIN product p ON sp.product_id = p.id
       INNER JOIN store st ON sp.store_id = st.id
       WHERE st.ceo_id = 1
+      	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	 
 	</select>
 	
+		<select id="getallpickup" parameterType="com.pickme.beeze.ceo.dto.OrderDto" resultType="Integer">
+	    select count(*)	
+	    from pickme.order o
+      INNER JOIN cart c ON o.cart_id = c.id
+      INNER JOIN customer_info ci ON c.customer_id = ci.id
+      INNER JOIN store_product sp ON sp.product_id = c.s_product_id
+	  INNER JOIN product p ON sp.product_id = p.id
+      INNER JOIN store st ON sp.store_id = st.id
+	    where sp.store_id = (select id from store where ceo_id=#{id}) 
+	    <if test="search != null and search != '' ">	
+	        and p.name like concat('%', #{search}, '%') 
+	    </if> 
+	</select>
 
 	
 	
@@ -141,6 +158,10 @@
 	 INNER JOIN store st ON s.store_id = st.id
 	 INNER JOIN product p ON s.product_id = p.id
      WHERE st.ceo_id = #{id}
+     	  <if test="search != null and search != '' ">	
+			and p.name like concat('%', #{search}, '%') 
+	  </if>  
+ 	  limit ${(pageNumber * 10)}, 10	 
 
 	</select>	
 	
