@@ -55,5 +55,8 @@ public interface CustomerDao {
 	// 매장 이름 가져오기
 	String selectstorename(int id);
 	
+	// 아이디 가져오기
+	String getid(int id);
+	
 }
 	

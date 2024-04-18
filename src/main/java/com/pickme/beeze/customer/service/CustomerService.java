@@ -95,5 +95,10 @@ public class CustomerService {
 	public String selectstorename(int id) {
 		return dao.selectstorename(id);
 	}
+	
+	// 아이디 가져오기
+	public String getid(int id) {
+		return dao.getid(id);
+	}
 
 }

@@ -5,6 +5,7 @@ public class CcbDto {
 	private int id;
 	private String category;
 	private String customerId;
+	private String customerName;
 	private String title;
 	private String content;
 	private String createAt;
@@ -14,12 +15,13 @@ public class CcbDto {
 		
 	}
 
-	public CcbDto(int id, String category, String customerId, String title, String content, String createAt,
-			int answerYn) {
+	public CcbDto(int id, String category, String customerId, String customerName, String title, String content,
+			String createAt, int answerYn) {
 		super();
 		this.id = id;
 		this.category = category;
 		this.customerId = customerId;
+		this.customerName = customerName;
 		this.title = title;
 		this.content = content;
 		this.createAt = createAt;
@@ -48,6 +50,14 @@ public class CcbDto {
 
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public String getTitle() {
@@ -84,9 +94,10 @@ public class CcbDto {
 
 	@Override
 	public String toString() {
-		return "CcbDto [id=" + id + ", category=" + category + ", customerId=" + customerId + ", title=" + title
-				+ ", content=" + content + ", createAt=" + createAt + ", answerYn=" + answerYn + "]";
+		return "CcbDto [id=" + id + ", category=" + category + ", customerId=" + customerId + ", customerName="
+				+ customerName + ", title=" + title + ", content=" + content + ", createAt=" + createAt + ", answerYn="
+				+ answerYn + "]";
 	}
-	
-	
+
+
 }
