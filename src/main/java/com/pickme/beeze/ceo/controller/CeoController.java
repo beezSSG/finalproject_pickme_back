@@ -221,6 +221,16 @@ public class CeoController {
           
       }
    
+// 픽업 승인완료 물품 사라지기
+   @PostMapping("/deletepickup")
+   public void deletepickup(OrderDto dto) { 
+      System.out.println("BbsController deletepickup " + new Date());
+      
+      System.out.println(dto.toString());
+
+      service.deletepickup(dto);
+   }
+   
    // 배달
    @GetMapping("/postcheck")
    public Map<String, Object> postcheck(Authentication Authentication, HttpServletRequest request, PostDto dto) {
