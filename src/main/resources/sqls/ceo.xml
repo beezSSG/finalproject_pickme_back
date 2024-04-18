@@ -155,7 +155,7 @@
 		
 	<!-- 택배 목록 -->
 	<select id="postcheck" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="com.pickme.beeze.ceo.dto.PostDto">
-     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  date_format(po.date, '%Y-%m-%d')  as `date`, po.post_yn as `postYn`,po.id,po.check_yn as `checkYn`
+     SELECT DISTINCT ci.name as `customerName`, po.item_category as `itemCategory`, po.item_weight as `itemWeight`, po.total_price as `totalPrice`,  date_format(po.date, '%Y-%m-%d')  as `date`, po.post_yn as `postYn`,po.id,po.check_yn as `checkYn`, store_id as `storeId`
 	  FROM pickme.post po
 	 INNER JOIN customer_info ci ON po.customer_id = ci.id
 	 INNER JOIN cart c ON po.customer_id = c.customer_id

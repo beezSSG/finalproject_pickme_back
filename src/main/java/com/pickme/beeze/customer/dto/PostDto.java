@@ -18,6 +18,8 @@ public class PostDto {
 	private String importantInfo;
 	private int totalPrice;
 	private String date;
+	private int PageNumber;
+	private int storeId;
 	
 	public PostDto() {
 		
@@ -25,7 +27,7 @@ public class PostDto {
 
 	public PostDto(int id, int customerId, String toUser, String toPhone, String toAddress, String reservationName,
 			String reservationPassword, int itemPrice, String itemWeight, String itemCategory, String importantInfo,
-			int totalPrice, String date) {
+			int totalPrice, String date, int pageNumber, int storeId) {
 		super();
 		this.id = id;
 		this.customerId = customerId;
@@ -40,6 +42,17 @@ public class PostDto {
 		this.importantInfo = importantInfo;
 		this.totalPrice = totalPrice;
 		this.date = date;
+		PageNumber = pageNumber;
+		this.storeId = storeId;
+	}
+
+	@Override
+	public String toString() {
+		return "PostDto [id=" + id + ", customerId=" + customerId + ", toUser=" + toUser + ", toPhone=" + toPhone
+				+ ", toAddress=" + toAddress + ", reservationName=" + reservationName + ", reservationPassword="
+				+ reservationPassword + ", itemPrice=" + itemPrice + ", itemWeight=" + itemWeight + ", itemCategory="
+				+ itemCategory + ", importantInfo=" + importantInfo + ", totalPrice=" + totalPrice + ", date=" + date
+				+ ", PageNumber=" + PageNumber + ", storeId=" + storeId + "]";
 	}
 
 	public int getId() {
@@ -146,13 +159,21 @@ public class PostDto {
 		this.date = date;
 	}
 
-	@Override
-	public String toString() {
-		return "PostDto [id=" + id + ", customerId=" + customerId + ", toUser=" + toUser + ", toPhone=" + toPhone
-				+ ", toAddress=" + toAddress + ", reservationName=" + reservationName + ", reservationPassword="
-				+ reservationPassword + ", itemPrice=" + itemPrice + ", itemWeight=" + itemWeight + ", itemCategory="
-				+ itemCategory + ", importantInfo=" + importantInfo + ", totalPrice=" + totalPrice + ", date=" + date
-				+ "]";
+	public int getPageNumber() {
+		return PageNumber;
 	}
+
+	public void setPageNumber(int pageNumber) {
+		PageNumber = pageNumber;
+	}
+
+	public int getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(int storeId) {
+		this.storeId = storeId;
+	}
+
 
 }
