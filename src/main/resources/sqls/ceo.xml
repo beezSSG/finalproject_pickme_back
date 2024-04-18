@@ -201,8 +201,42 @@
 		        AND YEAR(o.date) = #{date}
 		) AS subquery
 		GROUP BY 
-		    orderYear, orderMonth;
-		
-				    
+		    orderYear, orderMonth;		    
 	</select>
+	
+	<!-- 상품 예약 목록 불러오기 -->
+	<select id="getrplist" parameterType="com.pickme.beeze.customer.dto.ProductReservationDto" resultType="com.pickme.beeze.customer.dto.ProductReservationDto">
+		SELECT p.name AS `productName`,
+		       ci.name AS `customerName`,
+		       s.name AS `storeName`,
+		       pr.quantity as `quantity`,
+		       pr.pick_yn as `pickYn`,
+		       pr.id as `id`
+		FROM product_reservation pr
+		JOIN product p ON pr.product_id = p.id
+		JOIN store s ON pr.store_id = s.id
+		JOIN customer_info ci ON pr.customer_id = ci.id
+		WHERE s.ceo_id = #{ceoId} and pr.pick_yn = 0
+		limit ${(pageNumber * 5)}, 5
+	</select>
+	
+	<!-- 상품 예약 목록 총 수 -->
+	<select id="getallrp" parameterType="com.pickme.beeze.customer.dto.ProductReservationDto" resultType="Integer">
+		  select count(*)
+		  from product_reservation
+		  where store_id in (
+		      select id
+		      from store
+		      where ceo_id = #{ceoId}
+		  )
+	</select>
+	
+	<!-- 예약 승인 -->
+	<update id="checkrp" parameterType="Integer">
+		update product_reservation
+		set pick_yn = 1
+		where id=#{id}
+	</update>
+
+
 </mapper>
