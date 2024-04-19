@@ -22,7 +22,7 @@
 <!-- id(seq필요 X), email(실제ID역할), pw, name, address, phone, point, grade, rdate -->
 <insert id="addCustomerInfo" parameterType="LoginDto">
 	INSERT INTO customer_info(email, pw, name, address, phone, point, grade, rdate)
-	VALUES(#{email}, #{pw}, #{name}, #{address}, #{phone}, 0, 'Silver', now())
+	VALUES(#{email}, #{pw}, #{name}, #{address}, #{phone}, 0, 'SILVER', now())
 </insert>
 
 <!-- 점주 회원가입 -->
