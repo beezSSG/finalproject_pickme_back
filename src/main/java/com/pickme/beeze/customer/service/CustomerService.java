@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pickme.beeze.customer.dao.CustomerDao;
 import com.pickme.beeze.customer.dto.CartDto;
 import com.pickme.beeze.customer.dto.PostDto;
+import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.product.dto.ProductDto;
 import com.pickme.beeze.product.dto.ProductParam;
 
@@ -84,6 +85,16 @@ public class CustomerService {
 	// 상품 예약의 상품 목록 불러오기
 	public List<ProductDto> reservationproductlist(ProductParam param) {
 		return dao.reservationproductlist(param);
+	}
+	
+	// 상품 예약 후 db저장
+	public boolean productreservationAf(List<ProductReservationDto> list) {
+		
+		int count = 0;
+		for (ProductReservationDto dto : list) {
+			count = dao.productreservationAf(dto);
+		}
+		return count>0?true:false;
 	}
 	
 	// 매장 번호 가져오기

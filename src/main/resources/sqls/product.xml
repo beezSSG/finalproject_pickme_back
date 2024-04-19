@@ -13,7 +13,7 @@
 	 	from product p, product_category pc
 		where p.id = pc.product_id
 		<if test="choice == 'bogo'">			
-			and (pc.promotion_type = 1 or pc.promotion_type = 2)
+			and (pc.promotion_type = 1 or pc.promotion_type = 2 or pc.promotion_type = 3)
 			<if test="search != null and search != '' ">	
 				and name like concat('%', #{search}, '%')
 			</if>
@@ -65,7 +65,18 @@
 		select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.promotion_type as `promotionType`
 	 	from product p, product_category pc
 		where p.id = pc.product_id
-		
+		<if test="choice == 'bogo'">			
+			and (pc.promotion_type = 1 or pc.promotion_type = 2 or pc.promotion_type = 3) and pc.category_id = #{category}
+			<if test="search != null and search != '' ">	
+				and name like concat('%', #{search}, '%')
+			</if>
+			<if test="switching == true">
+	 			order by id desc
+			</if>
+			<if test="switching == false">
+	 			order by id asc
+			</if>
+		</if>
 		
 		<if test="choice == 'date'">				
 			<if test="search != null and search != '' ">	
@@ -118,7 +129,7 @@
 	where p.id = pc.product_id
 	<if test="category == 0">
 		<if test="choice == 'bogo'">
-			and pc.promotion_type = 1
+			and (pc.promotion_type = 1 or pc.promotion_type = 2 or pc.promotion_type = 3)
 			<if test="search != null and search != '' ">
 			and name like concat('%', #{search}, '%')
 			</if>
@@ -129,10 +140,15 @@
 	</if>
 	
 	<if test="category != 0">
+		<if test="choice == 'bogo'">
+			and (pc.promotion_type = 1 or pc.promotion_type = 2 or pc.promotion_type = 3) and pc.category_id = #{category}
+			<if test="search != null and search != '' ">
+				and name like concat('%', #{search}, '%')
+			</if>
+		</if>
 		<if test="search != null and search != '' ">
 			and name like concat('%', #{search}, '%')
 		</if>
-		and pc.category_id = #{category}
 	</if>	
 </select>
  
@@ -178,7 +194,7 @@
 
 <!-- 내 선물목록보기 -->
 <select id="getMyGift" parameterType="Integer" resultType="ProductGiftDto">
-	SELECT c.name as `giftUserName`, p.name as `productName`, p.url as `productUrl`, g.exp_day, g.id, g.use_yn as `useYn`
+	SELECT c.name as `giftUserName`, p.name as `productName`, p.url as `productUrl`, g.exp_day as `expDay`, g.id, g.use_yn as `useYn`, g.content as `content`
 	  FROM gift g
 	 INNER JOIN customer_info c ON g.customer_id = c.id
 	 INNER JOIN product p ON g.product_id = p.id
@@ -191,6 +207,14 @@
 	   SET use_yn = 1
 	 WHERE id = #{id}
 </update>
+
+<!-- 메인홈 1+1, 2+1, 신제품 목록 -->
+<select id="promotedproductlist" parameterType="Integer" resultType="com.pickme.beeze.product.dto.ProductDto">
+	select p.id, p.name, p.price, p.url, p.product_rating as `productRating`, pc.promotion_type as `promotionType`
+	from product p, product_category pc
+	where p.id = pc.product_id and pc.promotion_type = #{tag}
+	limit 0, 15
+</select>
 
 </mapper>
  

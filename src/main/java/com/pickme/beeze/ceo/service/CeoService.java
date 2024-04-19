@@ -15,6 +15,7 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.PurchaseProductDto;
 import com.pickme.beeze.ceo.dto.SalesChartDto;
+import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 
@@ -92,11 +93,36 @@ public class CeoService {
 		return dao.getallpickup(param);
 	}
 	
+	// 화면에서 픽업이 완료된 물품을 사라지게 하기
+	public void deletepickup(OrderDto dto) {
+		dao.deletepickup(dto);
+	}
 	
 	
-	// 배달
+	// 택배
 	public List<PostDto> postcheck(PostDto dto) {	
 		List<PostDto> list = dao.postcheck(dto);
 		return list;	
+	}
+	// 택배 총 수
+	public int getallpost(PostDto param) {
+		return dao.getallpost(param);
+	}
+	// 화면에서 택배가 완료된 물품을 사라지게 하기
+	public void deletepost(PostDto dto) {
+		dao.deletepost(dto);
+	}
+	
+	// 상품 예약 목록 불러오기
+	public List<ProductReservationDto> getrplist(ProductReservationDto dto) {
+		return dao.getrplist(dto);
+	}
+	// 총 수
+	public int getallrp(ProductReservationDto dto) {
+		return dao.getallrp(dto);
+	}
+	// 예약 승인
+	public void checkrp(int id) {
+		dao.checkrp(id);
 	}
 }

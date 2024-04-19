@@ -13,6 +13,7 @@ import com.pickme.beeze.ceo.dto.ProductDto;
 import com.pickme.beeze.ceo.dto.PurchaseDto;
 import com.pickme.beeze.ceo.dto.PurchaseProductDto;
 import com.pickme.beeze.ceo.dto.SalesChartDto;
+import com.pickme.beeze.customer.dto.ProductReservationDto;
 import com.pickme.beeze.ceo.dto.OrderDto;
 import com.pickme.beeze.ceo.dto.PostDto;
 
@@ -48,11 +49,24 @@ public interface CeoDao {
 	// 픽업 기능 구현하기
 	List<OrderDto> pickup(OrderDto dto);
 	
+	// 화면에서 픽업이 완료된 물품을 사라지게 하기
+	void deletepickup(OrderDto dto);
+	
 	int getallpickup(OrderDto dto);
 	
-	// 배달 기능 구현하기
-	
+	// 택배 기능 구현하기
 	List<PostDto> postcheck(PostDto dto);
+	int getallpost(PostDto dto);
+	
+	// 화면에서 택배가 완료된 물품을 사라지게 하기
+	void deletepost(PostDto dto);
+	
+	// 상품 예약 목록 가져오기
+	List<ProductReservationDto> getrplist(ProductReservationDto dto);
+	// 총 수
+	int getallrp(ProductReservationDto dto);
+	// 예약 승인
+	void checkrp(int id);
 
 	
 }
