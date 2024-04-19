@@ -118,7 +118,7 @@ values(#{productId}, #{customerId}, #{content}, #{rating})
 	<!-- Pick Box -->
 <!-- 픽박스 불러오기 -->
 <select id="MyPickBox" parameterType="Integer" resultType="MyPickBoxDto">
-	SELECT  p.name as `pName`, c.quantity as `quantity`, p.url as `pUrl`, s.exp_date as `expDate`, st.name as `sName`, date
+	SELECT  p.name as `pName`, c.quantity as `quantity`, p.url as `pUrl`, s.exp_date as `expDate`, st.name as `sName`, date, p.id as `pId`
 	  FROM pickme.order o
 	 INNER JOIN cart c ON o.cart_id = c.id
 	 INNER JOIN store_product s ON c.s_product_id = s.id

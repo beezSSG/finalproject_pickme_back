@@ -183,7 +183,9 @@ public class LoginController {
         // JWT 토큰 생성 및 반환
 		
         String jwt = provider.createToken(member2);
+        
         map.put("jwt", jwt);
+        map.put("name", member2.getName());
         
         
         // 생성된 JWT 토큰을 응답 본문에 담아 반환            
