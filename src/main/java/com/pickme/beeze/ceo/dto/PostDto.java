@@ -30,6 +30,6 @@ import lombok.NoArgsConstructor;
 		   private String date;
 		   private int postYn;
 		   private int checkYn;
-			private String search;
-			private int pageNumber; // 페이지
+		   private String search;
+		   private int pageNumber; // 페이지
 }

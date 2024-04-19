@@ -5,19 +5,19 @@
  <mapper namespace="com.pickme.beeze.manager.dao.EventDao">
  
  <select id="eventlist" parameterType="com.pickme.beeze.manager.dto.EventDto" resultType="com.pickme.beeze.manager.dto.EventDto">
- 	select id, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
+ 	select id,title, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
  	from promotion_post
  </select>
  
  <select id="eventdetail" parameterType="com.pickme.beeze.manager.dto.EventDto" resultType="com.pickme.beeze.manager.dto.EventDto">
- 	select id, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
+ 	select id,title, banner_photo as `bannerPhoto`, detail_photo as `detailPhoto`, start_date as `startDate`, end_date as `endDate`, promotion_yn as `promotionYn`
  	from promotion_post
  	where id=#{id}
  </select>
    
 <insert id="eventcreate" parameterType="com.pickme.beeze.manager.dto.EventDto">
-    insert into promotion_post(banner_photo, detail_photo, start_date, end_date, promotion_yn)
-    values (#{bannerPhoto}, #{detailPhoto}, #{startDate}, #{endDate}, #{promotionYn})
+    insert into promotion_post(title,banner_photo, detail_photo, start_date, end_date, promotion_yn)
+    values (#{title},#{bannerPhoto}, #{detailPhoto}, #{startDate}, #{endDate}, #{promotionYn})
 </insert>
 
 <update id="eventstop" parameterType="Integer">
