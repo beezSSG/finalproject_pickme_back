@@ -13,13 +13,14 @@ public class ProductReservationDto {
 	private String storeName;
 	private String customerName;
 	private int pageNumber;
+	private String date;
 	
 	public ProductReservationDto() {
 		
 	}
 
 	public ProductReservationDto(int id, int productId, int customerId, int storeId, int quantity, int pickYn,
-			String productName, int ceoId, String storeName, String customerName, int pageNumber) {
+			String productName, int ceoId, String storeName, String customerName, int pageNumber, String date) {
 		super();
 		this.id = id;
 		this.productId = productId;
@@ -32,6 +33,7 @@ public class ProductReservationDto {
 		this.storeName = storeName;
 		this.customerName = customerName;
 		this.pageNumber = pageNumber;
+		this.date = date;
 	}
 
 	public int getId() {
@@ -122,12 +124,20 @@ public class ProductReservationDto {
 		this.pageNumber = pageNumber;
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductReservationDto [id=" + id + ", productId=" + productId + ", customerId=" + customerId
 				+ ", storeId=" + storeId + ", quantity=" + quantity + ", pickYn=" + pickYn + ", productName="
 				+ productName + ", ceoId=" + ceoId + ", storeName=" + storeName + ", customerName=" + customerName
-				+ ", pageNumber=" + pageNumber + "]";
+				+ ", pageNumber=" + pageNumber + ", date=" + date + "]";
 	}
 
 }
