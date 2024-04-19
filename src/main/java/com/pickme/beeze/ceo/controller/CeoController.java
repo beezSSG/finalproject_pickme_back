@@ -231,7 +231,7 @@ public class CeoController {
       service.deletepickup(dto);
    }
    
-   // 배달
+   // 택배
    @GetMapping("/postcheck")
    public Map<String, Object> postcheck(Authentication Authentication, HttpServletRequest request, PostDto dto) {
 	   System.out.println("postcheckController postcheck " + new Date());
