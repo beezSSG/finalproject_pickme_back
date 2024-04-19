@@ -32,6 +32,7 @@ public class MypageService {
 		MypageMainInfoDto newDto = dao.getMyInfo(dto);
 		newDto.setCartQuantity(dao.getMyInfoCart(dto));
 		newDto.setGiftQuantity(dao.getMyInfoGift(dto));
+		newDto.setCouponQuantity(dao.getMyInfoCoupon(dto));		
 
 		return newDto;
 	};
