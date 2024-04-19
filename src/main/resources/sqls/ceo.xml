@@ -21,7 +21,7 @@
 	 <if test="search != null and search != ''">
 		and p.name like concat('%', #{search}, '%')
 	</if>
-	 ORDER BY po.wdate desc
+	 ORDER BY po.po_yn desc, po.wdate desc
 	 LIMIT ${(pageNumber * 10)}, 10
 </select>
 
@@ -93,14 +93,17 @@
 	
 	<!-- 재고현황 id 상품번호 /storeName 점포이름 / productName 상품이름 / price 가격 / quantity 수량 / exp_date --> 
 	<select id="inventory" parameterType="com.pickme.beeze.ceo.dto.InventoryDto" resultType="com.pickme.beeze.ceo.dto.InventoryDto">
-	SELECT sp.id, s.name as `storeName`, p.name as `productName`, p.price as `price`, quantity, date_format(exp_date, '%Y-%m-%d')  as `expDate`
+	SELECT sp.id, s.name as `storeName`, c.name as `productCategory`,p.name as `productName`, p.price as `price`, quantity, date_format(exp_date, '%Y-%m-%d')  as `expDate`
 	  FROM pickme.store_product sp 
 	  INNER JOIN pickme.store s ON sp.store_id = s.id
 	  INNER JOIN pickme.product p ON sp.product_id = p.id
+      INNER JOIN pickme.product_category pc ON p.id = pc.product_id
+      INNER JOIN pickme.category c ON c.id = pc.category_id
 	  WHERE s.ceo_id =#{id} 
 	  <if test="search != null and search != '' ">	
 			and p.name like concat('%', #{search}, '%') 
-	  </if>  
+	  </if>
+	  ORDER BY c.name asc, exp_date asc
  	  limit ${(pageNumber * 10)}, 10	  
 	</select>
 	
