@@ -3,6 +3,7 @@ package com.pickme.beeze.manager.dto;
 public class EventDto {
 	
 	private int id;
+	private String title;
 	private String bannerPhoto;
 	private String detailPhoto;
 	private String startDate;
@@ -13,21 +14,16 @@ public class EventDto {
 		
 	}
 
-	public EventDto(int id, String bannerPhoto, String detailPhoto, String startDate, String endDate, int promotionYn) {
+	public EventDto(int id, String title, String bannerPhoto, String detailPhoto, String startDate, String endDate,
+			int promotionYn) {
 		super();
 		this.id = id;
+		this.title = title;
 		this.bannerPhoto = bannerPhoto;
 		this.detailPhoto = detailPhoto;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.promotionYn = promotionYn;
-	}
-	
-	
-
-	public EventDto(String endDate) {
-		super();
-		this.endDate = endDate;
 	}
 
 	public int getId() {
@@ -36,6 +32,14 @@ public class EventDto {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getBannerPhoto() {
@@ -80,11 +84,9 @@ public class EventDto {
 
 	@Override
 	public String toString() {
-		return "EventDto [id=" + id + ", bannerPhoto=" + bannerPhoto + ", detailPhoto=" + detailPhoto + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", promotionYn=" + promotionYn + "]";
+		return "EventDto [id=" + id + ", title=" + title + ", bannerPhoto=" + bannerPhoto + ", detailPhoto="
+				+ detailPhoto + ", startDate=" + startDate + ", endDate=" + endDate + ", promotionYn=" + promotionYn
+				+ "]";
 	}
-	
-	
-	
 
 }
