@@ -18,4 +18,5 @@ public class MyPickBoxDto {
 	private String expDate;
 	private String sName;
 	private String date;
+	private int pId;
 }
