@@ -25,6 +25,8 @@ public interface MypageDao {
 	MypageMainInfoDto getMyInfo(MypageMainInfoDto dto);
 	int getMyInfoCart(MypageMainInfoDto dto);
 	int getMyInfoGift(MypageMainInfoDto dto);
+	int getMyInfoCoupon(MypageMainInfoDto dto);
+	
 	
 	MypageProductDto getRecentlyProduct(int id);
 	

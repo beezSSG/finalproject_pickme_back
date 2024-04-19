@@ -159,6 +159,8 @@
 	<!-- 택배 목록 -->
 	<select id="postcheck" parameterType="com.pickme.beeze.ceo.dto.PostDto" resultType="com.pickme.beeze.ceo.dto.PostDto">
 		SELECT 
+			post.id as `id`,
+			store.ceo_id as `ceoId`,
 		    customer_info.name as `customerName`,
 		    post.item_category as `itemCategory`,
 		    post.item_weight as `itemWeight`,
