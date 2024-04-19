@@ -103,7 +103,7 @@
 	  <if test="search != null and search != '' ">	
 			and p.name like concat('%', #{search}, '%') 
 	  </if>
-	  ORDER BY c.name asc, exp_date asc
+	  ORDER BY c.id asc, exp_date asc
  	  limit ${(pageNumber * 10)}, 10	  
 	</select>
 	
