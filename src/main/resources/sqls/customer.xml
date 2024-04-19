@@ -125,13 +125,14 @@
 
 <!-- 상품 예약 후 db에 저장 -->
 <insert id="productreservationAf" parameterType="com.pickme.beeze.customer.dto.ProductReservationDto">
-  insert into product_reservation (product_id, customer_id, store_id, quantity, pick_yn)
+  insert into product_reservation (product_id, customer_id, store_id, quantity, pick_yn,date)
   values (
     (select id from product where name = #{productName}), 
     #{customerId}, 
     #{storeId}, 
     #{quantity}, 
-    0
+    0,
+    #{date}
   )
 </insert>
 
