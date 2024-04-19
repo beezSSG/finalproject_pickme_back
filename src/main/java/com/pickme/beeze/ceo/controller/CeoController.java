@@ -83,24 +83,8 @@ public class CeoController {
       return map;
    }
    
-   // 발주하기
-   @GetMapping("/powrite") 
-   public List<ProductDto> powrite(CeoParam param) {
-      
-      System.out.println("CeoController powrite " + new Date());
-      
-      // 신청 가능한 발주 품목 목록
-      List<ProductDto> list = service.powrite(param);
-      
-      // 카테고리목록
-      
-      
-      System.out.println(list);
-         
-      return list;
-   }
    
-   // 발주하기(최종)
+   // 발주하기
    @PostMapping("/powritefinal")
    public String powritefinal(@RequestBody List<PurchaseProductDto> list, Authentication Authentication, HttpServletRequest request) {
       System.out.println("powritefinal " + new Date());
@@ -119,19 +103,10 @@ public class CeoController {
          return "NO";
       }      
    }
-   
-   // 발주하기 목록
-   @GetMapping("/powriteCn")
-   public List<ProductDto> powriteCn(ProductDto dto) {
-      
-      List<ProductDto> lst = service.powriteCn(dto);
-      System.out.println(lst);
-      return lst;
-   }
-   
-   // 발주 승인완료 물품 사라지기
+     
+   // 발주 승인완료 리스트 사라지기
    @PostMapping("/deleteProduct")
-   public int deleteProduct(PurchaseDto dto) { // 여기를 productDto가 아니라 purchaseDto로 바꿨어요! // 왜냐면 Polist 자체가 PurchaseDto를 result로 가져오기 때문이에요
+   public int deleteProduct(PurchaseDto dto) { 
       System.out.println("BbsController deleteProduct " + new Date());
       
       // purchase_order

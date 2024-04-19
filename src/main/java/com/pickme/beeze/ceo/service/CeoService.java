@@ -51,14 +51,7 @@ public class CeoService {
 	public int getallceo(CeoParam param) {
 		return dao.getallceo(param);
 	}
-	
-	public List<ProductDto> powrite(CeoParam param) { 
-		return dao.powrite(param);
-	 }
-	
-	public List<ProductDto> powriteCn(ProductDto dto) {
-		return dao.powriteCn(dto);
-	}
+
 	
 	// 화면에서 승인이 완료된 물품을 사라지게 하기 
 	public void deleteProduct(PurchaseDto dto) {

@@ -39,39 +39,6 @@
 </select>
 
 	<!-- 발주하기(신청가능품목) -->
-
-	<select id="powrite" parameterType="com.pickme.beeze.ceo.dto.CeoParam"
-		resultType="com.pickme.beeze.ceo.dto.ProductDto"> 
-		select p.id, p.name, p.price 
-		from pickme.product p join pickme.product_category pc on pc.product_id = p.id 
-		<if	test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'name'">
-				where name like concat('%', #{search}, '%') and del=0
-			</if>
-		</if>
-	</select>
-
-	<!--발주하기(카테고리 목록)-->
-
-<!--	<select id="powriteCn" parameterType="Integer"
-		resultType="com.pickme.beeze.ceo.dto.ProductDto"> 
-            select p.id, pc.category_id as `categoryId`, c.name as `categoryName`, p.name, p.price
-            from product p, category c, product_category pc
-            where p.id = pc.product_id
-		
-		<if test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'name'">
-				where name like concat('%', #{search}, '%') and del=0
-			</if>
-		</if>
-	</select>-->
-	
-	<select id="powriteCn" parameterType="com.pickme.beeze.ceo.dto.ProductDto" resultType="com.pickme.beeze.ceo.dto.ProductDto"> 
-			select p.id as `id`, pc.category_id as `categoryId`, c.name as `categoryName`, p.name, p.price
-            from product p, category c, product_category pc
-            where pc.category_id = c.id and pc.product_id = p.id
-	</select>
-	<!-- 발주발주 진짜 됨 -->
 	<insert id="powritefinal" parameterType="com.pickme.beeze.ceo.dto.PurchaseProductDto">
 	    insert into purchase_order(ceo_id, product_id, quantity, po_yn, wdate)
 	    values (#{id}, (select id from product where name=#{name}), #{quantity}, 0, now())
