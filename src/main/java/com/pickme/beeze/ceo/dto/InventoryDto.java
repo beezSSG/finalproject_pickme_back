@@ -24,4 +24,6 @@ import lombok.NoArgsConstructor;
 		private String productCategory;
 		private String search;
 		private int pageNumber; // 페이지
+		private boolean switching;
+		private int exp;
 }
