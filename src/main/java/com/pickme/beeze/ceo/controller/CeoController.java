@@ -273,7 +273,7 @@ public class CeoController {
    @GetMapping("/getrplist")
    public Map<String, Object>  getrplist(ProductReservationDto dto,Authentication Authentication, HttpServletRequest request) {
       
-      System.out.println("CeoController getrplist" + new Date());
+      System.out.println("CeoController getrplist " + new Date());
       
       int id = InfoUtil.getUserIdInfo(Authentication, request);
       dto.setCeoId(id);
