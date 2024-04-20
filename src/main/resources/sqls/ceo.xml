@@ -251,12 +251,11 @@
 	<!-- 상품 예약 목록 총 수 -->
 	<select id="getallrp" parameterType="com.pickme.beeze.customer.dto.ProductReservationDto" resultType="Integer">
 		  select count(*)
-		  from product_reservation
-		  where store_id in (
-		      select id
-		      from store
-		      where ceo_id = #{ceoId}
-		  )
+		FROM product_reservation pr
+		JOIN product p ON pr.product_id = p.id
+		JOIN store s ON pr.store_id = s.id
+		JOIN customer_info ci ON pr.customer_id = ci.id
+		WHERE s.ceo_id = #{ceoId} and pr.pick_yn = 0
 	</select>
 	
 	<!-- 예약 승인 -->
