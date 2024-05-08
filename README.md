@@ -5,9 +5,12 @@
 
 ---
 
+## ⚙ 아키텍쳐 구조도
+
+![Architecture](https://github.com/beezSSG/finalproject_pickme_back/assets/60279992/8e3f78ff-d4b5-4953-a873-d225622a0986)
+
 ## ERD
 ![ERD](https://github.com/beezSSG/finalproject_pickme_back/assets/60279992/6c01b502-82b5-48e8-91fd-a309941de352)
-
 
 
 ## DB Schema
@@ -15,23 +18,32 @@
 
 ---
 
-## ⚙ 아키텍쳐 구조도
-
-![architecture](https://github.com/beezSSG/finalproject_pickme_back/assets/60279992/8e3f78ff-d4b5-4953-a873-d225622a0986)
-
----
-
-
 ## 📢 실행 방법
 1.
 
 
-# Git Convention
+## Git Convention
+[Commit convention 확인하러 가기](.github/ISSUE_TEMPLATE/custom.md)
 
-# Code Convention
+[PR convention 확인하러 가기](.github/pull_request_template.md) 
 
 
-# API NEEDS
+## Code Convention
+### Class 규칙 
+- Pascal Case로 한다
+  ex. MypageController
+
+### DB 및 DTO 작성 요령
+
+- DB 테이블 및 **컬럼** 작성시 **소문자** 및 **snake_case**을 사용 
+  ex) **purchase_order** 테이블의 **ceo_id** 컬럼
+- sts에서 **dto** 작성시 **camelCase** 사용
+  ex) **ceo_id** 컬럼을 dto로 받을시 **ceoId** 로 작성
+ex. sts에서 sqls 작성 예시 select문
+```sql
+select ceo_id as `ceoId`
+from purchase_order;
+```
 
 ---
 
